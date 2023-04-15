@@ -1,4 +1,4 @@
-package coleta.informacoes;
+package com.br.api.dados;
 
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Disco;
