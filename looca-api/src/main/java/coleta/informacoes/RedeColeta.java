@@ -11,6 +11,9 @@ public class RedeColeta {
         Rede rede = looca.getRede();
         System.out.println("Informações da rede utilizada");
         System.out.println(rede.getParametros());
+
+        System.out.println("Grupo de interface:");
+        System.out.println(looca.getRede().getGrupoDeInterfaces().getInterfaces());
         
     }
 }
