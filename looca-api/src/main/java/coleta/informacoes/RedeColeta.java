@@ -9,7 +9,8 @@ public class RedeColeta {
         Looca looca = new Looca();
         
         Rede rede = looca.getRede();
-        System.out.println(rede);
+        System.out.println("Informações da rede utilizada");
+        System.out.println(rede.getParametros());
         
     }
 }
