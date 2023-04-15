@@ -1,6 +1,0 @@
-2023-04-13 20:28:12 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE IF EXISTS[*] LOGIN(ID INT PRIMARY KEY AUTO_INCREMENT,EMAIL VARCHAR(45),SENHA INT) "; expected "NOT"; SQL statement:
-CREATE TABLE IF EXISTS Login(id int primary key auto_increment,email varchar(45),senha int) [42001-199]
-2023-04-13 20:31:00 jdbc[3]: exception
-org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "CREATE TABLE IF EXISTS[*] LOGIN(ID INT PRIMARY KEY AUTO_INCREMENT,EMAIL VARCHAR(45),SENHA INT) "; expected "NOT"; SQL statement:
-CREATE TABLE IF EXISTS Login(id int primary key auto_increment,email varchar(45),senha int) [42001-199]
