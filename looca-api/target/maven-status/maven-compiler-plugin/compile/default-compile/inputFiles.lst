@@ -1,4 +1,10 @@
-C:\Users\carlo\OneDrive\Área de Trabalho\java\looca-api\src\main\java\coleta\informacoes\TesteBanco.java
-C:\Users\carlo\OneDrive\Área de Trabalho\java\looca-api\src\main\java\coleta\informacoes\RedeColeta.java
-C:\Users\carlo\OneDrive\Área de Trabalho\java\looca-api\src\main\java\coleta\informacoes\HardwareColeta.java
-C:\Users\carlo\OneDrive\Área de Trabalho\java\looca-api\src\main\java\coleta\informacoes\LoginSwing.java
+C:\Users\carlo\OneDrive\Área de Trabalho\java\looca-api\src\main\java\com\br\api\banco\jdbc\TesteConexao.java
+C:\Users\carlo\OneDrive\Área de Trabalho\java\looca-api\src\main\java\com\br\api\banco\jdbc\Memoria.java
+C:\Users\carlo\OneDrive\Área de Trabalho\java\looca-api\src\main\java\com\br\api\dados\LoginSwing.java
+C:\Users\carlo\OneDrive\Área de Trabalho\java\looca-api\src\main\java\com\br\api\dados\HardwareColeta.java
+C:\Users\carlo\OneDrive\Área de Trabalho\java\looca-api\src\main\java\com\br\api\banco\jdbc\controller\MemoriaController.java
+C:\Users\carlo\OneDrive\Área de Trabalho\java\looca-api\src\main\java\com\br\api\banco\jdbc\Login.java
+C:\Users\carlo\OneDrive\Área de Trabalho\java\looca-api\src\main\java\com\br\api\banco\jdbc\Conexao.java
+C:\Users\carlo\OneDrive\Área de Trabalho\java\looca-api\src\main\java\com\br\api\dados\RedeColeta.java
+C:\Users\carlo\OneDrive\Área de Trabalho\java\looca-api\src\main\java\com\br\api\banco\jdbc\controller\TesteController.java
+C:\Users\carlo\OneDrive\Área de Trabalho\java\looca-api\src\main\java\com\br\api\banco\jdbc\controller\LoginController.java
