@@ -1,6 +1,12 @@
-
 package com.br.api.dados;
 
+import com.br.api.banco.jdbc.Conexao;
+import com.br.api.banco.jdbc.Login;
+import com.br.api.banco.jdbc.controller.LoginController;
+import com.br.api.banco.jdbc.controller.MemoriaController;
+import com.github.britooo.looca.api.core.Looca;
+import com.github.britooo.looca.api.group.memoria.Memoria;
+import com.github.britooo.looca.api.util.Conversor;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,8 +25,6 @@ public class LoginSwing extends javax.swing.JFrame {
     public LoginSwing() {
         initComponents();
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -85,13 +89,13 @@ public class LoginSwing extends javax.swing.JFrame {
                         .addGap(163, 163, 163)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addComponent(lbl_senha, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_senha, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(lbl_email, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txt_email, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addComponent(lbl_senha, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_senha, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(322, 322, 322)
                         .addComponent(btn_entrar))
@@ -99,8 +103,8 @@ public class LoginSwing extends javax.swing.JFrame {
                         .addGap(293, 293, 293)
                         .addComponent(lbl_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(298, 298, 298)
-                        .addComponent(lbl_resposta, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(224, 224, 224)
+                        .addComponent(lbl_resposta, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(303, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -135,29 +139,47 @@ public class LoginSwing extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_senhaActionPerformed
 
     private void btn_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrarActionPerformed
-        /*ConexaoJAR conexao = new ConexaoJAR();
-        JdbcTemplate con = conexao.getConnection();
+        Conexao conexao = new Conexao();
+        JdbcTemplate con = conexao.getConexaoDoBanco();
+        LoginController loginDAO = new LoginController();
         String email = txt_email.getText();
         String senha = txt_senha.getText();
-        Integer senhaConvertida = Integer.parseInt(senha);
-        List<Login> listaLogin1 = new ArrayList();
-        listaLogin1 = con.query("select * from Login where id = 1", new BeanPropertyRowMapper(Login.class));
-        
-        for(int i = 0; i < listaLogin1.size(); i++){
-            if(!email.equals(listaLogin1.get(i).getEmail()) ||
-               !senhaConvertida.equals(listaLogin1.get(i).getSenha())){
+        Login login1 = new Login(null, email, senha);
+        List<Login> loginUser = new ArrayList();
+        Boolean conectado = false;
+        MemoriaController memoriaDAO = new MemoriaController();
+        Looca looca = new Looca();
+        Conversor conversor = new Conversor();
+        Memoria memoria = looca.getMemoria();
+
+        try {
+            loginUser = loginDAO.entrar(login1);
+            if (!loginUser.isEmpty()) {
+                lbl_resposta.setForeground(Color.GREEN);
+                lbl_resposta.setText("BEM VINDO");
                 
-                lbl_resposta.setText("Dados incorretos! Tente novamente");
+                System.out.println("ENVIANDO DADOS");
+                System.out.println("");
+                System.out.println("MEMORIA CONVERTIDA");
+                System.out.println(conversor.formatarBytes(memoria.getEmUso()));
+
+                System.out.println("----------------------------");
+                System.out.println("GET (EM BYTES)");
+                System.out.println(memoria.getEmUso());
+                System.out.println("-----------------------------");
+                System.out.println("DADOS ENVIADOS AO BANCO DE DADOS:");
+                memoriaDAO.registrarUso(memoria.getEmUso(), memoria.getDisponivel());
+                System.out.println(memoriaDAO.showAll());
+            } else {
+                System.out.println("DADOS INCORRETOS");
                 lbl_resposta.setForeground(Color.red);
-            }else{
-                lbl_resposta.setText("Bem vindo!");
-                lbl_resposta.setForeground(Color.green);
+                lbl_resposta.setText("INCORRETO! TENTE NOVAMENTE");
             }
+
+        } catch (Exception e) {
+            System.out.println("Mensagem de erro MYSQL -> " + e.getMessage());
         }
-        
-        txt_email.setText("");
-        txt_senha.setText("");
-       */ 
+
     }//GEN-LAST:event_btn_entrarActionPerformed
 
     /**

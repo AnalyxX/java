@@ -22,7 +22,7 @@ public class TesteController {
         System.out.println(memoria.getEmUso());
 
         try {
-            System.out.println(loginDAO.entrar("teste", "1234"));
+            // System.out.println(loginDAO.entrar("teste", "1234"));
             System.out.println("");
             memoriaDAO.registrarUso(memoria.getEmUso(), memoria.getDisponivel());
             System.out.println(memoriaDAO.showAll());
