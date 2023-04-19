@@ -42,7 +42,7 @@ public class Memoria {
 
     @Override
     public String toString() {
-        return String.format("\n DADOS DE MEMÓRIA\n"
+        return String.format("Memória\n"
                 + "Id: %d\n"
                 + "Em Uso: %s\n"
                 + "Disponivel: %s\n", id, emUso, disponivel);

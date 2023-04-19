@@ -12,22 +12,19 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
  */
 public class LoginController {
 
-    public void registear(Login login) {
+    public void registrar(Login login) {
         Conexao conexao = new Conexao();
 
         JdbcTemplate con = conexao.getConexaoDoBanco();
 
-        con.update("insert into login values (?,?,?)", login.getId(), login.getEmail(), login.getSenha());
+        con.update("insert into login values (null,?,?)", login.getEmail(), login.getSenha());
     }
-    
-    // ALTERADA A FUNÇÃO ENTRAR, DESTA VEZ UTILIZANDO O LOGIN COMO PARÂMETRO
 
-    public List<Login> entrar(Login login) {
+    public List<Login> entrar(String email, String senha) {
         Conexao conexao = new Conexao();
-        JdbcTemplate con = conexao.getConexaoDoBanco();
-        String email = login.getEmail();
-        String senha = login.getSenha();
 
-        return con.query("select * from login where email = ? and senha = ?",new BeanPropertyRowMapper(Login.class), email, senha);
+        JdbcTemplate con = conexao.getConexaoDoBanco();
+
+        return con.query("select email,senha from login where email = ? and senha = ?", new BeanPropertyRowMapper(Login.class), email, senha);
     }
 }

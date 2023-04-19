@@ -18,9 +18,9 @@ public class Conexao {
         
         dataSource.setUrl("jdbc:mysql://localhost:3306/teste"); 
         
-        dataSource.setUsername("root");
+        dataSource.setUsername("admin");
         
-        dataSource.setPassword("@Saopaulo633");
+        dataSource.setPassword("1234");
 
         this.conexaoDoBanco = new JdbcTemplate(dataSource);
     }

@@ -21,8 +21,9 @@ public class HardwareColeta {
 
     public static void main(String[] args) {
 
-        //INSTANCIANDO A LOOCA E EXIBINDO AS INFORMAÇÕES DO SISTEMA
         Looca looca = new Looca();
+        
+        //EXIBINDO AS INFORMAÇÕES DO SISTEMA
         Sistema sistema = looca.getSistema();
         System.out.println(sistema);
 
@@ -41,11 +42,11 @@ public class HardwareColeta {
         }
         
         //EXIBINDO OS PROCESSOS
-        ProcessoGrupo grupoDeProcessos = looca.getGrupoDeProcessos();
-        List<Processo> processos = grupoDeProcessos.getProcessos();
-        for (Processo processo : processos) {
-            System.out.println(processos);
-        }
+//        ProcessoGrupo grupoDeProcessos = looca.getGrupoDeProcessos();
+//        List<Processo> processos = grupoDeProcessos.getProcessos();
+//        for (Processo processo : processos) {
+//            System.out.println(processos);
+//        }
         
         //EXIBINDO AS INFORMAÇÕES DA MEMORIA RAM
         Memoria memoria = looca.getMemoria();
@@ -54,6 +55,8 @@ public class HardwareColeta {
         //EXIBINDO AS INFORMAÇÕES DA CPU
         Processador processador = looca.getProcessador();
         System.out.println(processador);
+        System.out.println("Mostrando a frequencia em gigahertz");
+        System.out.println(looca.getProcessador().getFrequencia()/1000000000);
         
         //EXIBINDO A TEMPERATURA
         Temperatura temperatura = looca.getTemperatura();
@@ -67,11 +70,11 @@ public class HardwareColeta {
         }
         
         //EXIBINDO OS DIPOSITIVOS USB CONECTADOS
-        DispositivosUsbGrupo grupoDeDispositivosUsb = looca.getDispositivosUsbGrupo();
-        List<DispositivoUsb> dispositivosUsb = grupoDeDispositivosUsb.getDispositivosUsb();
-        for (DispositivoUsb  dispositivoUsb : dispositivosUsb) {
-            System.out.println(dispositivoUsb);
-        }
+//        DispositivosUsbGrupo grupoDeDispositivosUsb = looca.getDispositivosUsbGrupo();
+//        List<DispositivoUsb> dispositivosUsb = grupoDeDispositivosUsb.getDispositivosUsb();
+//        for (DispositivoUsb  dispositivoUsb : dispositivosUsb) {
+//            System.out.println(dispositivoUsb);
+//        }
         
     }
 }
