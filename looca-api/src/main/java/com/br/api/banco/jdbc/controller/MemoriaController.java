@@ -12,19 +12,30 @@ import java.util.List;
  */
 public class MemoriaController {
 
-    public void registrarUso(Long emUso, Long disponivel) {
+    public void registrarUso(Memoria memoria) {
         Conexao conexao = new Conexao();
 
         JdbcTemplate con = conexao.getConexaoDoBanco();
-       
-        con.update("insert into memoria values (null,?,?)", emUso, disponivel);
+
+        con.update("insert into componente values (null,?,3)", memoria.getEmUso());
     }
-    
+
+    public Memoria leituraMemoria() {
+        Conexao conexao = new Conexao();
+
+        JdbcTemplate con = conexao.getConexaoDoBanco();
+        
+        return con.queryForObject("select id,"
+                + "uso as emUso "
+                + "from componente "
+                + "where tipoComponente = 3", new BeanPropertyRowMapper<Memoria>(Memoria.class));
+    }
+
     public List<Memoria> showAll() {
         Conexao conexao = new Conexao();
 
         JdbcTemplate con = conexao.getConexaoDoBanco();
 
-        return con.query("select * from memoria",new BeanPropertyRowMapper(Memoria.class));
+        return con.query("select * from memoria", new BeanPropertyRowMapper(Memoria.class));
     }
 }

@@ -16,7 +16,7 @@ public class Conexao {
 
         dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         
-        dataSource.setUrl("jdbc:mysql://localhost:3306/teste"); 
+        dataSource.setUrl("jdbc:mysql://localhost:3306/bd_analyx"); 
         
         dataSource.setUsername("admin");
         

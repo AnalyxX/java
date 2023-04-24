@@ -1,16 +1,13 @@
-
 package com.br.api.banco.jdbc;
 
 public class Memoria {
 
     private Integer id;
     private String emUso;
-    private String disponivel;
 
-    public Memoria(Integer id, String emUso, String disponivel) {
+    public Memoria(Integer id, String emUso) {
         this.id = id;
         this.emUso = emUso;
-        this.disponivel = disponivel;
     }
 
     Memoria() {
@@ -32,19 +29,11 @@ public class Memoria {
         this.emUso = emUso;
     }
 
-    public String getDisponivel() {
-        return disponivel;
-    }
-
-    public void setDisponivel(String disponivel) {
-        this.disponivel = disponivel;
-    }
-
     @Override
     public String toString() {
         return String.format("Memória\n"
                 + "Id: %d\n"
                 + "Em Uso: %s\n"
-                + "Disponivel: %s\n", id, emUso, disponivel);
+                ,id, emUso);
     }
 }

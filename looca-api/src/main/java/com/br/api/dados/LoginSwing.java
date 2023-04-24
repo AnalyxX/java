@@ -1,16 +1,9 @@
 package com.br.api.dados;
 
 import com.br.api.banco.jdbc.Conexao;
-import com.br.api.banco.jdbc.Login;
 import com.br.api.banco.jdbc.controller.LoginController;
 import com.br.api.banco.jdbc.controller.MemoriaController;
-import com.github.britooo.looca.api.core.Looca;
-import com.github.britooo.looca.api.group.memoria.Memoria;
-import com.github.britooo.looca.api.util.Conversor;
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import javax.swing.JFrame;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -42,6 +35,7 @@ public class LoginSwing extends javax.swing.JFrame {
         txt_senha = new javax.swing.JTextField();
         btn_entrar = new javax.swing.JButton();
         lbl_resposta = new javax.swing.JLabel();
+        lbl_verify = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -76,8 +70,11 @@ public class LoginSwing extends javax.swing.JFrame {
 
         lbl_resposta.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
         lbl_resposta.setForeground(java.awt.Color.white);
-        lbl_resposta.setText("---");
         lbl_resposta.setToolTipText("");
+
+        lbl_verify.setBackground(new java.awt.Color(69, 73, 74));
+        lbl_verify.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbl_verify.setForeground(new java.awt.Color(180, 0, 0));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -95,17 +92,18 @@ public class LoginSwing extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addComponent(lbl_senha, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txt_senha, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(322, 322, 322)
-                        .addComponent(btn_entrar))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(lbl_verify, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txt_senha, javax.swing.GroupLayout.DEFAULT_SIZE, 231, Short.MAX_VALUE))
+                                .addGap(39, 39, 39)
+                                .addComponent(lbl_resposta, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(293, 293, 293)
                         .addComponent(lbl_titulo, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(224, 224, 224)
-                        .addComponent(lbl_resposta, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(303, Short.MAX_VALUE))
+                        .addGap(332, 332, 332)
+                        .addComponent(btn_entrar)))
+                .addContainerGap(8, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,8 +121,10 @@ public class LoginSwing extends javax.swing.JFrame {
                 .addGap(26, 26, 26)
                 .addComponent(btn_entrar)
                 .addGap(18, 18, 18)
+                .addComponent(lbl_verify)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lbl_resposta)
-                .addContainerGap(66, Short.MAX_VALUE))
+                .addContainerGap(79, Short.MAX_VALUE))
         );
 
         pack();
@@ -141,44 +141,25 @@ public class LoginSwing extends javax.swing.JFrame {
     private void btn_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrarActionPerformed
         Conexao conexao = new Conexao();
         JdbcTemplate con = conexao.getConexaoDoBanco();
+
         LoginController loginDAO = new LoginController();
+        MemoriaController memoriaDAO = new MemoriaController();
+
+        JFrame telaApi = new ApiSwing();
+
         String email = txt_email.getText();
         String senha = txt_senha.getText();
-        Login login1 = new Login(null, email, senha);
-        List<Login> loginUser = new ArrayList();
-        Boolean conectado = false;
-        MemoriaController memoriaDAO = new MemoriaController();
-        Looca looca = new Looca();
-        Conversor conversor = new Conversor();
-        Memoria memoria = looca.getMemoria();
-
+        
         try {
-            loginUser = loginDAO.entrar(login1);
-            if (!loginUser.isEmpty()) {
-                lbl_resposta.setForeground(Color.GREEN);
-                lbl_resposta.setText("BEM VINDO");
-                
-                System.out.println("ENVIANDO DADOS");
-                System.out.println("");
-                System.out.println("MEMORIA CONVERTIDA");
-                System.out.println(conversor.formatarBytes(memoria.getEmUso()));
-
-                System.out.println("----------------------------");
-                System.out.println("GET (EM BYTES)");
-                System.out.println(memoria.getEmUso());
-                System.out.println("-----------------------------");
-                System.out.println("DADOS ENVIADOS AO BANCO DE DADOS:");
-                memoriaDAO.registrarUso(memoria.getEmUso(), memoria.getDisponivel());
-                System.out.println(memoriaDAO.showAll());
-            } else {
-                System.out.println("DADOS INCORRETOS");
-                lbl_resposta.setForeground(Color.red);
-                lbl_resposta.setText("INCORRETO! TENTE NOVAMENTE");
-            }
-
+            loginDAO.entrar(email, senha);
+            this.setVisible(false);
+            telaApi.setVisible(true);
         } catch (Exception e) {
-            System.out.println("Mensagem de erro MYSQL -> " + e.getMessage());
+            lbl_verify.setText("Informações de login incorretas");
+            System.out.println("erro ->" + e.getMessage());
         }
+                
+
 
     }//GEN-LAST:event_btn_entrarActionPerformed
 
@@ -224,6 +205,7 @@ public class LoginSwing extends javax.swing.JFrame {
     private javax.swing.JLabel lbl_resposta;
     private javax.swing.JLabel lbl_senha;
     private javax.swing.JLabel lbl_titulo;
+    private javax.swing.JLabel lbl_verify;
     private javax.swing.JTextField txt_email;
     private javax.swing.JTextField txt_senha;
     // End of variables declaration//GEN-END:variables
