@@ -47,9 +47,9 @@ public class Disco {
     public String toString() {
         return String.format("Disco\n"
                 + "Id: %d\n"
-                + "Volume do disco: %s\n"
+                //+ "Volume do disco: %s\n"
                 + "Uso disco: %s\n",
-                 id, volume, emUso);
+                 id, emUso);
     }
 
 }

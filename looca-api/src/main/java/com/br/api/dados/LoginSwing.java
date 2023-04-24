@@ -1,8 +1,12 @@
 package com.br.api.dados;
 
 import com.br.api.banco.jdbc.Conexao;
+import com.br.api.banco.jdbc.controller.CpuController;
+import com.br.api.banco.jdbc.controller.DiscoController;
 import com.br.api.banco.jdbc.controller.LoginController;
 import com.br.api.banco.jdbc.controller.MemoriaController;
+import com.github.britooo.looca.api.core.Looca;
+import com.github.britooo.looca.api.group.memoria.Memoria;
 import javax.swing.JFrame;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -143,22 +147,30 @@ public class LoginSwing extends javax.swing.JFrame {
         JdbcTemplate con = conexao.getConexaoDoBanco();
 
         LoginController loginDAO = new LoginController();
-        MemoriaController memoriaDAO = new MemoriaController();
 
         JFrame telaApi = new ApiSwing();
 
+        CpuController cpuDAO = new CpuController();
+        DiscoController discoDAO = new DiscoController();
+        MemoriaController memoriaDAO = new MemoriaController();
+        Looca looca = new Looca();
+        Memoria memoria = looca.getMemoria();
+
         String email = txt_email.getText();
         String senha = txt_senha.getText();
-        
+
         try {
             loginDAO.entrar(email, senha);
             this.setVisible(false);
-            telaApi.setVisible(true);
+            //telaApi.setVisible(true);
+            System.out.println(cpuDAO.leituraCpu());
+            System.out.println(discoDAO.leituraDisco());
+            System.out.println(memoriaDAO.leituraMemoria());
+
         } catch (Exception e) {
             lbl_verify.setText("Informações de login incorretas");
             System.out.println("erro ->" + e.getMessage());
         }
-                
 
 
     }//GEN-LAST:event_btn_entrarActionPerformed

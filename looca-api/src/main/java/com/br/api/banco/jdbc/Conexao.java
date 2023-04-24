@@ -14,13 +14,13 @@ public class Conexao {
     public Conexao() {
         BasicDataSource dataSource = new BasicDataSource();
 
-        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         
-        dataSource.setUrl("jdbc:mysql://localhost:3306/bd_analyx"); 
+        dataSource.setUrl("jdbc:sqlserver://localhost;encrypt=true;database=analyx;integratedSecurity=true;"); 
         
-        dataSource.setUsername("admin");
+        dataSource.setUsername("analyx-admin");
         
-        dataSource.setPassword("1234");
+        dataSource.setPassword("#Gfgrupo2");
 
         this.conexaoDoBanco = new JdbcTemplate(dataSource);
     }

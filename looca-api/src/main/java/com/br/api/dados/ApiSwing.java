@@ -9,10 +9,8 @@ import com.br.api.banco.jdbc.controller.DiscoController;
 import com.br.api.banco.jdbc.controller.MemoriaController;
 import com.github.britooo.looca.api.core.Looca;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import javax.swing.JLabel;
 
 /**
  *
@@ -150,14 +148,14 @@ public class ApiSwing extends javax.swing.JFrame {
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
         // TODO add your handling code here:
         this.setVisible(false);
-        
+
     }//GEN-LAST:event_sairActionPerformed
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
-        Font font = new Font("Jokerman", Font.PLAIN, 35);
-        jTextField1.setFont(font);
-        jTextField1.setText("hello");
+        //    Font font = new Font("Jokerman", Font.PLAIN, 35);
+        //    jTextField1.setFont(font);
+        //    jTextField1.setText("hello");
     }//GEN-LAST:event_jTextField1ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -166,9 +164,9 @@ public class ApiSwing extends javax.swing.JFrame {
 
     private void addTexto(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_addTexto
         // TODO add your handling code here:
-            Font font = new Font("Arial", Font.PLAIN, 35);
-        jTextField1.setFont(font);
-        jTextField1.setText("hello");
+        //Font font = new Font("Arial", Font.PLAIN, 35);
+        //jTextField1.setFont(font);
+        //jTextField1.setText("hello");
     }//GEN-LAST:event_addTexto
 
     private void buttonText(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_buttonText

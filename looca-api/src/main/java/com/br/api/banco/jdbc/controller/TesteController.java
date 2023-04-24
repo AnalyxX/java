@@ -13,9 +13,13 @@ public class TesteController {
         Looca looca = new Looca();
         Memoria memoria = looca.getMemoria();
         
+        try {
         System.out.println(loginDAO.entrar("teste@email.com", "1234"));
         System.out.println(cpuDAO.leituraCpu());
         System.out.println(discoDAO.leituraDisco());
         System.out.println(memoriaDAO.leituraMemoria());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
