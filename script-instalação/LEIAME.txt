@@ -1,0 +1,9 @@
+#################################################################
+Passos para instalação do executavel
+#################################################################
+1 - Abrir o terminal do sistema operacional
+2 - Estar logado em um usuário sudoer
+3 - Direciona-se a pasta raiz(script-instalação) onde esta 
+    o arquivo executável, utilize o comando: cd script-instalação
+4 - Digite o comando: chmod +x script_instalacao.sh
+5 - Execute o script digitando: ./script_instalacao.sh 
