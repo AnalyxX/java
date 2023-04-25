@@ -12,6 +12,8 @@ else #se nao,
 	        sudo apt install openjdk-17-jre -y #executa instalacao do java
         fi #fecha o 2º if
 fi #fecha o 1º if
+
+
 git clone https://github.com/AnalyxX/java.git #executa o clone onde esta o jar
 cd java #acessa o diretorio java
 cd looca-api #acessa o diretorio da api

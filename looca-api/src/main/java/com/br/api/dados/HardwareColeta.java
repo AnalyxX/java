@@ -34,20 +34,6 @@ public class HardwareColeta {
             System.out.println(disco);
         }
 
-        //EXIBINDO A LISTA DE SERVIÇOS
-        ServicoGrupo grupoDeServicos = looca.getGrupoDeServicos();
-        List<Servico> servicos = grupoDeServicos.getServicos();
-        for (Servico servico : servicos) {
-           System.out.println(servicos);
-        }
-        
-        //EXIBINDO OS PROCESSOS
-//        ProcessoGrupo grupoDeProcessos = looca.getGrupoDeProcessos();
-//        List<Processo> processos = grupoDeProcessos.getProcessos();
-//        for (Processo processo : processos) {
-//            System.out.println(processos);
-//        }
-        
         //EXIBINDO AS INFORMAÇÕES DA MEMORIA RAM
         Memoria memoria = looca.getMemoria();
         System.out.println(memoria);
@@ -62,6 +48,20 @@ public class HardwareColeta {
         Temperatura temperatura = looca.getTemperatura();
         System.out.println(temperatura);
         
+        //EXIBINDO OS PROCESSOS
+        ProcessoGrupo grupoDeProcessos = looca.getGrupoDeProcessos();
+        List<Processo> processos = grupoDeProcessos.getProcessos();
+        for (Processo processo : processos) {
+            System.out.println(processos);
+        }
+
+        //EXIBINDO A LISTA DE SERVIÇOS
+        ServicoGrupo grupoDeServicos = looca.getGrupoDeServicos();
+        List<Servico> servicos = grupoDeServicos.getServicos();
+        for (Servico servico : servicos) {
+           System.out.println(servicos);
+        }
+        
         //EXIBINDO AS JANELAS ABERTAS
         JanelaGrupo grupoDeJanelas = looca.getGrupoDeJanelas();
         List<Janela> janelas = grupoDeJanelas.getJanelas();
@@ -70,11 +70,11 @@ public class HardwareColeta {
         }
         
         //EXIBINDO OS DIPOSITIVOS USB CONECTADOS
-//        DispositivosUsbGrupo grupoDeDispositivosUsb = looca.getDispositivosUsbGrupo();
-//        List<DispositivoUsb> dispositivosUsb = grupoDeDispositivosUsb.getDispositivosUsb();
-//        for (DispositivoUsb  dispositivoUsb : dispositivosUsb) {
-//            System.out.println(dispositivoUsb);
-//        }
+        DispositivosUsbGrupo grupoDeDispositivosUsb = looca.getDispositivosUsbGrupo();
+        List<DispositivoUsb> dispositivosUsb = grupoDeDispositivosUsb.getDispositivosUsb();
+        for (DispositivoUsb  dispositivoUsb : dispositivosUsb) {
+            System.out.println(dispositivoUsb);
+        }
         
     }
 }

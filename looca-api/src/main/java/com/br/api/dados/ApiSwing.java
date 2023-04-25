@@ -133,7 +133,7 @@ public class ApiSwing extends javax.swing.JFrame {
             System.out.println(hora);
         }
         
-        usoCPU.setText(String.format("%.2f", looca.getProcessador().getUso()));
+        usoCPU.setText(String.format("%s", cpuDAO.leituraCpu().getEmUso()));
         usoDisco.setText(String.format("%s", discoDAO.leituraDisco().getEmUso()));
         usoRam.setText(String.format("%s", memoriaDAO.leituraMemoria().getEmUso()));
     }
