@@ -143,18 +143,9 @@ public class LoginSwing extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_senhaActionPerformed
 
     private void btn_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrarActionPerformed
-        Conexao conexao = new Conexao();
-        JdbcTemplate con = conexao.getConexaoDoBanco();
-
         LoginController loginDAO = new LoginController();
 
         JFrame telaApi = new ApiSwing();
-
-        CpuController cpuDAO = new CpuController();
-        DiscoController discoDAO = new DiscoController();
-        MemoriaController memoriaDAO = new MemoriaController();
-        Looca looca = new Looca();
-        Memoria memoria = looca.getMemoria();
 
         String email = txt_email.getText();
         String senha = txt_senha.getText();
@@ -162,11 +153,7 @@ public class LoginSwing extends javax.swing.JFrame {
         try {
             loginDAO.entrar(email, senha);
             this.setVisible(false);
-            //telaApi.setVisible(true);
-            System.out.println(cpuDAO.leituraCpu());
-            System.out.println(discoDAO.leituraDisco());
-            System.out.println(memoriaDAO.leituraMemoria());
-
+            telaApi.setVisible(true);
         } catch (Exception e) {
             lbl_verify.setText("Informações de login incorretas");
             System.out.println("erro ->" + e.getMessage());

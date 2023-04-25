@@ -23,6 +23,7 @@ public class ApiSwing extends javax.swing.JFrame {
      */
     public ApiSwing() {
         initComponents();
+        getDados();
     }
 
     /**
@@ -41,8 +42,6 @@ public class ApiSwing extends javax.swing.JFrame {
         usoDisco = new javax.swing.JLabel();
         usoRam = new javax.swing.JLabel();
         sair = new javax.swing.JButton();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -64,36 +63,12 @@ public class ApiSwing extends javax.swing.JFrame {
             }
         });
 
-        jTextField1.setText("asdvb");
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
-            }
-        });
-        jTextField1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                addTexto(evt);
-            }
-        });
-
-        jButton1.setText("att");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
-            }
-        });
-        jButton1.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                buttonText(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(105, 105, 105)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -109,15 +84,11 @@ public class ApiSwing extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addGap(60, 60, 60)
-                                .addComponent(usoCPU)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(usoCPU))))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(129, 129, 129)
-                        .addComponent(jButton1)
-                        .addGap(18, 18, 18)
+                        .addGap(219, 219, 219)
                         .addComponent(sair)))
-                .addContainerGap(202, Short.MAX_VALUE))
+                .addContainerGap(228, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -129,16 +100,13 @@ public class ApiSwing extends javax.swing.JFrame {
                 .addGap(35, 35, 35)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(usoDisco)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(29, 29, 29)
+                    .addComponent(usoDisco))
+                .addGap(31, 31, 31)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(usoRam))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(sair)
-                    .addComponent(jButton1))
+                .addComponent(sair)
                 .addGap(53, 53, 53))
         );
 
@@ -147,94 +115,46 @@ public class ApiSwing extends javax.swing.JFrame {
 
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
         // TODO add your handling code here:
-        this.setVisible(false);
+        System.exit(0);
 
     }//GEN-LAST:event_sairActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
-        // TODO add your handling code here:
-        //    Font font = new Font("Jokerman", Font.PLAIN, 35);
-        //    jTextField1.setFont(font);
-        //    jTextField1.setText("hello");
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    private void getDados() {
+        Looca looca = new Looca();
+        CpuController cpuDAO = new CpuController();
+        DiscoController discoDAO = new DiscoController();
+        MemoriaController memoriaDAO = new MemoriaController();
+        Date dataHoraAtual = new Date();
+        
+        String data = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
+        String hora = new SimpleDateFormat("ss").format(dataHoraAtual);
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
-
-    private void addTexto(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_addTexto
-        // TODO add your handling code here:
-        //Font font = new Font("Arial", Font.PLAIN, 35);
-        //jTextField1.setFont(font);
-        //jTextField1.setText("hello");
-    }//GEN-LAST:event_addTexto
-
-    private void buttonText(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_buttonText
-        // TODO add your handling code here:
-        addTexto(evt);
-        jButton1.setVisible(false);
-    }//GEN-LAST:event_buttonText
+        if (Integer.valueOf(hora) % 60 == 0) {
+            System.out.println(hora);
+        }
+        
+        usoCPU.setText(String.format("%.2f", looca.getProcessador().getUso()));
+        usoDisco.setText(String.format("%s", discoDAO.leituraDisco().getEmUso()));
+        usoRam.setText(String.format("%s", memoriaDAO.leituraMemoria().getEmUso()));
+    }
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(ApiSwing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(ApiSwing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(ApiSwing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(ApiSwing.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new ApiSwing().setVisible(true);
             }
         });
-        Looca looca = new Looca();
-        CpuController cpuDAO = new CpuController();
-        DiscoController discoDAO = new DiscoController();
-        MemoriaController memoriaDAO = new MemoriaController();
-        String cpu = cpuDAO.leituraCpu().getEmUso();
-        //ActionEvent evt = new ActionEvent();
-        Date dataHoraAtual = new Date();
-        String data = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
-        String hora = new SimpleDateFormat("ss").format(dataHoraAtual);
-        System.out.println(hora);
-
-        if (Integer.valueOf(hora) % 60 == 0) {
-            System.out.println(hora);
-        }
-        Font font = new Font("Jokerman", Font.PLAIN, 35);
-        // textLabel.setText(cpu);
-        System.out.println(discoDAO.leituraDisco());
-        System.out.println("Ram");
-        System.out.println(memoriaDAO.leituraMemoria());
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton sair;
     private javax.swing.JLabel usoCPU;
     private javax.swing.JLabel usoDisco;

@@ -16,7 +16,7 @@ public class Conexao {
 
         dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
         
-        dataSource.setUrl("jdbc:sqlserver://localhost;encrypt=true;database=analyx;integratedSecurity=true;"); 
+        dataSource.setUrl("jdbc:sqlserver://analayx.database.windows.net:1433;database=analyx;user=analyx-admin@analayx;password=#Gfgrupo2;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"); 
         
         dataSource.setUsername("analyx-admin");
         
