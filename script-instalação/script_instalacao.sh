@@ -1,4 +1,4 @@
-#!/bin/bash
+ #!/bin/bash
 java -version #verifica versao atual do java
 if [ $? = 0 ]; #se retorno for igual a 0
 then #entao,

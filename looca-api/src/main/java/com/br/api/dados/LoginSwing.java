@@ -1,14 +1,8 @@
+
 package com.br.api.dados;
 
-import com.br.api.banco.jdbc.Conexao;
-import com.br.api.banco.jdbc.controller.CpuController;
-import com.br.api.banco.jdbc.controller.DiscoController;
 import com.br.api.banco.jdbc.controller.LoginController;
-import com.br.api.banco.jdbc.controller.MemoriaController;
-import com.github.britooo.looca.api.core.Looca;
-import com.github.britooo.looca.api.group.memoria.Memoria;
 import javax.swing.JFrame;
-import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  *

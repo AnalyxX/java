@@ -61,7 +61,7 @@
             <!-- ou versão que já existir na .m2 local -->
         </dependency>
         
-         <!-- dependências do mysql -->
+        <!-- dependências do mysql -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
