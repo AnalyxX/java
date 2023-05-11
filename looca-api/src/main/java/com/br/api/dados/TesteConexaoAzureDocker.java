@@ -9,7 +9,6 @@ import java.util.Scanner;
 public class TesteConexaoAzureDocker {
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
         LoginControllerTeste loginDao = new LoginControllerTeste();
         try {
             System.out.println("Email: marcio@email.com");
@@ -27,15 +26,15 @@ public class TesteConexaoAzureDocker {
             System.out.println("Erro na conexão/Login com a azure");
         }
         
-        try {
-            System.out.println("""
-                               -------------------------------
-                               LOGIN NO MYSQL
-                               -------------------------------
-                               """+loginDao.entrarMySql("teste@email.com", "1234"));
-        } catch (Exception e) {
-            System.out.println("Erro na conexão/Login com a azure");
-        }
-        Integer loop = sc.nextInt();
+//        try {
+//            System.out.println("""
+//                               -------------------------------
+//                               LOGIN NO MYSQL
+//                               -------------------------------
+//                               """+loginDao.entrarMySql("teste@email.com", "1234"));
+//        } catch (Exception e) {
+//            System.out.println("Erro na conexão/Login com a azure");
+//        }
+        System.out.println(loginDao.entrarMySql("teste@email.com", "1234"));
     }
 }
