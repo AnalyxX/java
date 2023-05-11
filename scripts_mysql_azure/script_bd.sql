@@ -158,7 +158,7 @@ CREATE TABLE IF NOT EXISTS log (
     FOREIGN KEY (componente)
     REFERENCES componente (id));
     
-insert into tipousuario values
+insert into tipoUsuario values
 (null,'web'),
 (null,'java');
 
@@ -184,7 +184,7 @@ insert into funcionario value
 (null,'Marcio','01191000',1,null,null,1);
 
 insert into funcionario value
-(null,'João','01202000',1,1,null,1);
+(null,'Joao','01202000',1,1,null,1);
 
 insert into usuario values
 (null,'marcio@email.com','1234',1,1),

@@ -23,7 +23,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.br.api.dados.LoginSwing</mainClass> 
+                            <mainClass>com.br.api.dados.TesteConexaoAzureDocker</mainClass> 
                         </manifest>
                     </archive>
                 </configuration>

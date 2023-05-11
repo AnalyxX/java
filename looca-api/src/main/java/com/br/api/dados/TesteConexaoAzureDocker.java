@@ -9,6 +9,11 @@ public class TesteConexaoAzureDocker {
     public static void main(String[] args) {
         LoginControllerTeste loginDao = new LoginControllerTeste();
         try {
+            System.out.println("Email: marcio@email.com");
+            System.out.println("Senha: 1234");
+            System.out.println("-----------------------");
+            System.out.println("Email: teste@email.com");
+            System.out.println("Senha: 1234");
             System.out.println("""
                                -------------------------------
                                LOGIN NA AZURE
