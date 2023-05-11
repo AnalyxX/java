@@ -14,22 +14,14 @@ public class Conexao {
     public Conexao() {
         BasicDataSource dataSource = new BasicDataSource();
 
-//        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
-//        
-//        dataSource.setUrl("jdbc:mysql://localhost:3306/analyx?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"); 
-//        
-//        dataSource.setUsername("admin");
-//        
-//        dataSource.setPassword("1234");
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
         
-        dataSource.setDriverClassName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/bd_analyx?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"); 
         
-        dataSource.setUrl("jdbc:sqlserver://analayx.database.windows.net:1433;database=analyx;user=analyx-admin@analayx;password=#Gfgrupo2;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"); 
+        dataSource.setUsername("admin");
         
-        dataSource.setUsername("analyx-admin");
+        dataSource.setPassword("1234");
         
-        dataSource.setPassword("#Gfgrupo2");
-
         this.conexaoDoBanco = new JdbcTemplate(dataSource);
     }
 
