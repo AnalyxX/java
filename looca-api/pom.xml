@@ -23,7 +23,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>com.br.api.dados.TesteConexaoAzureDocker</mainClass> 
+                            <mainClass>com.br.api.dados.looca-api</mainClass> 
                         </manifest>
                     </archive>
                 </configuration>
