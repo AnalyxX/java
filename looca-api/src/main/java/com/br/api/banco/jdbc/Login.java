@@ -47,7 +47,7 @@ public class Login {
         return tipoUsuario;
     }
 
-    public void setTipoUsuaro(String tipoUsuario) {
+    public void setTipoUsuario(String tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
 
@@ -58,6 +58,8 @@ public class Login {
     public void setFuncionario(String funcionario) {
         this.funcionario = funcionario;
     }
+    
+    
     
     @Override
     public String toString() {
