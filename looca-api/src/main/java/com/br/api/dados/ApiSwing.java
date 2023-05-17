@@ -1,14 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package com.br.api.dados;
 
 import com.br.api.banco.jdbc.controller.CpuController;
 import com.br.api.banco.jdbc.controller.DiscoController;
 import com.br.api.banco.jdbc.controller.MemoriaController;
 import com.github.britooo.looca.api.core.Looca;
-import java.awt.Font;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 

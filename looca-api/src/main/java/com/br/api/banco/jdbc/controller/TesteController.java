@@ -6,7 +6,7 @@ import com.github.britooo.looca.api.group.memoria.Memoria;
 public class TesteController {
 
     public static void main(String[] args) {
-        LoginController loginDAO = new LoginController();
+        UsuarioController loginDAO = new UsuarioController();
         CpuController cpuDAO = new CpuController();
         DiscoController discoDAO = new DiscoController();
         MemoriaController memoriaDAO = new MemoriaController();
@@ -14,7 +14,7 @@ public class TesteController {
         Memoria memoria = looca.getMemoria();
         
         try {
-        System.out.println(loginDAO.entrar("teste@email.com", "1234"));
+        System.out.println(loginDAO.entrarMySql("teste@email.com", "1234"));
         System.out.println(cpuDAO.leituraCpu());
         System.out.println(discoDAO.leituraDisco());
         System.out.println(memoriaDAO.leituraMemoria());

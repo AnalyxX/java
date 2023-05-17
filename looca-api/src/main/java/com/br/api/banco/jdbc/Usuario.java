@@ -1,6 +1,6 @@
 package com.br.api.banco.jdbc;
 
-public class Login {
+public class Usuario {
 
     private Integer id;
     private String email;
@@ -8,7 +8,7 @@ public class Login {
     private String tipoUsuario;
     private String funcionario;
 
-    public Login(Integer id, String email, String senha, String tipoUsuario, String funcionario) {
+    public Usuario(Integer id, String email, String senha, String tipoUsuario, String funcionario) {
         this.id = id;
         this.email = email;
         this.senha = senha;
@@ -16,7 +16,7 @@ public class Login {
         this.funcionario = funcionario;
     }
 
-    Login() {
+    Usuario() {
     }
 
     public Integer getId() {

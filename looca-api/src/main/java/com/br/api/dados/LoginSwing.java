@@ -1,7 +1,7 @@
 
 package com.br.api.dados;
 
-import com.br.api.banco.jdbc.controller.LoginController;
+import com.br.api.banco.jdbc.controller.UsuarioController;
 import javax.swing.JFrame;
 
 /**
@@ -137,7 +137,7 @@ public class LoginSwing extends javax.swing.JFrame {
     }//GEN-LAST:event_txt_senhaActionPerformed
 
     private void btn_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrarActionPerformed
-        LoginController loginDAO = new LoginController();
+        UsuarioController usuarioDAO = new UsuarioController();
 
         JFrame telaApi = new ApiSwing();
 
@@ -145,7 +145,7 @@ public class LoginSwing extends javax.swing.JFrame {
         String senha = txt_senha.getText();
 
         try {
-            loginDAO.entrar(email, senha);
+            usuarioDAO.entrarAzure(email, senha);
             this.setVisible(false);
             telaApi.setVisible(true);
         } catch (Exception e) {
