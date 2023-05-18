@@ -205,7 +205,7 @@ public class LoginSwing extends javax.swing.JFrame {
             telaApi.setVisible(true);
         } catch (Exception e) {
             lbl_verify.setText("Informações de login incorretas");
-            System.out.println("erro ->" + e.getMessage());
+            System.out.println("erro -> " + e.getMessage());
         }
 
 

@@ -1,6 +1,8 @@
 CREATE SCHEMA IF NOT EXISTS bd_analyx DEFAULT CHARACTER SET utf8 ;
 USE bd_analyx;
+
 -- drop database bd_analyx;
+
 CREATE TABLE IF NOT EXISTS empresa (
   id INT NOT NULL AUTO_INCREMENT,
   cnpj CHAR(17) NULL,
@@ -28,18 +30,18 @@ CREATE TABLE IF NOT EXISTS ram (
 CREATE TABLE IF NOT EXISTS especificacaoMaquina (
   id INT NOT NULL AUTO_INCREMENT,
   numeroSerial VARCHAR(45) NULL,
-  cpu INT NOT NULL,
-  disco INT NOT NULL,
-  ram INT NOT NULL,
+  fkCpu INT NOT NULL,
+  fkDisco INT NOT NULL,
+  fkRam INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_especificacaoMaquina_cpu1
-    FOREIGN KEY (cpu)
+    FOREIGN KEY (fkcpu)
     REFERENCES cpu (id),
   CONSTRAINT fk_especificacaoMaquina_Disco1
-    FOREIGN KEY (disco)
+    FOREIGN KEY (fkDisco)
     REFERENCES disco (id),
   CONSTRAINT fk_especificacaoMaquina_ram1
-    FOREIGN KEY (ram)
+    FOREIGN KEY (fkRam)
     REFERENCES ram (id));
 
 CREATE TABLE IF NOT EXISTS setor (
@@ -51,22 +53,22 @@ CREATE TABLE IF NOT EXISTS funcionario (
   id INT NOT NULL AUTO_INCREMENT,
   nome VARCHAR(45) NULL,
   matricula VARCHAR(45) NULL UNIQUE,
-  empresa INT NULL,
-  gestor INT NULL,
-  maquina INT NULL,
-  setor INT NULL,
+  fkEmpresa INT NULL,
+  fkGestor INT NULL,
+  fkMaquina INT NULL,
+  fkSetor INT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_Funcionario_Empresa1
-    FOREIGN KEY (empresa)
+    FOREIGN KEY (fkEmpresa)
     REFERENCES empresa (id),
   CONSTRAINT fk_Funcionario_Funcionario1
-    FOREIGN KEY (gestor)
+    FOREIGN KEY (fkGestor)
     REFERENCES funcionario (id),
   CONSTRAINT fk_Funcionario_EspecificacaoMaquina1
-    FOREIGN KEY (maquina)
+    FOREIGN KEY (fkMaquina)
     REFERENCES especificacaoMaquina (id),
   CONSTRAINT fk_Funcionario_setor1
-    FOREIGN KEY (setor)
+    FOREIGN KEY (fkSetor)
     REFERENCES setor (id));
 
 CREATE TABLE IF NOT EXISTS tipoUsuario (
@@ -78,23 +80,23 @@ CREATE TABLE IF NOT EXISTS usuario (
   id INT NOT NULL AUTO_INCREMENT,
   email VARCHAR(256) NULL UNIQUE,
   senha VARCHAR(256) NULL,
-  tipo INT NOT NULL,
-  funcionario INT NOT NULL,
-  PRIMARY KEY (id, funcionario),
+  fkTipoUsuario INT NOT NULL,
+  fkFuncionario INT NOT NULL,
+  PRIMARY KEY (id, fkFuncionario),
   CONSTRAINT fk_Usuario_Funcionario1
-    FOREIGN KEY (funcionario)
+    FOREIGN KEY (fkFuncionario)
     REFERENCES funcionario (id),
   CONSTRAINT fk_Usuario_tipoUsuario1
-    FOREIGN KEY (tipo)
+    FOREIGN KEY (fkTipoUsuario)
     REFERENCES tipoUsuario (id));
 
 CREATE TABLE IF NOT EXISTS monitoramento (
   id INT NOT NULL AUTO_INCREMENT,
   data DATE NULL,
-  maquina INT NOT NULL,
+  fkMaquina INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_Monitoramento_EspecificacaoMaquina1
-    FOREIGN KEY (maquina)
+    FOREIGN KEY (fkMaquina)
     REFERENCES especificacaoMaquina (id));
 
 CREATE TABLE IF NOT EXISTS rede (
@@ -102,10 +104,10 @@ CREATE TABLE IF NOT EXISTS rede (
   latencia INT NULL,
   upload INT NULL,
   download INT NULL,
-  monitoramento INT NOT NULL,
+  fkMonitoramento INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_rede_Monitoramento1
-    FOREIGN KEY (monitoramento)
+    FOREIGN KEY (fkMonitoramento)
     REFERENCES monitoramento (id));
 
 CREATE TABLE IF NOT EXISTS tipoComponente (
@@ -116,14 +118,14 @@ CREATE TABLE IF NOT EXISTS tipoComponente (
 CREATE TABLE IF NOT EXISTS componente (
   id INT NOT NULL AUTO_INCREMENT,
   uso FLOAT NULL,
-  monitoramento INT NOT NULL,
-  tipoComponente INT NOT NULL,
+  fkMonitoramento INT NOT NULL,
+  fkTipoComponente INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_componente_Monitoramento1
-    FOREIGN KEY (monitoramento)
+    FOREIGN KEY (fkMonitoramento)
     REFERENCES monitoramento (id),
   CONSTRAINT fk_componente_table11
-    FOREIGN KEY (tipoComponente)
+    FOREIGN KEY (fkTipoComponente)
     REFERENCES tipoComponente (id));
 
 CREATE TABLE IF NOT EXISTS tipoCategoria (
@@ -135,27 +137,27 @@ CREATE TABLE IF NOT EXISTS tipoCategoria (
 CREATE TABLE IF NOT EXISTS alertas (
   id INT NOT NULL AUTO_INCREMENT,
   nivelGravidade VARCHAR(45) NULL,
-  monitoramento INT NOT NULL,
-  tipoComponente INT NOT NULL,
-  tipoCategoria INT NOT NULL,
+  fkMonitoramento INT NOT NULL,
+  fkTipoComponente INT NOT NULL,
+  fkTipoCategoria INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_Alertas_Monitoramento1
-    FOREIGN KEY (monitoramento)
+    FOREIGN KEY (fkMonitoramento)
     REFERENCES monitoramento (id),
   CONSTRAINT fk_Alertas_table11
-    FOREIGN KEY (tipoComponente)
+    FOREIGN KEY (fkTipoComponente)
     REFERENCES tipoComponente (id),
   CONSTRAINT fk_Alertas_tipoCategoria1
-    FOREIGN KEY (tipoCategoria)
+    FOREIGN KEY (fkTipoCategoria)
     REFERENCES tipoCategoria (id));
 
 CREATE TABLE IF NOT EXISTS log (
   id INT NOT NULL AUTO_INCREMENT,
   descrição VARCHAR(45) NULL,
-  componente INT NOT NULL,
+  fkComponente INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_Log_componente1
-    FOREIGN KEY (componente)
+    FOREIGN KEY (fkComponente)
     REFERENCES componente (id));
     
 insert into tipoUsuario values

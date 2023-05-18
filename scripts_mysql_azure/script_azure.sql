@@ -198,29 +198,3 @@ insert into componente values
 (50,1,1),
 (70,1,2),
 (30,1,3);
-select * from componente;
-
-select c.uso,c.tipoComponente,tc.tipoComponente 
-				from componente as c
-                join tipoComponente as tc
-                on tc.id = c.tipoComponente;
-
-select u.id,
-		u.email,
-		u.senha,
-		tu.tipoUsuario,
-		f.nome from usuario as u
-			join tipousuario as tu
-			on tu.id = u.tipo
-				join funcionario as f
-				on f.id = u.funcionario;
-
-select u.id,
-		u.email,
-		u.senha,
-		tu.tipoUsuario,
-		f.nome as funcionario from usuario as u
-		join tipousuario as tu
-		on tu.id = u.tipo
-				join funcionario as f
-				on f.id = u.funcionario where email = 'teste@email.com' and senha = '1234';
