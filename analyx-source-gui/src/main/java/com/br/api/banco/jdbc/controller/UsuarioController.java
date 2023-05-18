@@ -32,9 +32,9 @@ public class UsuarioController {
 "		f.nome as funcionario " +
 "                     from usuario as u" +
 "			join tipoUsuario as tu" +
-"			on tu.id = u.tipo" +
+"			on tu.id = u.fkTipoUsuario" +
 "				join funcionario as f" +
-"				on f.id = u.funcionario " +
+"				on f.id = u.fkFuncionario " +
 "               where email = ? and senha = ?", new BeanPropertyRowMapper<Usuario>(Usuario.class), email, senha);
     }
     public Usuario entrarAzure(String email, String senha) {
@@ -49,9 +49,11 @@ public class UsuarioController {
                 + "		f.nome as funcionario "
                 + "                     from usuario as u"
                 + "			join tipousuario as tu"
-                + "			on tu.id = u.tipo"
+                + "			on tu.id = u.fkTipoUsuario"
                 + "				join funcionario as f"
-                + "				on f.id = u.funcionario "
+                + "				on f.id = u.fkFuncionario "
                 + "               where email = ? and senha = ?", new BeanPropertyRowMapper<Usuario>(Usuario.class), email, senha);
     }
+    
+    
 }

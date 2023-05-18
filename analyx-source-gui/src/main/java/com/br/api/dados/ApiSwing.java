@@ -51,7 +51,7 @@ public class ApiSwing extends javax.swing.JFrame {
 
         sair.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         sair.setForeground(new java.awt.Color(0, 0, 0));
-        sair.setText("Sair");
+        sair.setText("Minimizar");
         sair.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 sairActionPerformed(evt);
@@ -63,27 +63,26 @@ public class ApiSwing extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(105, 105, 105)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(105, 105, 105)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(usoRam)
-                                .addGap(15, 15, 15))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(usoDisco))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(60, 60, 60)
-                                .addComponent(usoCPU))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(219, 219, 219)
-                        .addComponent(sair)))
-                .addContainerGap(228, Short.MAX_VALUE))
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(usoRam)
+                        .addGap(15, 15, 15))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(usoDisco))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(60, 60, 60)
+                        .addComponent(usoCPU)))
+                .addContainerGap(272, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(sair)
+                .addGap(209, 209, 209))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -100,9 +99,9 @@ public class ApiSwing extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(usoRam))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addComponent(sair)
-                .addGap(53, 53, 53))
+                .addGap(57, 57, 57))
         );
 
         pack();
@@ -110,8 +109,8 @@ public class ApiSwing extends javax.swing.JFrame {
 
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
-
+        //System.exit(0);
+        new ApiSwing().setVisible(false);
     }//GEN-LAST:event_sairActionPerformed
 
     private void getDados() {
@@ -119,18 +118,10 @@ public class ApiSwing extends javax.swing.JFrame {
         CpuController cpuDAO = new CpuController();
         DiscoController discoDAO = new DiscoController();
         MemoriaController memoriaDAO = new MemoriaController();
-        Date dataHoraAtual = new Date();
-        
-        String data = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
-        String hora = new SimpleDateFormat("ss").format(dataHoraAtual);
 
-        if (Integer.valueOf(hora) % 60 == 0) {
-            System.out.println(hora);
-        }
-        
-        usoCPU.setText(String.format("%s", cpuDAO.leituraCpu().getEmUso()));
-        usoDisco.setText(String.format("%s", discoDAO.leituraDisco().getEmUso()));
-        usoRam.setText(String.format("%s", memoriaDAO.leituraMemoria().getEmUso()));
+        usoCPU.setText(String.format("%s", cpuDAO.leituraCpu().getEmUso()) + " %");
+        usoDisco.setText(String.format("%s", discoDAO.leituraDisco().getEmUso()) + " %");
+        usoRam.setText(String.format("%s", memoriaDAO.leituraMemoria().getEmUso()) + " %");
     }
 
     /**
@@ -143,7 +134,19 @@ public class ApiSwing extends javax.swing.JFrame {
                 new ApiSwing().setVisible(true);
             }
         });
-        
+
+        Date dataHoraAtual = new Date();
+
+        String data = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
+        String hora = new SimpleDateFormat("ss").format(dataHoraAtual);
+
+        while (Integer.valueOf(hora) % 60 == 0) {
+//            if (Integer.valueOf(hora) % 60 == 0) {
+//                System.out.println(hora);
+//            }
+
+
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -20,6 +20,6 @@ public class DiscoController {
         return con.queryForObject("select id,"
                 + "uso as emUso "
                 + "from componente "
-                + "where tipoComponente = 2", new BeanPropertyRowMapper<Disco>(Disco.class));
+                + "where fkTipoComponente = 2", new BeanPropertyRowMapper<Disco>(Disco.class));
     }
 }

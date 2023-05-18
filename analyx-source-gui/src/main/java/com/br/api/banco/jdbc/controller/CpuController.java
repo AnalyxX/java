@@ -19,6 +19,6 @@ public class CpuController {
         return con.queryForObject("select id,"
                 + "uso as emUso "
                 + "from componente "
-                + "where tipoComponente = 1", new BeanPropertyRowMapper<Cpu>(Cpu.class));
+                + "where fkTipoComponente = 1", new BeanPropertyRowMapper<Cpu>(Cpu.class));
     }
 }

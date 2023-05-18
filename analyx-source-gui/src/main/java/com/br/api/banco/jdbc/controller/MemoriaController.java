@@ -28,7 +28,7 @@ public class MemoriaController {
         return con.queryForObject("select id,"
                 + "uso as emUso "
                 + "from componente "
-                + "where tipoComponente = 3", new BeanPropertyRowMapper<Memoria>(Memoria.class));
+                + "where fkTipoComponente = 3", new BeanPropertyRowMapper<Memoria>(Memoria.class));
     }
 
     public List<Memoria> showAll() {
