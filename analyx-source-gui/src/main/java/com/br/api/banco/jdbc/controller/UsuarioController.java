@@ -25,18 +25,19 @@ public class UsuarioController {
 
         JdbcTemplate con = conexao.getConexaoDoBanco();
 
-        return con.queryForObject("select u.id,\n" +
-"		u.email," +
-"		u.senha," +
-"		tu.tipoUsuario," +
-"		f.nome as funcionario " +
-"                     from usuario as u" +
-"			join tipoUsuario as tu" +
-"			on tu.id = u.fkTipoUsuario" +
-"				join funcionario as f" +
-"				on f.id = u.fkFuncionario " +
-"               where email = ? and senha = ?", new BeanPropertyRowMapper<Usuario>(Usuario.class), email, senha);
+        return con.queryForObject("select u.id,\n"
+                + "		u.email,"
+                + "		u.senha,"
+                + "		tu.tipoUsuario,"
+                + "		f.nome as funcionario "
+                + "                     from usuario as u"
+                + "			join tipoUsuario as tu"
+                + "			on tu.id = u.fkTipoUsuario"
+                + "				join funcionario as f"
+                + "				on f.id = u.fkFuncionario "
+                + "               where email = ? and senha = ?", new BeanPropertyRowMapper<Usuario>(Usuario.class), email, senha);
     }
+
     public Usuario entrarAzure(String email, String senha) {
         ConexaoAzure conexaoAzure = new ConexaoAzure();
 
@@ -54,6 +55,5 @@ public class UsuarioController {
                 + "				on f.id = u.fkFuncionario "
                 + "               where email = ? and senha = ?", new BeanPropertyRowMapper<Usuario>(Usuario.class), email, senha);
     }
-    
-    
+
 }
