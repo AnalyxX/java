@@ -94,7 +94,7 @@ CREATE TABLE IF NOT EXISTS monitoramento (
   id INT NOT NULL AUTO_INCREMENT,
   data DATE NULL,
   fkMaquina INT NOT NULL,
-  PRIMARY KEY (id),
+  PRIMARY KEY (id,fkMaquina),
   CONSTRAINT fk_Monitoramento_EspecificacaoMaquina1
     FOREIGN KEY (fkMaquina)
     REFERENCES especificacaoMaquina (id));
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS tipoCategoria (
   descricao VARCHAR(45) NULL,
   PRIMARY KEY (id));
 
-CREATE TABLE IF NOT EXISTS alertas (
+CREATE TABLE IF NOT EXISTS alerta (
   id INT NOT NULL AUTO_INCREMENT,
   nivelGravidade VARCHAR(45) NULL,
   fkMonitoramento INT NOT NULL,
@@ -150,15 +150,6 @@ CREATE TABLE IF NOT EXISTS alertas (
   CONSTRAINT fk_Alertas_tipoCategoria1
     FOREIGN KEY (fkTipoCategoria)
     REFERENCES tipoCategoria (id));
-
-CREATE TABLE IF NOT EXISTS log (
-  id INT NOT NULL AUTO_INCREMENT,
-  descrição VARCHAR(45) NULL,
-  fkComponente INT NOT NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT fk_Log_componente1
-    FOREIGN KEY (fkComponente)
-    REFERENCES componente (id));
     
 insert into tipoUsuario values
 (null,'web'),
