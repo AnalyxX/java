@@ -168,13 +168,13 @@ insert into cpu value
 (null,'i5');
 
 insert into disco value
-(null,'1tb');
+(null,'10000000000');
 
 insert into ram value
-(null,'8bg');
+(null,'80000');
 desc especificacaoMaquina;
 insert into especificacaoMaquina values
-(null,'06515KLN51',1,1,1);
+(null,'joao-host',1,1,1);
 
 insert into funcionario value
 (null,'Marcio','01191000',1,null,null,1);
@@ -187,7 +187,7 @@ insert into usuario values
 (null,'teste@email.com','1234',2,2);
 
 insert into monitoramento value
-(null,'2023-04-23',1);
+(null,'2023-04-23','14:30:00',1);
 
 insert into tipoComponente values
 (null,'cpu'),
