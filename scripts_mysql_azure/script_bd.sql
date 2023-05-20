@@ -19,12 +19,12 @@ CREATE TABLE IF NOT EXISTS cpu (
 
 CREATE TABLE IF NOT EXISTS disco (
   id INT NOT NULL AUTO_INCREMENT,
-  volume INT NOT NULL,
+  volume BIGINT NOT NULL,
   PRIMARY KEY (id));
 
 CREATE TABLE IF NOT EXISTS ram (
   id INT NOT NULL AUTO_INCREMENT,
-  total INT NOT NULL,
+  total BIGINT NOT NULL,
   PRIMARY KEY (id));
 
 CREATE TABLE IF NOT EXISTS especificacaoMaquina (
@@ -180,7 +180,7 @@ insert into funcionario value
 (null,'Marcio','01191000',1,null,null,1);
 
 insert into funcionario value
-(null,'Joao','01202000',1,1,null,1);
+(null,'Joao','01202000',1,1,1,1);
 
 insert into usuario values
 (null,'marcio@email.com','1234',1,1),
