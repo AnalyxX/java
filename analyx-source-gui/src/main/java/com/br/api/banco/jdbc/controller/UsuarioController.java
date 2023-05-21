@@ -12,20 +12,12 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
  */
 public class UsuarioController {
 
-    public void registrar(Usuario login) {
-        Conexao conexao = new Conexao();
-
-        JdbcTemplate con = conexao.getConexaoDoBanco();
-
-        con.update("insert into usuario values (null,?,?)", login.getEmail(), login.getSenha());
-    }
-
     public Usuario entrarMySql(String email, String senha) {
         Conexao conexao = new Conexao();
 
         JdbcTemplate con = conexao.getConexaoDoBanco();
 
-        return con.queryForObject("select u.id,\n"
+        return con.queryForObject("select u.id, "
                 + "		u.email,"
                 + "		u.senha,"
                 + "		tu.tipoUsuario,"
@@ -43,7 +35,7 @@ public class UsuarioController {
 
         JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
-        return conAzure.queryForObject("select u.id,\n"
+        return conAzure.queryForObject("select u.id, "
                 + "		u.email,"
                 + "		u.senha,"
                 + "		tu.tipoUsuario,"
@@ -54,6 +46,28 @@ public class UsuarioController {
                 + "				join funcionario as f"
                 + "				on f.id = u.fkFuncionario "
                 + "               where email = ? and senha = ?", new BeanPropertyRowMapper<Usuario>(Usuario.class), email, senha);
+    }
+
+    public Usuario getUsuarioAzure(String email) {
+        ConexaoAzure conexaoAzure = new ConexaoAzure();
+
+        JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
+
+        return conAzure.queryForObject("select u.id,"
+                + "		u.email,"
+                + "		u.senha,"
+                + "		tu.tipoUsuario,"
+                + "		f.nome as funcionario, "
+                + "             f.fkMaquina as maquina"
+                + "                     from usuario as u"
+                + "			join tipoUsuario as tu"
+                + "			on tu.id = u.fkTipoUsuario"
+                + "				join funcionario as f"
+                + "				on f.id = u.fkFuncionario "
+                + "                                    join especificacaoMaquina as em"
+                + "                                    on f.fkMaquina = em.id"
+                + "               where email = ?", new BeanPropertyRowMapper<Usuario>(Usuario.class), email);
+
     }
 
 }

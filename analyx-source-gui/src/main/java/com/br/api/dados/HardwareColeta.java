@@ -45,7 +45,7 @@ public class HardwareColeta {
         System.out.println(processador);
         System.out.println("Mostrando a frequencia em gigahertz");
         System.out.println(looca.getProcessador().getFrequencia() / 1000000000);
-        System.out.println("Mostrando o uso com duas casas decimais e tipagem 'Double'");
+        System.out.println("Mostrando o uso com duas casas decimais");
         System.out.println(df.format(looca.getProcessador().getUso()));
         //EXIBINDO A TEMPERATURA
         Temperatura temperatura = looca.getTemperatura();

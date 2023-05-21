@@ -20,21 +20,21 @@ public class CpuController {
         return con.queryForObject("select * from componente where fkTipoComponente = 1 and fkMonitoramento = 2", new BeanPropertyRowMapper<Cpu>(Cpu.class));
     }
 
-    public void setDadosBanco(String c, Integer fkMonitoramento, Integer fkTipoComponente) {
+    public void insertUsoCpuLocal(Double c, Integer fkMonitoramento) {
         Conexao conexao = new Conexao();
 
         JdbcTemplate con = conexao.getConexaoDoBanco();
 
         con.update("insert into componente value "
-                + "(null, ?,?,?)", c, fkMonitoramento, fkTipoComponente);
+                + "(null, ?,?,1)", c, fkMonitoramento);
     }
 
-    public void setDadosBancoAzure(String c, Integer fkMonitoramento, Integer fkTipoComponente) {
+    public void insertUsoCpuAzure(Double c, Integer fkMonitoramento) {
         ConexaoAzure conexaoAzure = new ConexaoAzure();
 
         JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
         conAzure.update("insert into componente value "
-                + "(null, ?,?,?)", c, fkMonitoramento, fkTipoComponente);
+                + "(null, ?,?,1)", c, fkMonitoramento);
     }
 }

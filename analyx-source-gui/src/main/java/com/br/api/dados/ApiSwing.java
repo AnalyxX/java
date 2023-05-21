@@ -1,11 +1,20 @@
 package com.br.api.dados;
 
+import com.br.api.banco.jdbc.EspecificacaoMaquina;
+import com.br.api.banco.jdbc.Monitoramento;
 import com.br.api.banco.jdbc.controller.CpuController;
 import com.br.api.banco.jdbc.controller.DiscoController;
+import com.br.api.banco.jdbc.controller.EspecificacaoMaquinaController;
 import com.br.api.banco.jdbc.controller.MemoriaController;
+import com.br.api.banco.jdbc.controller.MonitoramentoController;
 import com.github.britooo.looca.api.core.Looca;
+import com.github.britooo.looca.api.group.discos.Volume;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  *
@@ -114,7 +123,6 @@ public class ApiSwing extends javax.swing.JFrame {
     }//GEN-LAST:event_sairActionPerformed
 
     private void getDados() {
-        Looca looca = new Looca();
         CpuController cpuDAO = new CpuController();
         DiscoController discoDAO = new DiscoController();
         MemoriaController memoriaDAO = new MemoriaController();
@@ -135,18 +143,56 @@ public class ApiSwing extends javax.swing.JFrame {
             }
         });
 
-        Date dataHoraAtual = new Date();
+        // INSTANCIANDO OS OBJETOS DE COMANDOS DO BANCO
+        MonitoramentoController monitoramentoDAO = new MonitoramentoController();
+        CpuController cpuDAO = new CpuController();
+        DiscoController discoDAO = new DiscoController();
+        MemoriaController memoriaDAO = new MemoriaController();
+        EspecificacaoMaquinaController emDAO = new EspecificacaoMaquinaController();
+        //
 
-        String data = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
-        String hora = new SimpleDateFormat("ss").format(dataHoraAtual);
-
-        while (Integer.valueOf(hora) % 60 == 0) {
-//            if (Integer.valueOf(hora) % 60 == 0) {
-//                System.out.println(hora);
-//            }
-
-
+        // PREPARANDO OS DADOS PARA O INSERT
+        Looca looca = new Looca();
+        DecimalFormat df = new DecimalFormat("#.##");
+        Double usoCpu = Double.valueOf(df.format(looca.getProcessador().getUso()));
+        //Double usoDisco = Double.valueOf(df.format(looca.getGrupoDeDiscos());
+        List<Volume> volumeTotalUsado = looca.getGrupoDeDiscos().getVolumes();
+        long disponivel = 0;
+        long total = 0;
+        for (Volume volume : volumeTotalUsado) {
+            disponivel += volume.getDisponivel();
+            total += volume.getTotal();
         }
+        Double espacoUtilizado = (double) (total - disponivel);
+        Double usoDisco = (espacoUtilizado / total) * 100.0;
+        usoDisco = Math.round(usoDisco * 100.0) / 100.0;
+        Double usoRam = Double.valueOf(df.format(looca.getMemoria().getEmUso()));
+        //
+
+        // INSTANCIANDOS OS OBJETOS CORRESPONDENTES DO MONITORAMENTO
+        EspecificacaoMaquina maquinaAtual = emDAO.getEspecificacaoMaquinaAzurePorHostNameAzure(
+                looca.getRede().getParametros().getHostName());
+        Monitoramento monitoramentoAtual = monitoramentoDAO.getMonitoramentoAzure(
+                maquinaAtual.getId());
+        cpuDAO.insertUsoCpuAzure(usoCpu, monitoramentoAtual.getId());
+        discoDAO.insertUsoDiscoAzure(usoDisco, monitoramentoAtual.getId());
+        memoriaDAO.insertUsoRamAzure(usoRam, monitoramentoAtual.getId());
+        //
+
+        // INSTANCIANDO OS OBJETOS DE HORA DO COMPUTADOR
+        Date dataHoraAtual = new Date();
+        String dataAtual = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
+        String horaAtual = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
+        //
+
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println("Esse print aparece a cada 1 minuto");
+
+            }
+        }, 0, 60000);
+
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

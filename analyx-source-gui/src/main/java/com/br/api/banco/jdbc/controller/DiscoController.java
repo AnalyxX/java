@@ -20,21 +20,21 @@ public class DiscoController {
         return con.queryForObject("select * from componente where fkTipoComponente = 2 and fkMonitoramento = 2", new BeanPropertyRowMapper<Disco>(Disco.class));
     }
 
-    public void setDadosBanco(String d, Integer fkMonitoramento, Integer fkTipoComponente) {
+    public void insertUsoDiscoLocal(String d, Integer fkMonitoramento) {
         Conexao conexao = new Conexao();
 
         JdbcTemplate con = conexao.getConexaoDoBanco();
         
         con.update("insert into componente value "
-                + "(null, ?,?,?)", d, fkMonitoramento, fkTipoComponente);
+                + "(null, ?,?,2)", d, fkMonitoramento);
     }
     
-    public void setDadosBancoAzure(String d, Integer fkMonitoramento, Integer fkTipoComponente) {
+    public void insertUsoDiscoAzure(Double d, Integer fkMonitoramento) {
         ConexaoAzure conexaoAzure = new ConexaoAzure();
 
         JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
         
         conAzure.update("insert into componente value "
-                + "(null, ?,?,?)", d, fkMonitoramento, fkTipoComponente);
+                + "(null, ?,?,2)", d, fkMonitoramento);
     }
 }

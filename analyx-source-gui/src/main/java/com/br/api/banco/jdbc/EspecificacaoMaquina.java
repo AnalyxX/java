@@ -1,4 +1,3 @@
-
 package com.br.api.banco.jdbc;
 
 /**
@@ -6,21 +5,19 @@ package com.br.api.banco.jdbc;
  * @author carlo
  */
 public class EspecificacaoMaquina {
+
     private Integer id;
-    private String numeroSerial;
-    private String modeloCpu;
-    private String volumeDisco;
-    private String totalRam;
+    private String hostName;
+    private Integer cpu;
+    private Integer disco;
+    private Integer ram;
 
-    public EspecificacaoMaquina(Integer id, String numeroSerial, String modeloCpu, String volumeDisco, String totalRam) {
+    public EspecificacaoMaquina(Integer id, String hostName, Integer cpu, Integer disco, Integer ram) {
         this.id = id;
-        this.numeroSerial = numeroSerial;
-        this.modeloCpu = modeloCpu;
-        this.volumeDisco = volumeDisco;
-        this.totalRam = totalRam;
-    }
-
-    public EspecificacaoMaquina() {
+        this.hostName = hostName;
+        this.cpu = cpu;
+        this.disco = disco;
+        this.ram = ram;
     }
 
     public Integer getId() {
@@ -31,48 +28,47 @@ public class EspecificacaoMaquina {
         this.id = id;
     }
 
-    public String getNumeroSerial() {
-        return numeroSerial;
+    public String getHostName() {
+        return hostName;
     }
 
-    public void setNumeroSerial(String numeroSerial) {
-        this.numeroSerial = numeroSerial;
+    public void setHostName(String hostName) {
+        this.hostName = hostName;
     }
 
-    public String getModeloCpu() {
-        return modeloCpu;
+    public Integer getCpu() {
+        return cpu;
     }
 
-    public void setModeloCpu(String modeloCpu) {
-        this.modeloCpu = modeloCpu;
+    public void setCpu(Integer cpu) {
+        this.cpu = cpu;
     }
 
-    public String getVolumeDisco() {
-        return volumeDisco;
+    public Integer getDisco() {
+        return disco;
     }
 
-    public void setVolumeDisco(String volumeDisco) {
-        this.volumeDisco = volumeDisco;
+    public void setDisco(Integer disco) {
+        this.disco = disco;
     }
 
-    public String getTotalRam() {
-        return totalRam;
+    public Integer getRam() {
+        return ram;
     }
 
-    public void setTotalRam(String totalRam) {
-        this.totalRam = totalRam;
+    public void setRam(Integer ram) {
+        this.ram = ram;
     }
 
     @Override
     public String toString() {
-        return String.format("Especificação da máquina\n"
-                + "Id: %d\n"
-                + "Número Serial: %s\n"
-                + "CPU: %s\n"
-                + "Disco: %s\n"
-                + "Ram: %s\n"
-                ,id,numeroSerial,modeloCpu,volumeDisco,totalRam);
+        return String.format("""
+                             Id: %d
+                             Host Name: %s
+                             Cpu: %d
+                             Disco: %d
+                             Ram: %d
+                             """, id, hostName, cpu, disco, ram);
     }
-    
-    
+
 }

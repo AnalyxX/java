@@ -13,14 +13,6 @@ import java.util.List;
  */
 public class MemoriaController {
 
-    public void registrarUso(Memoria memoria) {
-        Conexao conexao = new Conexao();
-
-        JdbcTemplate con = conexao.getConexaoDoBanco();
-
-        con.update("insert into componente values (null,?,3)", memoria.getEmUso());
-    }
-
     public Memoria leituraMemoria() {
         Conexao conexao = new Conexao();
 
@@ -37,22 +29,22 @@ public class MemoriaController {
         return con.query("select * from memoria", new BeanPropertyRowMapper(Memoria.class));
     }
 
-    public void setDadosBanco(String r, Integer fkMonitoramento, Integer fkTipoComponente) {
+    public void insertUsoRamLocal(Double r, Integer fkMonitoramento) {
         Conexao conexao = new Conexao();
 
         JdbcTemplate con = conexao.getConexaoDoBanco();
 
         con.update("insert into componente value "
-                + "(null, ?,?,?)", r, fkMonitoramento, fkTipoComponente);
+                + "(null, ?,?,3)", r, fkMonitoramento);
     }
 
-    public void setDadosBancoAzure(String r, Integer fkMonitoramento, Integer fkTipoComponente) {
+    public void insertUsoRamAzure(Double r, Integer fkMonitoramento) {
         ConexaoAzure conexaoAzure = new ConexaoAzure();
 
         JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
         conAzure.update("insert into componente value "
-                + "(null, ?,?,?)", r, fkMonitoramento, fkTipoComponente);
+                + "(null, ?,?,3)", r, fkMonitoramento);
     }
 
 }

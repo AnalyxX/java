@@ -7,14 +7,13 @@ package com.br.api.banco.jdbc;
 public class Cpu {
 
     private Integer id;
-    private String emUso;
+    private String modelo;
+    private Double emUso;
 
-    public Cpu(Integer id, String emUso) {
+    public Cpu(Integer id, String modelo, Double emUso) {
         this.id = id;
+        this.modelo = modelo;
         this.emUso = emUso;
-    }
-
-    public Cpu() {
     }
 
     public Integer getId() {
@@ -24,21 +23,31 @@ public class Cpu {
     public void setId(Integer id) {
         this.id = id;
     }
-    
-    public String getEmUso() {
+
+    public String getModelo() {
+        return modelo;
+    }
+
+    public void setModelo(String modelo) {
+        this.modelo = modelo;
+    }
+
+    public Double getEmUso() {
         return emUso;
     }
 
-    public void setEmUso(String emUso) {
+    public void setEmUso(Double emUso) {
         this.emUso = emUso;
     }
 
     @Override
     public String toString() {
-        return String.format("CPU\n"
-                + "Id: %d\n"
-                + "uso: %s\n"
-                ,id, emUso);
+        return String.format("""
+                             CPU
+                             Id: %d
+                             Modelo: %s
+                             uso: %.2f
+                             """, id, modelo, emUso);
     }
 
 }

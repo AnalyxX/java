@@ -7,16 +7,13 @@ package com.br.api.banco.jdbc;
 public class Disco {
 
     private Integer id;
-    private String volume;
-    private String emUso;
+    private Long volume;
+    private Double emUso;
 
-    public Disco(Integer id, String volume, String emUso) {
+    public Disco(Integer id, Long volume, Double emUso) {
         this.id = id;
         this.volume = volume;
         this.emUso = emUso;
-    }
-
-    public Disco() {
     }
 
     public Integer getId() {
@@ -27,29 +24,31 @@ public class Disco {
         this.id = id;
     }
 
-    public String getVolume() {
+    public Long getVolume() {
         return volume;
     }
 
-    public void setVolume(String volume) {
+    public void setVolume(Long volume) {
         this.volume = volume;
     }
 
-    public String getEmUso() {
+    public Double getEmUso() {
         return emUso;
     }
 
-    public void setEmUso(String emUso) {
+    public void setEmUso(Double emUso) {
         this.emUso = emUso;
     }
 
     @Override
     public String toString() {
-        return String.format("Disco\n"
-                + "Id: %d\n"
-                //+ "Volume do disco: %s\n"
-                + "Uso disco: %s\n",
-                 id, emUso);
+        return String.format("""
+                             Disco
+                             Id: %d
+                             Volume do disco: %d
+                             Uso disco: %.2f
+                             """,
+                id, volume, emUso);
     }
 
 }
