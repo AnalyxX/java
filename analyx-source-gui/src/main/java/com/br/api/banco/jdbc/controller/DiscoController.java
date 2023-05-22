@@ -20,7 +20,7 @@ public class DiscoController {
         return con.queryForObject("select * from componente where fkTipoComponente = 2 and fkMonitoramento = 2", new BeanPropertyRowMapper<Disco>(Disco.class));
     }
 
-    public void insertUsoDiscoLocal(String d, Integer fkMonitoramento) {
+    public void insertUsoDiscoLocal(Double d, Integer fkMonitoramento) {
         Conexao conexao = new Conexao();
 
         JdbcTemplate con = conexao.getConexaoDoBanco();

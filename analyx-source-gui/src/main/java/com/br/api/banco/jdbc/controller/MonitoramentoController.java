@@ -24,6 +24,19 @@ public class MonitoramentoController {
                 + "from monitoramento "
                 + "where fkMaquina = ?", new BeanPropertyRowMapper<Monitoramento>(Monitoramento.class), fkMaquina);
     }
+    
+    public Monitoramento getMonitoramentoLocal(Integer fkMaquina) {
+        Conexao conexao = new Conexao();
+
+        JdbcTemplate conAzure = conexao.getConexaoDoBanco();
+
+        return conAzure.queryForObject("select id, "
+                + "data, "
+                + "hora, "
+                + "fkMaquina as maquina "
+                + "from monitoramento "
+                + "where fkMaquina = ?", new BeanPropertyRowMapper<Monitoramento>(Monitoramento.class), fkMaquina);
+    }
 
     public void insertMonitoramentoAzure(String data, String hora, Integer fkMaquina) {
         ConexaoAzure conexaoAzure = new ConexaoAzure();

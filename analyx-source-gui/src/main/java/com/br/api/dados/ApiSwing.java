@@ -143,55 +143,46 @@ public class ApiSwing extends javax.swing.JFrame {
             }
         });
 
-        // INSTANCIANDO OS OBJETOS DE COMANDOS DO BANCO
         MonitoramentoController monitoramentoDAO = new MonitoramentoController();
         CpuController cpuDAO = new CpuController();
         DiscoController discoDAO = new DiscoController();
         MemoriaController memoriaDAO = new MemoriaController();
         EspecificacaoMaquinaController emDAO = new EspecificacaoMaquinaController();
-        //
-
-        // PREPARANDO OS DADOS PARA O INSERT
         Looca looca = new Looca();
         DecimalFormat df = new DecimalFormat("#.##");
-        Double usoCpu = Double.valueOf(df.format(looca.getProcessador().getUso()));
-        //Double usoDisco = Double.valueOf(df.format(looca.getGrupoDeDiscos());
-        List<Volume> volumeTotalUsado = looca.getGrupoDeDiscos().getVolumes();
-        long disponivel = 0;
-        long total = 0;
-        for (Volume volume : volumeTotalUsado) {
-            disponivel += volume.getDisponivel();
-            total += volume.getTotal();
-        }
-        Double espacoUtilizado = (double) (total - disponivel);
-        Double usoDisco = (espacoUtilizado / total) * 100.0;
-        usoDisco = Math.round(usoDisco * 100.0) / 100.0;
-        Double usoRam = Double.valueOf(df.format(looca.getMemoria().getEmUso()));
-        //
-
-        // INSTANCIANDOS OS OBJETOS CORRESPONDENTES DO MONITORAMENTO
-        EspecificacaoMaquina maquinaAtual = emDAO.getEspecificacaoMaquinaAzurePorHostNameAzure(
-                looca.getRede().getParametros().getHostName());
-        Monitoramento monitoramentoAtual = monitoramentoDAO.getMonitoramentoAzure(
-                maquinaAtual.getId());
-        cpuDAO.insertUsoCpuAzure(usoCpu, monitoramentoAtual.getId());
-        discoDAO.insertUsoDiscoAzure(usoDisco, monitoramentoAtual.getId());
-        memoriaDAO.insertUsoRamAzure(usoRam, monitoramentoAtual.getId());
-        //
-
-        // INSTANCIANDO OS OBJETOS DE HORA DO COMPUTADOR
-        Date dataHoraAtual = new Date();
-        String dataAtual = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
-        String horaAtual = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
-        //
 
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 System.out.println("Esse print aparece a cada 1 minuto");
+                Date dataHoraAtual = new Date();
+                String dataAtual = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
+                String horaAtual = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
+
+                Double usoCpu = Double.valueOf(df.format(looca.getProcessador().getUso()));
+                List<Volume> volumeTotalUsado = looca.getGrupoDeDiscos().getVolumes();
+                long disponivel = 0;
+                long total = 0;
+                for (Volume volume : volumeTotalUsado) {
+                    disponivel += volume.getDisponivel();
+                    total += volume.getTotal();
+                }
+                Double espacoUtilizado = (double) (total - disponivel);
+                Double usoDisco = (espacoUtilizado / total) * 100.0;
+                usoDisco = Math.round(usoDisco * 100.0) / 100.0;
+                Double usoRam = Double.valueOf(df.format(looca.getMemoria().getEmUso()));
+
+                //EspecificacaoMaquina maquinaAtual = emDAO.getEspecificacaoMaquinaAzurePorHostNameAzure(
+                //        looca.getRede().getParametros().getHostName());
+                EspecificacaoMaquina maquinaAtual = emDAO.getEspecificacaoMaquinaPorHostNameLocal("teste-host");
+                monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtual.getId());
+                Monitoramento monitoramentoAtual = monitoramentoDAO.getMonitoramentoLocal(maquinaAtual.getId());
+                cpuDAO.insertUsoCpuLocal(usoCpu, monitoramentoAtual.getMaquina());
+                discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtual.getMaquina());
+                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtual.getMaquina());
 
             }
-        }, 0, 60000);
+        }, 0, 5000);//60000
 
     }
 

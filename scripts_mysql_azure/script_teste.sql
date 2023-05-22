@@ -264,3 +264,4 @@ select * from monitoramento;
 select * from funcionario;
 select * from componente;
 select * from tipoComponente;
+select * from usuario;
