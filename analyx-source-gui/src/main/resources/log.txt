@@ -1,0 +1,7 @@
+TABELA DE LOGS
+bbbbbb[2023-05-22T11:05:31.747900600] Início da execução do programa.
+[2023-05-22T11:05:31.763909400] Evento ocorreu.
+[2023-05-22T11:05:31.763909400] Ocorreu um erro!
+[2023-05-22T11:06:10.039573800] Início da execução do programa.
+[2023-05-22T11:06:10.058714500] Evento ocorreu.
+[2023-05-22T11:06:10.058714500] Ocorreu um erro!
