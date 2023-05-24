@@ -58,5 +58,13 @@ public class Teste {
         Double porcentagemDeUso = (espacoUtilizado / testeTotal) * 100.0;
         porcentagemDeUso = Math.round(porcentagemDeUso * 100.0) / 100.0;
         System.out.println("PORCETAGEM DE USO ->>>>>>>   " + porcentagemDeUso);
+        
+        System.out.println("USO MEMORIA");
+        System.out.println(looca.getMemoria().getEmUso());
+        
+        Double memoriaUtilizada = (double) (looca.getMemoria().getTotal() - looca.getMemoria().getEmUso());
+        Double porcentagemUsoMemoria = (memoriaUtilizada / looca.getMemoria().getTotal()) * 100.0;
+        porcentagemUsoMemoria = Math.round(porcentagemUsoMemoria * 100.0) / 100.0;
+        System.out.println(porcentagemUsoMemoria);
     }
 }

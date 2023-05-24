@@ -149,17 +149,15 @@ public class ApiSwing extends javax.swing.JFrame {
         MemoriaController memoriaDAO = new MemoriaController();
         EspecificacaoMaquinaController emDAO = new EspecificacaoMaquinaController();
         Looca looca = new Looca();
-        DecimalFormat df = new DecimalFormat("##.##");
 
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 System.out.println("Esse print aparece a cada 1 minuto");
                 Date dataHoraAtual = new Date();
-                String dataAtual = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
+                String dataAtual = new SimpleDateFormat("yyyy/MM/dd").format(dataHoraAtual);
                 String horaAtual = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
 
-                //Double usoCpu = Double.valueOf(df.format(looca.getProcessador().getUso()));
                 List<Volume> volumeTotalUsado = looca.getGrupoDeDiscos().getVolumes();
                 long disponivel = 0;
                 long total = 0;
@@ -170,17 +168,19 @@ public class ApiSwing extends javax.swing.JFrame {
                 Double espacoUtilizado = (double) (total - disponivel);
                 Double usoDisco = (espacoUtilizado / total) * 100.0;
                 usoDisco = Math.round(usoDisco * 100.0) / 100.0;
-                //Double usoRam = Double.valueOf(df.format(looca.getMemoria().getEmUso()));
-                
-                //Double usoCpuFormatado = Double.valueOf(String.format("%.2f",looca.getProcessador().getUso()));
+
+                Double memoriaUtilizada = (double) (looca.getMemoria().getTotal() - looca.getMemoria().getEmUso());
+                Double usoRam = (memoriaUtilizada / looca.getMemoria().getTotal()) * 100.0;
+                usoRam = Math.round(usoRam * 100.0) / 100.0;
+
                 //EspecificacaoMaquina maquinaAtual = emDAO.getEspecificacaoMaquinaAzurePorHostNameAzure(
                 //        looca.getRede().getParametros().getHostName());
                 EspecificacaoMaquina maquinaAtual = emDAO.getEspecificacaoMaquinaPorHostNameLocal("teste-host");
                 monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtual.getId());
                 Monitoramento monitoramentoAtual = monitoramentoDAO.getMonitoramentoLocal(maquinaAtual.getId());
-                cpuDAO.insertUsoCpuLocal(looca.getProcessador().getUso(), monitoramentoAtual.getMaquina());
-                //discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtual.getMaquina());
-                //memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtual.getMaquina());
+                cpuDAO.insertUsoCpuLocal(looca.getProcessador().getUso(), monitoramentoAtual.getId());
+                discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtual.getId());
+                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtual.getId());
 
             }
         }, 0, 5000);//60000

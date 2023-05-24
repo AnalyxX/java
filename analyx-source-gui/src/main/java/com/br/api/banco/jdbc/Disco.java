@@ -16,6 +16,9 @@ public class Disco {
         this.emUso = emUso;
     }
 
+    public Disco() {
+    }
+
     public Integer getId() {
         return id;
     }

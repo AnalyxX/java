@@ -48,9 +48,9 @@ public class EspecificacaoMaquinaController {
     public EspecificacaoMaquina getEspecificacaoMaquinaPorHostNameLocal(String hostName) {
         Conexao conexao = new Conexao();
 
-        JdbcTemplate conAzure = conexao.getConexaoDoBanco();
+        JdbcTemplate con = conexao.getConexaoDoBanco();
 
-        return conAzure.queryForObject("select id, "
+        return con.queryForObject("select id, "
                 + "hostName, "
                 + "fkCpu as cpu, "
                 + "fkDisco as disco, "

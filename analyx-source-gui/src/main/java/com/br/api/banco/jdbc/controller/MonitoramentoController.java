@@ -35,7 +35,7 @@ public class MonitoramentoController {
                 + "hora, "
                 + "fkMaquina as maquina "
                 + "from monitoramento "
-                + "where fkMaquina = ?", new BeanPropertyRowMapper<Monitoramento>(Monitoramento.class), fkMaquina);
+                + "where fkMaquina = ? limit 1", new BeanPropertyRowMapper<Monitoramento>(Monitoramento.class), fkMaquina);
     }
 
     public void insertMonitoramentoAzure(String data, String hora, Integer fkMaquina) {

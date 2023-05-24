@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS tipoComponente (
 
 CREATE TABLE IF NOT EXISTS componente (
   id INT NOT NULL AUTO_INCREMENT,
-  uso DECIMAL(5,2) NOT NULL,
+  uso FLOAT NOT NULL,
   fkMonitoramento INT NOT NULL,
   fkTipoComponente INT NOT NULL,
   PRIMARY KEY (id),
@@ -265,3 +265,7 @@ select * from funcionario;
 select * from componente;
 select * from tipoComponente;
 select * from usuario;
+select * from especificacaomaquina;
+desc especificacaomaquina;
+desc componente;
+alter table componente modify uso DECIMAL(5,2);

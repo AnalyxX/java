@@ -24,6 +24,9 @@ public class Funcionario {
         this.setor = setor;
     }
 
+    public Funcionario() {
+    }
+
     public Integer getId() {
         return id;
     }

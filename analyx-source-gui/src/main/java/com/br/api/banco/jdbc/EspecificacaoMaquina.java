@@ -20,6 +20,9 @@ public class EspecificacaoMaquina {
         this.ram = ram;
     }
 
+    public EspecificacaoMaquina() {
+    }
+    
     public Integer getId() {
         return id;
     }

@@ -16,6 +16,9 @@ public class Cpu {
         this.emUso = emUso;
     }
 
+    public Cpu() {
+    }
+
     public Integer getId() {
         return id;
     }

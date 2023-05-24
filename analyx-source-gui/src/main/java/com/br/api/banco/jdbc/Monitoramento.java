@@ -18,6 +18,9 @@ public class Monitoramento {
         this.maquina = maquina;
     }
 
+    public Monitoramento() {
+    }
+
     public Integer getId() {
         return id;
     }

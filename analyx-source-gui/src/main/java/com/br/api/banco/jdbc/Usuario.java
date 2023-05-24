@@ -18,6 +18,9 @@ public class Usuario {
         this.maquina = maquina;
     }
 
+    public Usuario() {
+    }
+
     public Integer getId() {
         return id;
     }
