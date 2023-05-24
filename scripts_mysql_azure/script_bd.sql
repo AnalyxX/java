@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS tipoComponente (
 
 CREATE TABLE IF NOT EXISTS componente (
   id INT NOT NULL AUTO_INCREMENT,
-  uso FLOAT NOT NULL,
+  uso decimal(5,2) NOT NULL,
   fkMonitoramento INT NOT NULL,
   fkTipoComponente INT NOT NULL,
   PRIMARY KEY (id),

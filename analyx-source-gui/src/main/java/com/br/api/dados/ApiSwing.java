@@ -127,9 +127,9 @@ public class ApiSwing extends javax.swing.JFrame {
         DiscoController discoDAO = new DiscoController();
         MemoriaController memoriaDAO = new MemoriaController();
 
-        usoCPU.setText(String.format("%s", cpuDAO.leituraCpu().getEmUso()) + " %");
-        usoDisco.setText(String.format("%s", discoDAO.leituraDisco().getEmUso()) + " %");
-        usoRam.setText(String.format("%s", memoriaDAO.leituraMemoria().getEmUso()) + " %");
+        //usoCPU.setText(String.format("%s", cpuDAO.leituraCpu().getEmUso()) + " %");
+        //usoDisco.setText(String.format("%s", discoDAO.leituraDisco().getEmUso()) + " %");
+        //usoRam.setText(String.format("%s", memoriaDAO.leituraMemoria().getEmUso()) + " %");
     }
 
     /**
@@ -149,7 +149,7 @@ public class ApiSwing extends javax.swing.JFrame {
         MemoriaController memoriaDAO = new MemoriaController();
         EspecificacaoMaquinaController emDAO = new EspecificacaoMaquinaController();
         Looca looca = new Looca();
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("##.##");
 
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -159,7 +159,7 @@ public class ApiSwing extends javax.swing.JFrame {
                 String dataAtual = new SimpleDateFormat("dd/MM/yyyy").format(dataHoraAtual);
                 String horaAtual = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
 
-                Double usoCpu = Double.valueOf(df.format(looca.getProcessador().getUso()));
+                //Double usoCpu = Double.valueOf(df.format(looca.getProcessador().getUso()));
                 List<Volume> volumeTotalUsado = looca.getGrupoDeDiscos().getVolumes();
                 long disponivel = 0;
                 long total = 0;
@@ -170,16 +170,17 @@ public class ApiSwing extends javax.swing.JFrame {
                 Double espacoUtilizado = (double) (total - disponivel);
                 Double usoDisco = (espacoUtilizado / total) * 100.0;
                 usoDisco = Math.round(usoDisco * 100.0) / 100.0;
-                Double usoRam = Double.valueOf(df.format(looca.getMemoria().getEmUso()));
-
+                //Double usoRam = Double.valueOf(df.format(looca.getMemoria().getEmUso()));
+                
+                //Double usoCpuFormatado = Double.valueOf(String.format("%.2f",looca.getProcessador().getUso()));
                 //EspecificacaoMaquina maquinaAtual = emDAO.getEspecificacaoMaquinaAzurePorHostNameAzure(
                 //        looca.getRede().getParametros().getHostName());
                 EspecificacaoMaquina maquinaAtual = emDAO.getEspecificacaoMaquinaPorHostNameLocal("teste-host");
                 monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtual.getId());
                 Monitoramento monitoramentoAtual = monitoramentoDAO.getMonitoramentoLocal(maquinaAtual.getId());
-                cpuDAO.insertUsoCpuLocal(usoCpu, monitoramentoAtual.getMaquina());
-                discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtual.getMaquina());
-                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtual.getMaquina());
+                cpuDAO.insertUsoCpuLocal(looca.getProcessador().getUso(), monitoramentoAtual.getMaquina());
+                //discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtual.getMaquina());
+                //memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtual.getMaquina());
 
             }
         }, 0, 5000);//60000
