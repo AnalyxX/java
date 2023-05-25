@@ -1,7 +1,7 @@
 CREATE SCHEMA IF NOT EXISTS bd_analyx DEFAULT CHARACTER SET utf8 ;
 USE bd_analyx;
 
--- drop database bd_analyx;
+-- rop database bd_analyx;
 
 CREATE TABLE IF NOT EXISTS empresa (
   id INT NOT NULL AUTO_INCREMENT,
@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS monitoramento (
 
 CREATE TABLE IF NOT EXISTS pacote (
   id INT NOT NULL AUTO_INCREMENT,
-  latencia FLOAT NOT NULL,
+  latencia DECIMAL(5,2) NOT NULL,
   pacotesEnviados INT NOT NULL,
   pacotesRecebidos INT NOT NULL,
   bytesEnviados INT NOT NULL,
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS tipoComponente (
 
 CREATE TABLE IF NOT EXISTS componente (
   id INT NOT NULL AUTO_INCREMENT,
-  uso FLOAT NOT NULL,
+  uso DECIMAL(5,2) NOT NULL,
   fkMonitoramento INT NOT NULL,
   fkTipoComponente INT NOT NULL,
   PRIMARY KEY (id),
@@ -160,7 +160,7 @@ insert into tipoUsuario values
 
 insert into setor value
 (null, 'DevOps');
-desc funcionario;
+
 insert into empresa value
 (null, '00000000000100', 'SPTech School','Rafel Petry','(11)959595959','rafael.petry@sptech.school');
 
@@ -172,7 +172,7 @@ insert into disco value
 
 insert into ram value
 (null,'80000');
-desc especificacaoMaquina;
+
 insert into especificacaoMaquina value
 (null,'joao-host',1,1,1);
 
@@ -202,11 +202,7 @@ insert into componente value
 (null,70,1,2),
 (null,30,1,3);
 
-select * from monitoramento;
-
-select * from componente c 
-		 join monitoramento m 
-         on c.fkMonitoramento = m.id;
+-- select * from monitoramento;
          
 select f.id as idUsuario,
 	   f.nome,
@@ -217,7 +213,7 @@ select f.id as idUsuario,
 		 join especificacaoMaquina em
          on f.fkMaquina = em.id;
          
-select * from usuario;
+-- select * from usuario;
          
 select f.id,
 	   f.nome,
@@ -244,7 +240,7 @@ insert into monitoramento value
 insert into monitoramento value
 (3,'2023-05-20','20:50',2);
 
-select CONCAT(id,fkMaquina) as 'CHAVE_PRIMARIA' from monitoramento;
+-- select CONCAT(id,fkMaquina) as 'CHAVE_PRIMARIA' from monitoramento;
 
 select u.id,
 	   u.email,
@@ -259,13 +255,19 @@ select u.id,
 				on f.id = u.fkFuncionario 
 						join especificacaoMaquina as em
 						on f.fkMaquina = em.id;
+                        
+select * from componente c
+		 join monitoramento m
+         on c.fkMonitoramento = m.id where m.id = 2;
 
-select * from monitoramento;
-select * from funcionario;
-select * from componente;
-select * from tipoComponente;
-select * from usuario;
-select * from especificacaomaquina;
-desc especificacaomaquina;
-desc componente;
-alter table componente modify uso DECIMAL(5,2);
+-- desc pacote;
+select * from pacote;
+-- select * from monitoramento;
+-- select * from componente;
+-- select * from monitoramento where fkMaquina = 2 order by id desc;
+-- select * from funcionario;
+-- select * from tipoComponente;
+-- select * from usuario;
+-- select * from especificacaomaquina;
+-- desc especificacaomaquina;
+-- desc componente;

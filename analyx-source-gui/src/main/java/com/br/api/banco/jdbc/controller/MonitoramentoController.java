@@ -22,7 +22,7 @@ public class MonitoramentoController {
                 + "hora, "
                 + "fkMaquina as maquina "
                 + "from monitoramento "
-                + "where fkMaquina = ?", new BeanPropertyRowMapper<Monitoramento>(Monitoramento.class), fkMaquina);
+                + "where fkMaquina = ? order by id desc", new BeanPropertyRowMapper<Monitoramento>(Monitoramento.class), fkMaquina);
     }
     
     public Monitoramento getMonitoramentoLocal(Integer fkMaquina) {
@@ -35,7 +35,7 @@ public class MonitoramentoController {
                 + "hora, "
                 + "fkMaquina as maquina "
                 + "from monitoramento "
-                + "where fkMaquina = ? limit 1", new BeanPropertyRowMapper<Monitoramento>(Monitoramento.class), fkMaquina);
+                + "where fkMaquina = ? order by id desc limit 1", new BeanPropertyRowMapper<Monitoramento>(Monitoramento.class), fkMaquina);
     }
 
     public void insertMonitoramentoAzure(String data, String hora, Integer fkMaquina) {
@@ -49,9 +49,9 @@ public class MonitoramentoController {
     public void insertMonitoramentoLocal(String data, String hora, Integer fkMaquina) {
         Conexao conexao = new Conexao();
 
-        JdbcTemplate conAzure = conexao.getConexaoDoBanco();
+        JdbcTemplate con = conexao.getConexaoDoBanco();
 
-        conAzure.update("insert into monitoramento values (null, ?,?,?)", data, hora, fkMaquina);
+        con.update("insert into monitoramento values (null, ?,?,?)", data, hora, fkMaquina);
     }
 
 }

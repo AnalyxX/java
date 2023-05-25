@@ -7,10 +7,14 @@ import com.br.api.banco.jdbc.controller.DiscoController;
 import com.br.api.banco.jdbc.controller.EspecificacaoMaquinaController;
 import com.br.api.banco.jdbc.controller.MemoriaController;
 import com.br.api.banco.jdbc.controller.MonitoramentoController;
+import com.br.api.banco.jdbc.controller.PacoteController;
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Volume;
-import java.text.DecimalFormat;
+import com.github.britooo.looca.api.group.rede.RedeInterface;
+import java.io.IOException;
+import java.net.InetAddress;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Timer;
@@ -27,7 +31,7 @@ public class ApiSwing extends javax.swing.JFrame {
      */
     public ApiSwing() {
         initComponents();
-        getDados();
+        verificaMaquina();
     }
 
     /**
@@ -122,14 +126,8 @@ public class ApiSwing extends javax.swing.JFrame {
         new ApiSwing().setVisible(false);
     }//GEN-LAST:event_sairActionPerformed
 
-    private void getDados() {
-        CpuController cpuDAO = new CpuController();
-        DiscoController discoDAO = new DiscoController();
-        MemoriaController memoriaDAO = new MemoriaController();
+    private void verificaMaquina() {
 
-        //usoCPU.setText(String.format("%s", cpuDAO.leituraCpu().getEmUso()) + " %");
-        //usoDisco.setText(String.format("%s", discoDAO.leituraDisco().getEmUso()) + " %");
-        //usoRam.setText(String.format("%s", memoriaDAO.leituraMemoria().getEmUso()) + " %");
     }
 
     /**
@@ -148,6 +146,7 @@ public class ApiSwing extends javax.swing.JFrame {
         DiscoController discoDAO = new DiscoController();
         MemoriaController memoriaDAO = new MemoriaController();
         EspecificacaoMaquinaController emDAO = new EspecificacaoMaquinaController();
+        PacoteController pacoteDAO = new PacoteController();
         Looca looca = new Looca();
 
         new Timer().scheduleAtFixedRate(new TimerTask() {
@@ -173,11 +172,48 @@ public class ApiSwing extends javax.swing.JFrame {
                 Double usoRam = (memoriaUtilizada / looca.getMemoria().getTotal()) * 100.0;
                 usoRam = Math.round(usoRam * 100.0) / 100.0;
 
+                Long bytesEnviados = 0L;
+                Long bytesRecebidos = 0L;
+                Long pacotesEnviados = 0L;
+                Long pacotesRecebidos = 0L;
+
+                List<RedeInterface> redes = new ArrayList<>(looca.getRede().getGrupoDeInterfaces().getInterfaces());
+                for (RedeInterface rede : redes) {
+                    if (rede.getBytesEnviados() > 0L || rede.getPacotesEnviados() > 0L) {
+                        bytesEnviados += rede.getBytesEnviados();
+                        bytesRecebidos += rede.getBytesRecebidos();
+                        pacotesEnviados += rede.getPacotesEnviados();
+                        pacotesRecebidos += rede.getPacotesRecebidos();
+                    }
+                }
+
+                Double latencia = 0.0;
+                try {
+                    InetAddress address = InetAddress.getByName("www.google.com.br");
+                    long start = System.nanoTime();
+                    if (address.isReachable(5000)) {
+                        long end = System.nanoTime();
+                        latencia = (end - start) / 1000000.0;
+                    } else {
+                        System.out.println("Host inacessível");
+                        latencia = null;
+                    }
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                    latencia = null;
+                }
+
                 //EspecificacaoMaquina maquinaAtual = emDAO.getEspecificacaoMaquinaAzurePorHostNameAzure(
                 //        looca.getRede().getParametros().getHostName());
                 EspecificacaoMaquina maquinaAtual = emDAO.getEspecificacaoMaquinaPorHostNameLocal("teste-host");
                 monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtual.getId());
                 Monitoramento monitoramentoAtual = monitoramentoDAO.getMonitoramentoLocal(maquinaAtual.getId());
+                pacoteDAO.insertPacotesLocal(latencia,
+                        pacotesEnviados,
+                        pacotesRecebidos,
+                        bytesRecebidos,
+                        bytesEnviados,
+                        monitoramentoAtual.getId());
                 cpuDAO.insertUsoCpuLocal(looca.getProcessador().getUso(), monitoramentoAtual.getId());
                 discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtual.getId());
                 memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtual.getId());

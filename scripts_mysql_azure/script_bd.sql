@@ -102,11 +102,11 @@ CREATE TABLE IF NOT EXISTS monitoramento (
 
 CREATE TABLE IF NOT EXISTS pacote (
   id INT NOT NULL AUTO_INCREMENT,
-  latencia FLOAT NOT NULL,
-  pacotesEnviados INT NOT NULL,
-  pacotesRecebidos INT NOT NULL,
-  bytesEnviados INT NOT NULL,
-  bytesRecebidos INT NOT NULL,
+  latencia DECIMAL(5,2) NOT NULL,
+  pacotesEnviados BIGINT NOT NULL,
+  pacotesRecebidos BIGINT NOT NULL,
+  bytesEnviados BIGINT NOT NULL,
+  bytesRecebidos BIGINT NOT NULL,
   fkMonitoramento INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_rede_Monitoramento1
@@ -120,7 +120,7 @@ CREATE TABLE IF NOT EXISTS tipoComponente (
 
 CREATE TABLE IF NOT EXISTS componente (
   id INT NOT NULL AUTO_INCREMENT,
-  uso decimal(5,2) NOT NULL,
+  uso DECIMAL(5,2) NOT NULL,
   fkMonitoramento INT NOT NULL,
   fkTipoComponente INT NOT NULL,
   PRIMARY KEY (id),
@@ -135,6 +135,11 @@ CREATE TABLE IF NOT EXISTS tipoCategoria (
   id INT NOT NULL AUTO_INCREMENT,
   tipoCategoria VARCHAR(45) NOT NULL,
   descricao VARCHAR(45) NOT NULL,
+  PRIMARY KEY (id));
+  
+  CREATE TABLE IF NOT EXISTS tipoAlertaLimite (
+  id INT NOT NULL,
+  limite DECIMAL(5,2) NOT NULL,
   PRIMARY KEY (id));
 
 CREATE TABLE IF NOT EXISTS alerta (
@@ -152,7 +157,10 @@ CREATE TABLE IF NOT EXISTS alerta (
     REFERENCES tipoComponente (id),
   CONSTRAINT fk_Alertas_tipoCategoria1
     FOREIGN KEY (fkTipoCategoria)
-    REFERENCES tipoCategoria (id));
+    REFERENCES tipoCategoria (id),
+    CONSTRAINT fk_alerta_tipoAlertaLimite1
+    FOREIGN KEY (tipoAlertaLimite)
+    REFERENCES tipoAlertaLimite (id));
     
 insert into tipoUsuario values
 (null,'web'),
@@ -160,19 +168,10 @@ insert into tipoUsuario values
 
 insert into setor value
 (null, 'DevOps');
-desc funcionario;
+
 insert into empresa value
 (null, '00000000000100', 'SPTech School','Rafel Petry','(11)959595959','rafael.petry@sptech.school');
 
-insert into cpu value 
-(null,'i5');
-
-insert into disco value
-(null,'10000000000');
-
-insert into ram value
-(null,'80000');
-desc especificacaoMaquina;
 insert into especificacaoMaquina values
 (null,'joao-host',1,1,1);
 
@@ -186,15 +185,7 @@ insert into usuario values
 (null,'marcio@email.com','1234',1,1),
 (null,'teste@email.com','1234',2,2);
 
-insert into monitoramento value
-(null,'2023-04-23','14:30:00',1);
-
 insert into tipoComponente values
 (null,'cpu'),
 (null,'disco'),
 (null,'ram');
-
-insert into componente value
-(null,50,1,1),
-(null,70,1,2),
-(null,30,1,3);

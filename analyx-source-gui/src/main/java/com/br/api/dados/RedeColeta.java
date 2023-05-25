@@ -2,8 +2,11 @@ package com.br.api.dados;
 
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.rede.Rede;
+import com.github.britooo.looca.api.group.rede.RedeInterface;
 import java.io.IOException;
 import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.List;
 
 public class RedeColeta {
     
@@ -24,6 +27,13 @@ public class RedeColeta {
             System.out.println("Latência: " + (end - start) / 1000000.0 + " ms");
         } else {
             System.out.println("Host inacessível");
+        }
+        
+        List<RedeInterface> redes = new ArrayList<>(looca.getRede().getGrupoDeInterfaces().getInterfaces());
+        for (RedeInterface redeDaVez : redes) {
+            if (redeDaVez.getBytesEnviados()> 0L || redeDaVez.getPacotesEnviados() > 0L) {
+                System.out.println(redeDaVez);
+            }
         }
 
     }

@@ -2,6 +2,7 @@ package com.br.api.dados;
 
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Volume;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -66,5 +67,10 @@ public class Teste {
         Double porcentagemUsoMemoria = (memoriaUtilizada / looca.getMemoria().getTotal()) * 100.0;
         porcentagemUsoMemoria = Math.round(porcentagemUsoMemoria * 100.0) / 100.0;
         System.out.println(porcentagemUsoMemoria);
+        
+        LocalDate data1 = LocalDate.now();
+        LocalDate data2 = LocalDate.of(200, 05, 22);
+        LocalDate data3 = LocalDate.parse("2000-05-22");
+        
     }
 }
