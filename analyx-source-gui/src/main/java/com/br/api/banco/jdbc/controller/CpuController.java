@@ -3,6 +3,7 @@ package com.br.api.banco.jdbc.controller;
 import com.br.api.banco.jdbc.Conexao;
 import com.br.api.banco.jdbc.ConexaoAzure;
 import com.br.api.banco.jdbc.Cpu;
+import java.util.List;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -12,27 +13,59 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class CpuController {
 
-    public void insertCpuMaquinaLocal(String modeloCPU) {
-        Conexao conexao = new Conexao();
+    ConexaoAzure conexaoAzure = new ConexaoAzure();
 
-        JdbcTemplate con = conexao.getConexaoDoBanco();
+    JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
+
+    Conexao conexao = new Conexao();
+
+    JdbcTemplate con = conexao.getConexaoDoBanco();
+
+    public Cpu getCpuAzure(String modeloCpu) {
         
-        con.update("insert into cpu value (null,?)", modeloCPU);
+        return conAzure.queryForObject("select id, "
+                + "modeloCPU as modelo, "
+                + "from cpu where modeloCPU = ?",
+                new BeanPropertyRowMapper<Cpu>(Cpu.class), modeloCpu);
+    }
+
+    public void insertCpuMaquinaAzure(String modeloCpu) {
+
+        List<Cpu> cpu = conAzure.query("select id, "
+                + "modeloCPU as modelo, "
+                + "from cpu where modeloCPU = ?",
+                new BeanPropertyRowMapper<Cpu>(Cpu.class), modeloCpu);
+
+        if (cpu.isEmpty()) {
+            conAzure.update("insert into cpu value (null,?)", modeloCpu);
+            System.out.println("Cpu cadastrada");
+        } else {
+            System.out.println(cpu + " Cpu já cadastrada");
+        }
+    }
+
+    public void insertCpuMaquinaLocal(String modeloCpu) {
+
+        List<Cpu> cpu = con.query("select id, "
+                + "modeloCPU as modelo, "
+                + "from cpu where modeloCPU = ?",
+                new BeanPropertyRowMapper<Cpu>(Cpu.class), modeloCpu);
+
+        if (cpu.isEmpty()) {
+            con.update("insert into cpu value (null,?)", modeloCpu);
+            System.out.println("Cpu cadastrada");
+        } else {
+            System.out.println(cpu + " Cpu já cadastrada");
+        }
     }
 
     public void insertUsoCpuLocal(Double c, Integer fkMonitoramento) {
-        Conexao conexao = new Conexao();
-
-        JdbcTemplate con = conexao.getConexaoDoBanco();
 
         con.update("insert into componente value "
                 + "(null, ?,?,1)", c, fkMonitoramento);
     }
 
     public void insertUsoCpuAzure(Double c, Integer fkMonitoramento) {
-        ConexaoAzure conexaoAzure = new ConexaoAzure();
-
-        JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
         conAzure.update("insert into componente value "
                 + "(null, ?,?,1)", c, fkMonitoramento);

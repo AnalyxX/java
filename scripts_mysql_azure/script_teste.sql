@@ -1,7 +1,7 @@
 CREATE SCHEMA IF NOT EXISTS bd_analyx DEFAULT CHARACTER SET utf8 ;
 USE bd_analyx;
 
--- rop database bd_analyx;
+-- drop database bd_analyx;
 
 CREATE TABLE IF NOT EXISTS empresa (
   id INT NOT NULL AUTO_INCREMENT,
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS alerta (
   PRIMARY KEY (id),
   CONSTRAINT fk_Alertas_Monitoramento1
     FOREIGN KEY (fkMonitoramento)
-    REFERENCES monitoramento (id,fkMaquina),
+    REFERENCES monitoramento (id),
   CONSTRAINT fk_Alertas_table11
     FOREIGN KEY (fkTipoComponente)
     REFERENCES tipoComponente (id),

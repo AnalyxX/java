@@ -1,8 +1,15 @@
 package com.br.api.dados;
 
+import com.br.api.banco.jdbc.Cpu;
+import com.br.api.banco.jdbc.EspecificacaoMaquina;
+import com.br.api.banco.jdbc.controller.CpuController;
+import com.br.api.banco.jdbc.controller.DiscoController;
 import com.br.api.banco.jdbc.controller.EspecificacaoMaquinaController;
+import com.br.api.banco.jdbc.controller.MemoriaController;
 import com.br.api.banco.jdbc.controller.UsuarioController;
 import com.github.britooo.looca.api.core.Looca;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JFrame;
 
 /**
@@ -140,16 +147,21 @@ public class LoginSwing extends javax.swing.JFrame {
     private void btn_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrarActionPerformed
         UsuarioController usuarioDAO = new UsuarioController();
         EspecificacaoMaquinaController emDAO = new EspecificacaoMaquinaController();
+        CpuController cpuDAO = new CpuController();
+        DiscoController discoDAO = new DiscoController();
+        MemoriaController memoriaDAO = new MemoriaController();
         Looca looca = new Looca();
         JFrame telaApi = new ApiSwing();
         
         String email = txt_email.getText();
         String senha = txt_senha.getText();
         String hostName = looca.getRede().getParametros().getHostName();
+        Cpu cpu = cpuDAO.getCpuAzure(looca.getProcessador().getNome());
         try {
             usuarioDAO.entrarAzure(email, senha);
-            EmpescificacaoMaquina maquinaCadastrada = emDAO.getEspecificacaoMaquinaPorHostNameAzure(hostName);
-            if () {
+            List<EspecificacaoMaquina> maquinaCadastrada = new ArrayList<>();
+            maquinaCadastrada.add(emDAO.getEspecificacaoMaquinaPorHostNameAzure(hostName));
+            if (maquinaCadastrada.isEmpty()) {
                 
             }
             this.setVisible(false);

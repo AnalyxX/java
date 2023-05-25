@@ -72,5 +72,9 @@ public class Teste {
         LocalDate data2 = LocalDate.of(200, 05, 22);
         LocalDate data3 = LocalDate.parse("2000-05-22");
         
+        System.out.println(looca.getProcessador().getNome());
+        System.out.println(looca.getProcessador().getIdentificador());
+        System.out.println(looca.getProcessador().getId());
+        
     }
 }
