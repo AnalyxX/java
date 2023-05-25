@@ -12,12 +12,12 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class CpuController {
 
-    public Cpu leituraCpu() {
+    public void insertCpuMaquinaLocal(String modeloCPU) {
         Conexao conexao = new Conexao();
 
         JdbcTemplate con = conexao.getConexaoDoBanco();
-
-        return con.queryForObject("select * from componente where fkTipoComponente = 1 and fkMonitoramento = 2", new BeanPropertyRowMapper<Cpu>(Cpu.class));
+        
+        con.update("insert into cpu value (null,?)", modeloCPU);
     }
 
     public void insertUsoCpuLocal(Double c, Integer fkMonitoramento) {

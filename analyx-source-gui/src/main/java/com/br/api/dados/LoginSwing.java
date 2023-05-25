@@ -1,6 +1,8 @@
 package com.br.api.dados;
 
+import com.br.api.banco.jdbc.controller.EspecificacaoMaquinaController;
 import com.br.api.banco.jdbc.controller.UsuarioController;
+import com.github.britooo.looca.api.core.Looca;
 import javax.swing.JFrame;
 
 /**
@@ -137,14 +139,19 @@ public class LoginSwing extends javax.swing.JFrame {
 
     private void btn_entrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_entrarActionPerformed
         UsuarioController usuarioDAO = new UsuarioController();
-
+        EspecificacaoMaquinaController emDAO = new EspecificacaoMaquinaController();
+        Looca looca = new Looca();
         JFrame telaApi = new ApiSwing();
-
+        
         String email = txt_email.getText();
         String senha = txt_senha.getText();
-
+        String hostName = looca.getRede().getParametros().getHostName();
         try {
             usuarioDAO.entrarAzure(email, senha);
+            EmpescificacaoMaquina maquinaCadastrada = emDAO.getEspecificacaoMaquinaPorHostNameAzure(hostName);
+            if () {
+                
+            }
             this.setVisible(false);
             telaApi.setVisible(true);
         } catch (Exception e) {

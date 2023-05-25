@@ -148,6 +148,7 @@ CREATE TABLE IF NOT EXISTS alerta (
   fkMonitoramento INT NOT NULL,
   fkTipoComponente INT NOT NULL,
   fkTipoCategoria INT NOT NULL,
+  fkTipoAlertaLimite INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_Alertas_Monitoramento1
     FOREIGN KEY (fkMonitoramento)
@@ -159,7 +160,7 @@ CREATE TABLE IF NOT EXISTS alerta (
     FOREIGN KEY (fkTipoCategoria)
     REFERENCES tipoCategoria (id),
     CONSTRAINT fk_alerta_tipoAlertaLimite1
-    FOREIGN KEY (tipoAlertaLimite)
+    FOREIGN KEY (fkTipoAlertaLimite)
     REFERENCES tipoAlertaLimite (id));
     
 insert into tipoUsuario values

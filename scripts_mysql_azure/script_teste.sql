@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS alerta (
   PRIMARY KEY (id),
   CONSTRAINT fk_Alertas_Monitoramento1
     FOREIGN KEY (fkMonitoramento)
-    REFERENCES monitoramento (id),
+    REFERENCES monitoramento (id,fkMaquina),
   CONSTRAINT fk_Alertas_table11
     FOREIGN KEY (fkTipoComponente)
     REFERENCES tipoComponente (id),
@@ -201,7 +201,7 @@ insert into componente value
 (null,50,1,1),
 (null,70,1,2),
 (null,30,1,3);
-
+	
 -- select * from monitoramento;
          
 select f.id as idUsuario,
@@ -261,7 +261,7 @@ select * from componente c
          on c.fkMonitoramento = m.id where m.id = 2;
 
 -- desc pacote;
-select * from pacote;
+-- select * from pacote;
 -- select * from monitoramento;
 -- select * from componente;
 -- select * from monitoramento where fkMaquina = 2 order by id desc;
