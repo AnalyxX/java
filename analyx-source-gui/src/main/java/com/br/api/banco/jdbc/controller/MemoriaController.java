@@ -12,21 +12,36 @@ import java.util.List;
  * @author carlo
  */
 public class MemoriaController {
+    
+    ConexaoAzure conexaoAzure = new ConexaoAzure();
 
-    public Memoria leituraMemoria() {
-        Conexao conexao = new Conexao();
+    JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
-        JdbcTemplate con = conexao.getConexaoDoBanco();
+    Conexao conexao = new Conexao();
 
-        return con.queryForObject("select * from componente where fkTipoComponente = 3 and fkMonitoramento = 2", new BeanPropertyRowMapper<Memoria>(Memoria.class));
+    JdbcTemplate con = conexao.getConexaoDoBanco();
+    
+        public void insertMemoriaMaquinaAzure(Long total) {
+
+        List<Memoria> memoria = conAzure.query("select id, "
+                + "total as modelo "
+                + "from ram where total = ?",
+                new BeanPropertyRowMapper<Memoria>(Memoria.class), total);
+
+        if (memoria.isEmpty()) {
+            conAzure.update("insert into ram values (?)", total);
+            System.out.println("Memoria cadastrada");
+        } else {
+            System.out.println(memoria + " Memória já cadastrada");
+        }
     }
-
+    
     public List<Memoria> showAll() {
         Conexao conexao = new Conexao();
 
         JdbcTemplate con = conexao.getConexaoDoBanco();
 
-        return con.query("select * from memoria", new BeanPropertyRowMapper(Memoria.class));
+        return con.query("select * from ram", new BeanPropertyRowMapper(Memoria.class));
     }
 
     public void insertUsoRamLocal(Double r, Integer fkMonitoramento) {
@@ -44,7 +59,7 @@ public class MemoriaController {
         JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
         conAzure.update("insert into componente value "
-                + "(null, ?,?,3)", r, fkMonitoramento);
+                + "(?,?,3)", r, fkMonitoramento);
     }
 
 }

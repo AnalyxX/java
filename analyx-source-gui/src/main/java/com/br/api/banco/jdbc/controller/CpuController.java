@@ -22,9 +22,9 @@ public class CpuController {
     JdbcTemplate con = conexao.getConexaoDoBanco();
 
     public Cpu getCpuAzure(String modeloCpu) {
-        
+
         return conAzure.queryForObject("select id, "
-                + "modeloCPU as modelo, "
+                + "modeloCPU as modelo "
                 + "from cpu where modeloCPU = ?",
                 new BeanPropertyRowMapper<Cpu>(Cpu.class), modeloCpu);
     }
@@ -32,12 +32,12 @@ public class CpuController {
     public void insertCpuMaquinaAzure(String modeloCpu) {
 
         List<Cpu> cpu = conAzure.query("select id, "
-                + "modeloCPU as modelo, "
+                + "modeloCPU as modelo "
                 + "from cpu where modeloCPU = ?",
                 new BeanPropertyRowMapper<Cpu>(Cpu.class), modeloCpu);
 
         if (cpu.isEmpty()) {
-            conAzure.update("insert into cpu value (null,?)", modeloCpu);
+            conAzure.update("insert into cpu values (?)", modeloCpu);
             System.out.println("Cpu cadastrada");
         } else {
             System.out.println(cpu + " Cpu já cadastrada");
@@ -47,12 +47,12 @@ public class CpuController {
     public void insertCpuMaquinaLocal(String modeloCpu) {
 
         List<Cpu> cpu = con.query("select id, "
-                + "modeloCPU as modelo, "
+                + "modeloCPU as modelo "
                 + "from cpu where modeloCPU = ?",
                 new BeanPropertyRowMapper<Cpu>(Cpu.class), modeloCpu);
 
         if (cpu.isEmpty()) {
-            con.update("insert into cpu value (null,?)", modeloCpu);
+            con.update("insert into cpu values (null,?)", modeloCpu);
             System.out.println("Cpu cadastrada");
         } else {
             System.out.println(cpu + " Cpu já cadastrada");
@@ -61,13 +61,13 @@ public class CpuController {
 
     public void insertUsoCpuLocal(Double c, Integer fkMonitoramento) {
 
-        con.update("insert into componente value "
+        con.update("insert into componente values "
                 + "(null, ?,?,1)", c, fkMonitoramento);
     }
 
     public void insertUsoCpuAzure(Double c, Integer fkMonitoramento) {
 
-        conAzure.update("insert into componente value "
-                + "(null, ?,?,1)", c, fkMonitoramento);
+        conAzure.update("insert into componente values "
+                + "(?,?,1)", c, fkMonitoramento);
     }
 }

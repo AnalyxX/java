@@ -2,7 +2,6 @@ package com.br.api.banco.jdbc.controller;
 
 import com.br.api.banco.jdbc.Conexao;
 import com.br.api.banco.jdbc.ConexaoAzure;
-import com.br.api.banco.jdbc.Pacote;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
@@ -12,16 +11,16 @@ import org.springframework.jdbc.core.JdbcTemplate;
 public class PacoteController {
 
     public void insertPacotesAzure( Double latencia,
-            Integer pctEnviado,
-            Integer pctRecebido,
-            Integer byteRecebido,
-            Integer byteEnviado,
+            Long pctEnviado,
+            Long pctRecebido,
+            Long byteRecebido,
+            Long byteEnviado,
             Integer fkMonitoramento) {
         ConexaoAzure conexaoAzure = new ConexaoAzure();
 
         JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
-        conAzure.update("insert into pacote values (null, ?, ?, ?, ?, ?, ?)",
+        conAzure.update("insert into pacote values (?, ?, ?, ?, ?, ?)",
                 latencia,
                 pctEnviado,
                 pctRecebido,

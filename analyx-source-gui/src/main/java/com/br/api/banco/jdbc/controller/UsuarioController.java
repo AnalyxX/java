@@ -12,10 +12,15 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
  */
 public class UsuarioController {
 
-    public Usuario entrarMySql(String email, String senha) {
-        Conexao conexao = new Conexao();
+    ConexaoAzure conexaoAzure = new ConexaoAzure();
 
-        JdbcTemplate con = conexao.getConexaoDoBanco();
+    JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
+
+    Conexao conexao = new Conexao();
+
+    JdbcTemplate con = conexao.getConexaoDoBanco();
+
+    public Usuario entrarMySql(String email, String senha) {
 
         return con.queryForObject("select u.id, "
                 + "		u.email,"
@@ -31,9 +36,6 @@ public class UsuarioController {
     }
 
     public Usuario entrarAzure(String email, String senha) {
-        ConexaoAzure conexaoAzure = new ConexaoAzure();
-
-        JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
         return conAzure.queryForObject("select u.id, "
                 + "		u.email,"
@@ -49,9 +51,6 @@ public class UsuarioController {
     }
 
     public Usuario getUsuarioAzure(String email) {
-        ConexaoAzure conexaoAzure = new ConexaoAzure();
-
-        JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
         return conAzure.queryForObject("select u.id,"
                 + "		u.email,"

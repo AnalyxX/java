@@ -259,7 +259,8 @@ select u.id,
 select * from componente c
 		 join monitoramento m
          on c.fkMonitoramento = m.id where m.id = 2;
-
+         
+-- select * from cpu;
 -- desc pacote;
 -- select * from pacote;
 -- select * from monitoramento;

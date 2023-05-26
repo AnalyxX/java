@@ -3,6 +3,7 @@ package com.br.api.banco.jdbc.controller;
 import com.br.api.banco.jdbc.Conexao;
 import com.br.api.banco.jdbc.ConexaoAzure;
 import com.br.api.banco.jdbc.Disco;
+import java.util.List;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -12,29 +13,38 @@ import org.springframework.jdbc.core.JdbcTemplate;
  */
 public class DiscoController {
 
-    public Disco leituraDisco() {
-        Conexao conexao = new Conexao();
+    ConexaoAzure conexaoAzure = new ConexaoAzure();
 
-        JdbcTemplate con = conexao.getConexaoDoBanco();
+    JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
-        return con.queryForObject("select * from componente where fkTipoComponente = 2 and fkMonitoramento = 2", new BeanPropertyRowMapper<Disco>(Disco.class));
+    Conexao conexao = new Conexao();
+
+    JdbcTemplate con = conexao.getConexaoDoBanco();
+    
+    public void insertDiscoMaquinaAzure(Long volume) {
+
+        List<Disco> disco = conAzure.query("select id, "
+                + "volume "
+                + "from disco where volume = ?",
+                new BeanPropertyRowMapper<Disco>(Disco.class), volume);
+
+        if (disco.isEmpty()) {
+            conAzure.update("insert into disco values (?)", volume);
+            System.out.println("disco cadastrado");
+        } else {
+            System.out.println(disco + " disco já cadastrada");
+        }
     }
 
     public void insertUsoDiscoLocal(Double d, Integer fkMonitoramento) {
-        Conexao conexao = new Conexao();
-
-        JdbcTemplate con = conexao.getConexaoDoBanco();
         
         con.update("insert into componente value "
                 + "(null, ?,?,2)", d, fkMonitoramento);
     }
     
     public void insertUsoDiscoAzure(Double d, Integer fkMonitoramento) {
-        ConexaoAzure conexaoAzure = new ConexaoAzure();
-
-        JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
         
         conAzure.update("insert into componente value "
-                + "(null, ?,?,2)", d, fkMonitoramento);
+                + "(?,?,2)", d, fkMonitoramento);
     }
 }

@@ -43,7 +43,7 @@ public class MonitoramentoController {
 
         JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
-        conAzure.update("insert into monitoramento values (null, ?,?,?)", data, hora, fkMaquina);
+        conAzure.update("insert into monitoramento values (?,?,?)", data, hora, fkMaquina);
     }
 
     public void insertMonitoramentoLocal(String data, String hora, Integer fkMaquina) {
