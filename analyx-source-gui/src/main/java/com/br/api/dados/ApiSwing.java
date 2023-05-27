@@ -2,6 +2,7 @@ package com.br.api.dados;
 
 import com.br.api.banco.jdbc.EspecificacaoMaquina;
 import com.br.api.banco.jdbc.Monitoramento;
+import com.br.api.banco.jdbc.Slack;
 import com.br.api.banco.jdbc.controller.CpuController;
 import com.br.api.banco.jdbc.controller.DiscoController;
 import com.br.api.banco.jdbc.controller.EspecificacaoMaquinaController;
@@ -19,6 +20,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.json.*;
 
 /**
  *
@@ -29,7 +33,7 @@ public class ApiSwing extends javax.swing.JFrame {
     /**
      * Creates new form ApiSwing
      */
-    public ApiSwing() {
+    public ApiSwing() throws InterruptedException {
         initComponents();
         startApp();
     }
@@ -121,12 +125,10 @@ public class ApiSwing extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void sairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sairActionPerformed
-        // TODO add your handling code here:
-        //System.exit(0);
-        new ApiSwing().setVisible(false);
+        
     }//GEN-LAST:event_sairActionPerformed
 
-    private void startApp() {
+    private void startApp() throws InterruptedException, IOException{
         MonitoramentoController monitoramentoDAO = new MonitoramentoController();
         CpuController cpuDAO = new CpuController();
         DiscoController discoDAO = new DiscoController();
@@ -134,6 +136,7 @@ public class ApiSwing extends javax.swing.JFrame {
         EspecificacaoMaquinaController emDAO = new EspecificacaoMaquinaController();
         PacoteController pacoteDAO = new PacoteController();
         Looca looca = new Looca();
+        JSONObject json = new JSONObject();
 
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -158,6 +161,8 @@ public class ApiSwing extends javax.swing.JFrame {
                 Double memoriaUtilizada = (double) (looca.getMemoria().getTotal() - looca.getMemoria().getEmUso());
                 Double usoRam = (memoriaUtilizada / looca.getMemoria().getTotal()) * 100.0;
                 usoRam = Math.round(usoRam * 100.0) / 100.0;
+
+              
 
                 Long bytesEnviados = 0L;
                 Long bytesRecebidos = 0L;
@@ -219,6 +224,42 @@ public class ApiSwing extends javax.swing.JFrame {
                 cpuDAO.insertUsoCpuAzure(looca.getProcessador().getUso(), monitoramentoAtualAzure.getId());
                 discoDAO.insertUsoDiscoAzure(usoDisco, monitoramentoAtualAzure.getId());
                 memoriaDAO.insertUsoRamAzure(usoRam, monitoramentoAtualAzure.getId());
+                
+                if (usoDisco > 90) {
+                    try {               
+                        String nome = maquinaAtualAzure.getHostName();
+                        json.put("text", "Uma de suas máquinas está com uso elevado do disco! Nome da Máquina: "+ nome);
+
+                        Slack.sendMessage(json);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    
+                }
+                
+                if(usoRam > 80){
+                     try {               
+                        String nome = maquinaAtualAzure.getHostName();
+                        json.put("text", "Uma de suas máquinas está com uso elevado do memória! Nome da Máquina: "+ nome);
+
+                        Slack.sendMessage(json);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                     
+                }if(looca.getProcessador().getUso() > 80.0){
+                    try {               
+                        String nome = maquinaAtualAzure.getHostName();
+                        json.put("text", "Uma de suas máquinas está com uso elevado da CPU! Nome da Máquina: "+ nome);
+
+                        Slack.sendMessage(json);
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
 
             }
         }, 0, 5000);//60000
@@ -231,7 +272,11 @@ public class ApiSwing extends javax.swing.JFrame {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new ApiSwing().setVisible(true);
+                try {
+                    new ApiSwing().setVisible(true);
+                } catch (InterruptedException ex) {
+                    Logger.getLogger(ApiSwing.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         });
 
