@@ -1,4 +1,3 @@
-
 package com.br.api.dados;
 
 import com.br.api.banco.jdbc.Usuario;
@@ -198,7 +197,6 @@ public class LoginSwing extends javax.swing.JFrame {
         UsuarioController usuarioDAO = new UsuarioController();
         EspecificacaoMaquinaController emDAO = new EspecificacaoMaquinaController();
         Looca looca = new Looca();
-        JFrame telaApi = new ApiSwing();
 
         String email = txt_email.getText();
         String senha = txt_senha.getText();
@@ -206,9 +204,10 @@ public class LoginSwing extends javax.swing.JFrame {
         try {
             Usuario user = usuarioDAO.entrarAzure(email, senha);
             String hostName = looca.getRede().getParametros().getHostName();
-            emDAO.verificaCadastroDaMaquina(hostName, user.getFuncionario());
-            //this.setVisible(false);
-            //telaApi.setVisible(true);
+            emDAO.cadastroDaMaquina(hostName, user.getFuncionario());
+            this.setVisible(false);
+            JFrame telaApi = new ApiSwing();
+            telaApi.setVisible(true);
         } catch (Exception e) {
             lbl_verify.setText("Informações de login incorretas");
             System.out.println("erro ->" + e.getMessage());

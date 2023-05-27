@@ -44,7 +44,7 @@ public class EspecificacaoMaquinaController {
                 hostName, fkCpu, fkDisco, fkRam);
     }
 
-    public void verificaCadastroDaMaquina(String hostName, Integer fkUsuario) {
+    public EspecificacaoMaquina cadastroDaMaquina(String hostName, Integer fkUsuario) {
 
         List<EspecificacaoMaquina> cadastro = conAzure.query("select id, "
                 + "hostName, "
@@ -93,14 +93,26 @@ public class EspecificacaoMaquinaController {
             EspecificacaoMaquina maquina = getEspecificacaoMaquinaPorHostNameAzure(hostName);
             
             funcionarioDAO.vincularMaquinaAzure(maquina.getId(), fkUsuario);
+            
+            return conAzure.queryForObject("select id, "
+                + "hostName, "
+                + "fkCpu as cpu, "
+                + "fkDisco as disco, "
+                + "fkRam as ram "
+                + "from especificacaoMaquina where hostName = ?",
+                new BeanPropertyRowMapper<EspecificacaoMaquina>(EspecificacaoMaquina.class),
+                hostName);
         } else {
             System.out.println("A máquina já está cadastrada na Azure");
+            return conAzure.queryForObject("select id, "
+                + "hostName, "
+                + "fkCpu as cpu, "
+                + "fkDisco as disco, "
+                + "fkRam as ram "
+                + "from especificacaoMaquina where hostName = ?",
+                new BeanPropertyRowMapper<EspecificacaoMaquina>(EspecificacaoMaquina.class),
+                hostName);
         }
-
-    }
-
-    public void cadastrarMaquina(String hostName) {
-
     }
 
     public EspecificacaoMaquina getEspecificacaoMaquinaPorHostNameLocal(String hostName) {
