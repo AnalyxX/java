@@ -5,17 +5,15 @@ public class Usuario {
     private Integer id;
     private String email;
     private String senha;
-    private String tipoUsuario;
-    private String funcionario;
-    private Integer maquina;
+    private Integer tipoUsuario;
+    private Integer funcionario;
 
-    public Usuario(Integer id, String email, String senha, String tipoUsuario, String funcionario, Integer maquina) {
+    public Usuario(Integer id, String email, String senha, Integer tipoUsuario, Integer funcionario) {
         this.id = id;
         this.email = email;
         this.senha = senha;
         this.tipoUsuario = tipoUsuario;
         this.funcionario = funcionario;
-        this.maquina = maquina;
     }
 
     public Usuario() {
@@ -45,40 +43,20 @@ public class Usuario {
         this.senha = senha;
     }
 
-    public String getTipoUsuario() {
+    public Integer getTipoUsuario() {
         return tipoUsuario;
     }
 
-    public void setTipoUsuario(String tipoUsuario) {
+    public void setTipoUsuario(Integer tipoUsuario) {
         this.tipoUsuario = tipoUsuario;
     }
 
-    public String getFuncionario() {
+    public Integer getFuncionario() {
         return funcionario;
     }
 
-    public void setFuncionario(String funcionario) {
+    public void setFuncionario(Integer funcionario) {
         this.funcionario = funcionario;
     }
 
-    public Integer getMaquina() {
-        return maquina;
-    }
-
-    public void setMaquina(Integer maquina) {
-        this.maquina = maquina;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("""
-                             Login
-                             Id: %d
-                             E-mail: %s
-                             Senha: %s
-                             Tipo do Usuário: %s
-                             Funcionário: %s
-                             Maquina: %d
-                             """, id, email, senha, tipoUsuario, funcionario, maquina);
-    }
 }

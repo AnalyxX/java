@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS setor (
 CREATE TABLE IF NOT EXISTS funcionario (
   id INT NOT NULL AUTO_INCREMENT,
   nome VARCHAR(45) NOT NULL,
-  matricula VARCHAR(45) NULL UNIQUE,
+  matricula VARCHAR(45) NOT NULL UNIQUE,
   fkEmpresa INT NULL,
   fkGestor INT NULL,
   fkMaquina INT NULL,
@@ -151,8 +151,8 @@ CREATE TABLE IF NOT EXISTS alerta (
   fkTipoAlertaLimite INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_Alertas_Monitoramento1
-    FOREIGN KEY (fkMonitoramento)
-    REFERENCES monitoramento (id),
+    FOREIGN KEY (id, fkMonitoramento)
+    REFERENCES monitoramento (id,fkMaquina),
   CONSTRAINT fk_Alertas_table11
     FOREIGN KEY (fkTipoComponente)
     REFERENCES tipoComponente (id),

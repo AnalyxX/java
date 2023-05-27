@@ -296,7 +296,7 @@ public class ApiSwing extends javax.swing.JFrame {
                 EspecificacaoMaquina maquinaAtual = emDAO.getEspecificacaoMaquinaPorHostNameLocal("teste-host");
                 monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtual.getId());
                 Monitoramento monitoramentoAtual = monitoramentoDAO.getMonitoramentoLocal(maquinaAtual.getId());
-                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtual.getId());
+                
                 pacoteDAO.insertPacotesLocal(latencia,
                         pacotesEnviados,
                         pacotesRecebidos,
@@ -305,7 +305,8 @@ public class ApiSwing extends javax.swing.JFrame {
                         monitoramentoAtual.getId());
                 cpuDAO.insertUsoCpuLocal(looca.getProcessador().getUso(), monitoramentoAtual.getId());
                 discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtual.getId());
-                memoriaDAO.insertUsoRamAzure(usoRam, monitoramentoAtual.getId());
+                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtual.getId());
+                
                 pacoteDAO.insertPacotesAzure(latencia,
                         pacotesEnviados,
                         pacotesRecebidos,

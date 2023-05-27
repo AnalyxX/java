@@ -19,7 +19,21 @@ public class Teste {
         CpuController cpuDAO = new CpuController();
         DiscoController discoDAO = new DiscoController();
         MemoriaController memoriaDAO = new MemoriaController();
+
+        List<Volume> volumes = looca.getGrupoDeDiscos().getVolumes();
+        long total = 0;
+        for (Volume volume : volumes) {
+            total += volume.getTotal();
+        }
+
+        System.out.println("Teste sem formatação " + total);
+        System.out.println("Tste com foratação " + total / 1000000000);
+
+        Long totalRam = looca.getMemoria().getTotal();
         
+        System.out.println("RAM ->>> " + totalRam / 1000000000);
+
+
 //        System.out.println(looca.getGrupoDeDiscos().getDiscos());
 //        System.out.println(looca.getGrupoDeDiscos().getQuantidadeDeDiscos());
 //        System.out.println(looca.getGrupoDeDiscos().getQuantidadeDeVolumes());
