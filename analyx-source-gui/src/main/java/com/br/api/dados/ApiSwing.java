@@ -135,96 +135,93 @@ public class ApiSwing extends javax.swing.JFrame {
         PacoteController pacoteDAO = new PacoteController();
         Looca looca = new Looca();
 
-        if (!new LoginSwing().isVisible()) {
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
 
-            new Timer().scheduleAtFixedRate(new TimerTask() {
-                @Override
-                public void run() {
+                System.out.println("Esse print aparece a cada 1 minuto");
+                Date dataHoraAtual = new Date();
+                String dataAtual = new SimpleDateFormat("yyyy/MM/dd").format(dataHoraAtual);
+                String horaAtual = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
 
-                    System.out.println("Esse print aparece a cada 1 minuto");
-                    Date dataHoraAtual = new Date();
-                    String dataAtual = new SimpleDateFormat("yyyy/MM/dd").format(dataHoraAtual);
-                    String horaAtual = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
+                List<Volume> volumeTotalUsado = looca.getGrupoDeDiscos().getVolumes();
+                long disponivel = 0;
+                long total = 0;
+                for (Volume volume : volumeTotalUsado) {
+                    disponivel += volume.getDisponivel();
+                    total += volume.getTotal();
+                }
+                Double espacoUtilizado = (double) (total - disponivel);
+                Double usoDisco = (espacoUtilizado / total) * 100.0;
+                usoDisco = Math.round(usoDisco * 100.0) / 100.0;
 
-                    List<Volume> volumeTotalUsado = looca.getGrupoDeDiscos().getVolumes();
-                    long disponivel = 0;
-                    long total = 0;
-                    for (Volume volume : volumeTotalUsado) {
-                        disponivel += volume.getDisponivel();
-                        total += volume.getTotal();
+                Double memoriaUtilizada = (double) (looca.getMemoria().getTotal() - looca.getMemoria().getEmUso());
+                Double usoRam = (memoriaUtilizada / looca.getMemoria().getTotal()) * 100.0;
+                usoRam = Math.round(usoRam * 100.0) / 100.0;
+
+                Long bytesEnviados = 0L;
+                Long bytesRecebidos = 0L;
+                Long pacotesEnviados = 0L;
+                Long pacotesRecebidos = 0L;
+
+                List<RedeInterface> redes = new ArrayList<>(looca.getRede().getGrupoDeInterfaces().getInterfaces());
+                for (RedeInterface rede : redes) {
+                    if (rede.getBytesEnviados() > 0L || rede.getPacotesEnviados() > 0L) {
+                        bytesEnviados += rede.getBytesEnviados();
+                        bytesRecebidos += rede.getBytesRecebidos();
+                        pacotesEnviados += rede.getPacotesEnviados();
+                        pacotesRecebidos += rede.getPacotesRecebidos();
                     }
-                    Double espacoUtilizado = (double) (total - disponivel);
-                    Double usoDisco = (espacoUtilizado / total) * 100.0;
-                    usoDisco = Math.round(usoDisco * 100.0) / 100.0;
+                }
 
-                    Double memoriaUtilizada = (double) (looca.getMemoria().getTotal() - looca.getMemoria().getEmUso());
-                    Double usoRam = (memoriaUtilizada / looca.getMemoria().getTotal()) * 100.0;
-                    usoRam = Math.round(usoRam * 100.0) / 100.0;
-
-                    Long bytesEnviados = 0L;
-                    Long bytesRecebidos = 0L;
-                    Long pacotesEnviados = 0L;
-                    Long pacotesRecebidos = 0L;
-
-                    List<RedeInterface> redes = new ArrayList<>(looca.getRede().getGrupoDeInterfaces().getInterfaces());
-                    for (RedeInterface rede : redes) {
-                        if (rede.getBytesEnviados() > 0L || rede.getPacotesEnviados() > 0L) {
-                            bytesEnviados += rede.getBytesEnviados();
-                            bytesRecebidos += rede.getBytesRecebidos();
-                            pacotesEnviados += rede.getPacotesEnviados();
-                            pacotesRecebidos += rede.getPacotesRecebidos();
-                        }
-                    }
-
-                    Double latencia = 0.0;
-                    try {
-                        InetAddress address = InetAddress.getByName("www.google.com.br");
-                        long start = System.nanoTime();
-                        if (address.isReachable(5000)) {
-                            long end = System.nanoTime();
-                            latencia = (end - start) / 1000000.0;
-                        } else {
-                            System.out.println("Host inacessível");
-                            latencia = null;
-                        }
-                    } catch (IOException e) {
-                        System.out.println(e.getMessage());
+                Double latencia = 0.0;
+                try {
+                    InetAddress address = InetAddress.getByName("www.google.com.br");
+                    long start = System.nanoTime();
+                    if (address.isReachable(5000)) {
+                        long end = System.nanoTime();
+                        latencia = (end - start) / 1000000.0;
+                    } else {
+                        System.out.println("Host inacessível");
                         latencia = null;
                     }
-
-                    EspecificacaoMaquina maquinaAtualLocal = emDAO.getEspecificacaoMaquinaPorHostNameLocal(
-                            looca.getRede().getParametros().getHostName());
-                    monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtualLocal.getId());
-                    Monitoramento monitoramentoAtualLocal = monitoramentoDAO.getMonitoramentoLocal(maquinaAtualLocal.getId());
-                    memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtualLocal.getId());
-
-                    pacoteDAO.insertPacotesLocal(latencia,
-                            pacotesEnviados,
-                            pacotesRecebidos,
-                            bytesRecebidos,
-                            bytesEnviados,
-                            monitoramentoAtualLocal.getId());
-                    cpuDAO.insertUsoCpuLocal(looca.getProcessador().getUso(), monitoramentoAtualLocal.getId());
-                    discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtualLocal.getId());
-                    memoriaDAO.insertUsoRamAzure(usoRam, monitoramentoAtualLocal.getId());
-
-                    EspecificacaoMaquina maquinaAtualAzure = emDAO.getEspecificacaoMaquinaPorHostNameAzure(
-                            looca.getRede().getParametros().getHostName());
-                    monitoramentoDAO.insertMonitoramentoAzure(dataAtual, horaAtual, maquinaAtualAzure.getId());
-                    Monitoramento monitoramentoAtualAzure = monitoramentoDAO.getMonitoramentoLocal(maquinaAtualAzure.getId());
-                    pacoteDAO.insertPacotesAzure(latencia,
-                            pacotesEnviados,
-                            pacotesRecebidos,
-                            bytesRecebidos,
-                            bytesEnviados,
-                            monitoramentoAtualAzure.getId());
-                    cpuDAO.insertUsoCpuAzure(looca.getProcessador().getUso(), monitoramentoAtualAzure.getId());
-                    discoDAO.insertUsoDiscoAzure(usoDisco, monitoramentoAtualAzure.getId());
-                    memoriaDAO.insertUsoRamAzure(usoRam, monitoramentoAtualAzure.getId());
-
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
+                    latencia = null;
                 }
-            }, 0, 5000);//60000
-        }
+
+                EspecificacaoMaquina maquinaAtualLocal = emDAO.getEspecificacaoMaquinaPorHostNameLocal(
+                        looca.getRede().getParametros().getHostName());
+                monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtualLocal.getId());
+                Monitoramento monitoramentoAtualLocal = monitoramentoDAO.getMonitoramentoLocal(maquinaAtualLocal.getId());
+                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtualLocal.getId());
+
+                pacoteDAO.insertPacotesLocal(latencia,
+                        pacotesEnviados,
+                        pacotesRecebidos,
+                        bytesRecebidos,
+                        bytesEnviados,
+                        monitoramentoAtualLocal.getId());
+                cpuDAO.insertUsoCpuLocal(looca.getProcessador().getUso(), monitoramentoAtualLocal.getId());
+                discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtualLocal.getId());
+                memoriaDAO.insertUsoRamAzure(usoRam, monitoramentoAtualLocal.getId());
+
+                EspecificacaoMaquina maquinaAtualAzure = emDAO.getEspecificacaoMaquinaPorHostNameAzure(
+                        looca.getRede().getParametros().getHostName());
+                monitoramentoDAO.insertMonitoramentoAzure(dataAtual, horaAtual, maquinaAtualAzure.getId());
+                Monitoramento monitoramentoAtualAzure = monitoramentoDAO.getMonitoramentoLocal(maquinaAtualAzure.getId());
+                pacoteDAO.insertPacotesAzure(latencia,
+                        pacotesEnviados,
+                        pacotesRecebidos,
+                        bytesRecebidos,
+                        bytesEnviados,
+                        monitoramentoAtualAzure.getId());
+                cpuDAO.insertUsoCpuAzure(looca.getProcessador().getUso(), monitoramentoAtualAzure.getId());
+                discoDAO.insertUsoDiscoAzure(usoDisco, monitoramentoAtualAzure.getId());
+                memoriaDAO.insertUsoRamAzure(usoRam, monitoramentoAtualAzure.getId());
+
+            }
+        }, 0, 5000);//60000
     }
 
     /**
