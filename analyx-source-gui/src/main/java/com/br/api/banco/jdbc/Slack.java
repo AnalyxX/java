@@ -1,9 +1,7 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package com.br.api.banco.jdbc;
 
+import com.br.api.banco.jdbc.controller.UrlSlackController;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -16,8 +14,13 @@ import org.json.JSONObject;
  * @author gibas
  */
 public class Slack {
+    
+    UrlSlackController urlDAO = new UrlSlackController();
+    UrlSlack urlObj = urlDAO.getUrl();
+    String urlText = urlObj.toString();
+    
     private static HttpClient client = HttpClient.newHttpClient();
-    private static final String URL = "https://hooks.slack.com/services/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";
+    private static final String URL = String.format("%s",urlText);
     
     public static void sendMessage(JSONObject content) throws IOException, InterruptedException{
         HttpRequest request = HttpRequest.newBuilder(
