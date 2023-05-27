@@ -33,7 +33,7 @@ public class ApiSwing extends javax.swing.JFrame {
     /**
      * Creates new form ApiSwing
      */
-    public ApiSwing() throws InterruptedException {
+    public ApiSwing() throws IOException, InterruptedException {
         initComponents();
         startApp();
     }
@@ -275,7 +275,9 @@ public class ApiSwing extends javax.swing.JFrame {
                 try {
                     new ApiSwing().setVisible(true);
                 } catch (InterruptedException ex) {
-                    Logger.getLogger(ApiSwing.class.getName()).log(Level.SEVERE, null, ex);
+                    System.out.println(ex.getMessage());
+                } catch (IOException e) {
+                    System.out.println(e.getMessage());
                 }
             }
         });
