@@ -15,8 +15,14 @@ public class LoginSwing extends javax.swing.JFrame {
     /**
      * Creates new form LoginSwing
      */
+    private Logger log;
     public LoginSwing() {
         initComponents();
+        try {
+            log = new Logger("logAnalyx.txt");
+        } catch (Exception e) {
+        }
+        
     }
 
     /**
@@ -197,6 +203,7 @@ public class LoginSwing extends javax.swing.JFrame {
         UsuarioController usuarioDAO = new UsuarioController();
         EspecificacaoMaquinaController emDAO = new EspecificacaoMaquinaController();
         Looca looca = new Looca();
+       
 
         String email = txt_email.getText();
         String senha = txt_senha.getText();
@@ -208,12 +215,14 @@ public class LoginSwing extends javax.swing.JFrame {
             this.setVisible(false);
             JFrame telaApi = new ApiSwing();
             telaApi.setVisible(true);
+            log.logInfo("Login efetuado user: " + email);
         } catch (Exception e) {
+            log.logInfo("Informações de login incorretas, user: " + email);
             lbl_verify.setText("Informações de login incorretas");
             System.out.println("erro ->" + e.getMessage());
             e.printStackTrace();
         }
-
+        log.close();
 
     }//GEN-LAST:event_btn_entrarActionPerformed
 
