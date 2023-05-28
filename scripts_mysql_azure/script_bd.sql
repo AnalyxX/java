@@ -137,9 +137,10 @@ CREATE TABLE IF NOT EXISTS tipoCategoria (
   descricao VARCHAR(45) NOT NULL,
   PRIMARY KEY (id));
   
-  CREATE TABLE IF NOT EXISTS tipoAlertaLimite (
+CREATE TABLE IF NOT EXISTS tipoAlertaLimite (
   id INT NOT NULL,
-  limite DECIMAL(5,2) NOT NULL,
+  limiteVerde DECIMAL(5,2) NOT NULL,
+  limiteVermelho DECIMAL(5,2) NOT NULL,
   PRIMARY KEY (id));
 
 CREATE TABLE IF NOT EXISTS alerta (

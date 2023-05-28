@@ -1,8 +1,12 @@
 package com.br.api.dados;
 
+import com.br.api.banco.jdbc.Alerta;
+import com.br.api.banco.jdbc.AlertaLimite;
 import com.br.api.banco.jdbc.EspecificacaoMaquina;
 import com.br.api.banco.jdbc.Monitoramento;
 import com.br.api.banco.jdbc.Slack;
+import com.br.api.banco.jdbc.controller.AlertaController;
+import com.br.api.banco.jdbc.controller.AlertaLimiteController;
 import com.br.api.banco.jdbc.controller.CpuController;
 import com.br.api.banco.jdbc.controller.DiscoController;
 import com.br.api.banco.jdbc.controller.EspecificacaoMaquinaController;
@@ -135,6 +139,8 @@ public class ApiSwing extends javax.swing.JFrame {
         MemoriaController memoriaDAO = new MemoriaController();
         EspecificacaoMaquinaController emDAO = new EspecificacaoMaquinaController();
         PacoteController pacoteDAO = new PacoteController();
+        AlertaLimiteController alertaLimiteDAO = new AlertaLimiteController();
+        AlertaController alertaDAO  = new AlertaController();
         Looca looca = new Looca();
         JSONObject json = new JSONObject();
 
@@ -142,7 +148,7 @@ public class ApiSwing extends javax.swing.JFrame {
             @Override
             public void run() {
 
-                System.out.println("Esse print aparece a cada 1 minuto");
+                
                 Date dataHoraAtual = new Date();
                 String dataAtual = new SimpleDateFormat("yyyy/MM/dd").format(dataHoraAtual);
                 String horaAtual = new SimpleDateFormat("HH:mm:ss").format(dataHoraAtual);
@@ -162,8 +168,8 @@ public class ApiSwing extends javax.swing.JFrame {
                 Double usoRam = (memoriaUtilizada / looca.getMemoria().getTotal()) * 100.0;
                 usoRam = Math.round(usoRam * 100.0) / 100.0;
 
-              
-
+                Double usoCpu = looca.getProcessador().getUso();
+                
                 Long bytesEnviados = 0L;
                 Long bytesRecebidos = 0L;
                 Long pacotesEnviados = 0L;
@@ -206,7 +212,7 @@ public class ApiSwing extends javax.swing.JFrame {
 //                        bytesRecebidos,
 //                        bytesEnviados,
 //                        monitoramentoAtualLocal.getId());
-//                cpuDAO.insertUsoCpuLocal(looca.getProcessador().getUso(), monitoramentoAtualLocal.getId());
+//                cpuDAO.insertUsoCpuLocal(usoCpu, monitoramentoAtualLocal.getId());
 //                discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtualLocal.getId());
 //                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtualLocal.getId());
 
@@ -222,7 +228,7 @@ public class ApiSwing extends javax.swing.JFrame {
                         bytesEnviados,
                         monitoramentoAtualAzure.getId(),
                         maquinaAtualAzure.getId());
-                cpuDAO.insertUsoCpuAzure(looca.getProcessador().getUso(), 
+                cpuDAO.insertUsoCpuAzure(usoCpu, 
                         monitoramentoAtualAzure.getId(),
                         maquinaAtualAzure.getId());
                 discoDAO.insertUsoDiscoAzure(usoDisco, 
@@ -232,42 +238,98 @@ public class ApiSwing extends javax.swing.JFrame {
                         monitoramentoAtualAzure.getId(),
                         maquinaAtualAzure.getId());
                 
-//                if (usoDisco >= 90) {
+                AlertaLimite alertaLimite = alertaLimiteDAO.getAlertaLimiteAzure();
+                Double verde = alertaLimite.getLimiteVerde();
+                Double vermelho = alertaLimite.getLimiteVermelho();
+                
+                if (usoCpu <= verde) {
+                    alertaDAO.insertAlertaAzure("Normal", 1, 1, alertaLimite.getId(),
+                            monitoramentoAtualAzure.getId(),
+                            maquinaAtualAzure.getId()
+                    );
+                } else if (usoCpu > verde && usoCpu < vermelho) {
+                    alertaDAO.insertAlertaAzure("Alerta", 1, 2, alertaLimite.getId(),
+                            monitoramentoAtualAzure.getId(),
+                            maquinaAtualAzure.getId()
+                    );
+                } else {
+                    alertaDAO.insertAlertaAzure("Crítico", 1, 3, alertaLimite.getId(),
+                            monitoramentoAtualAzure.getId(),
+                            maquinaAtualAzure.getId()
+                    );
+                    
 //                    try {               
 //                        String nome = maquinaAtualAzure.getHostName();
-//                        json.put("text", "Uma de suas máquinas está com uso elevado do disco! Nome da Máquina: "+ nome);
+//                        json.put("text", 
+//                                "Uma de suas máquinas está com uso crítico da CPU!"
+//                                        + " Nome da Máquina: "+ nome);
 //
 //                        Slack.sendMessage(json);
 //
 //                    } catch (Exception e) {
 //                        e.printStackTrace();
 //                    }
-//                    
-//                }
-//                
-//                if(usoRam >= 80){
-//                     try {               
-//                        String nome = maquinaAtualAzure.getHostName();
-//                        json.put("text", "Uma de suas máquinas está com uso elevado do memória! Nome da Máquina: "+ nome);
-//
-//                        Slack.sendMessage(json);
-//
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                     
-//                }if(looca.getProcessador().getUso() >= 80.0){
+                }
+                
+                if (usoDisco <= verde) {
+                    alertaDAO.insertAlertaAzure("Normal", 2, 1, alertaLimite.getId(),
+                            monitoramentoAtualAzure.getId(),
+                            maquinaAtualAzure.getId()
+                    );
+                } else if (usoDisco > verde && usoDisco < vermelho) {
+                    alertaDAO.insertAlertaAzure("Alerta", 2, 2, alertaLimite.getId(),
+                            monitoramentoAtualAzure.getId(),
+                            maquinaAtualAzure.getId()
+                    );
+                } else {
+                    alertaDAO.insertAlertaAzure("Crítico", 2, 3, alertaLimite.getId(),
+                            monitoramentoAtualAzure.getId(),
+                            maquinaAtualAzure.getId()
+                    );
+                    
 //                    try {               
 //                        String nome = maquinaAtualAzure.getHostName();
-//                        json.put("text", "Uma de suas máquinas está com uso elevado da CPU! Nome da Máquina: "+ nome);
+//                        json.put("text", 
+//                                "Uma de suas máquinas está com uso crítico do Disco!"
+//                                        + " Nome da Máquina: "+ nome);
 //
 //                        Slack.sendMessage(json);
 //
 //                    } catch (Exception e) {
 //                        e.printStackTrace();
 //                    }
-//                }
-
+                }
+                
+                if (usoRam <= verde) {
+                    alertaDAO.insertAlertaAzure("Normal", 3, 1, alertaLimite.getId(),
+                            monitoramentoAtualAzure.getId(),
+                            maquinaAtualAzure.getId()
+                    );
+                } else if (usoRam > verde && usoRam < vermelho) {
+                    alertaDAO.insertAlertaAzure("Alerta", 3, 2, alertaLimite.getId(),
+                            monitoramentoAtualAzure.getId(),
+                            maquinaAtualAzure.getId()
+                    );
+                } else {
+                    alertaDAO.insertAlertaAzure("Crítico", 3, 3, alertaLimite.getId(),
+                            monitoramentoAtualAzure.getId(),
+                            maquinaAtualAzure.getId()
+                    );
+                    
+//                    try {               
+//                        String nome = maquinaAtualAzure.getHostName();
+//                        json.put("text", 
+//                                "Uma de suas máquinas está com uso crítico do Disco!"
+//                                        + " Nome da Máquina: "+ nome);
+//
+//                        Slack.sendMessage(json);
+//
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+                }
+                System.out.println("Monitoramento feito com sucesso, "
+                        + "aguarde mais 1 minuto");
             }
         }, 0, 5000);//60000
     }
