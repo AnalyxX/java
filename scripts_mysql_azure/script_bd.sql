@@ -145,13 +145,14 @@ CREATE TABLE IF NOT EXISTS tipoCategoria (
 CREATE TABLE IF NOT EXISTS alerta (
   id INT NOT NULL AUTO_INCREMENT,
   nivelGravidade VARCHAR(45) NOT NULL,
-  fkMonitoramento INT NOT NULL,
   fkTipoComponente INT NOT NULL,
   fkTipoCategoria INT NOT NULL,
   fkTipoAlertaLimite INT NOT NULL,
+  fkMonitoramento INT NOT NULL,
+  fkMaquina INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_Alertas_Monitoramento1
-    FOREIGN KEY (id, fkMonitoramento)
+    FOREIGN KEY (fkMonitoramento, fkMaquina)
     REFERENCES monitoramento (id,fkMaquina),
   CONSTRAINT fk_Alertas_table11
     FOREIGN KEY (fkTipoComponente)

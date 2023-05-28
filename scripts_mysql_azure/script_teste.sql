@@ -107,7 +107,6 @@ CREATE TABLE IF NOT EXISTS pacote (
   pacotesRecebidos BIGINT NOT NULL,
   bytesEnviados BIGINT NOT NULL,
   bytesRecebidos BIGINT NOT NULL,
- -- fkMaquina INT NOT NULL,
   fkMonitoramento INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_rede_Monitoramento1
@@ -137,23 +136,33 @@ CREATE TABLE IF NOT EXISTS tipoCategoria (
   tipoCategoria VARCHAR(45) NOT NULL,
   descricao VARCHAR(45) NOT NULL,
   PRIMARY KEY (id));
+  
+CREATE TABLE IF NOT EXISTS tipoAlertaLimite (
+  id INT NOT NULL,
+  limite DECIMAL(5,2) NOT NULL,
+  PRIMARY KEY (id));
 
 CREATE TABLE IF NOT EXISTS alerta (
   id INT NOT NULL AUTO_INCREMENT,
   nivelGravidade VARCHAR(45) NOT NULL,
-  fkMonitoramento INT NOT NULL,
   fkTipoComponente INT NOT NULL,
   fkTipoCategoria INT NOT NULL,
+  fkTipoAlertaLimite INT NOT NULL,
+  fkMonitoramento INT NOT NULL,
+  fkMaquina INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_Alertas_Monitoramento1
-    FOREIGN KEY (fkMonitoramento)
-    REFERENCES monitoramento (id),
+    FOREIGN KEY (fkMonitoramento, fkMaquina)
+    REFERENCES monitoramento (id,fkMaquina),
   CONSTRAINT fk_Alertas_table11
     FOREIGN KEY (fkTipoComponente)
     REFERENCES tipoComponente (id),
   CONSTRAINT fk_Alertas_tipoCategoria1
     FOREIGN KEY (fkTipoCategoria)
-    REFERENCES tipoCategoria (id));
+    REFERENCES tipoCategoria (id),
+    CONSTRAINT fk_alerta_tipoAlertaLimite1
+    FOREIGN KEY (fkTipoAlertaLimite)
+    REFERENCES tipoAlertaLimite (id));
     
 insert into tipoUsuario values
 (null,'web'),
@@ -222,8 +231,8 @@ insert into monitoramento value
 insert into pacote values (null,50.0,1000,1000,10000,1000,1);
 -- select * from cpu;
 -- desc pacote;
--- select * from pacote;
- select * from monitoramento;
+select * from pacote;
+-- select * from monitoramento;
 -- select * from componente;
 -- select * from monitoramento where fkMaquina = 2 order by id desc;
 -- select * from funcionario;
