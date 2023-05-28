@@ -195,26 +195,26 @@ public class ApiSwing extends javax.swing.JFrame {
                     latencia = null;
                 }
 
-                EspecificacaoMaquina maquinaAtualLocal = emDAO.getEspecificacaoMaquinaPorHostNameLocal(
-                        looca.getRede().getParametros().getHostName());
-                monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtualLocal.getId());
-                Monitoramento monitoramentoAtualLocal = monitoramentoDAO.getMonitoramentoLocal(maquinaAtualLocal.getId());
-                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtualLocal.getId());
-
-                pacoteDAO.insertPacotesLocal(latencia,
-                        pacotesEnviados,
-                        pacotesRecebidos,
-                        bytesRecebidos,
-                        bytesEnviados,
-                        monitoramentoAtualLocal.getId());
-                cpuDAO.insertUsoCpuLocal(looca.getProcessador().getUso(), monitoramentoAtualLocal.getId());
-                discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtualLocal.getId());
-                memoriaDAO.insertUsoRamAzure(usoRam, monitoramentoAtualLocal.getId());
+//                EspecificacaoMaquina maquinaAtualLocal = emDAO.getEspecificacaoMaquinaPorHostNameLocal(
+//                        looca.getRede().getParametros().getHostName());
+//                monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtualLocal.getId());
+//                Monitoramento monitoramentoAtualLocal = monitoramentoDAO.getMonitoramentoLocal(maquinaAtualLocal.getId());
+//                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtualLocal.getId());
+//
+//                pacoteDAO.insertPacotesLocal(latencia,
+//                        pacotesEnviados,
+//                        pacotesRecebidos,
+//                        bytesRecebidos,
+//                        bytesEnviados,
+//                        monitoramentoAtualLocal.getId());
+//                cpuDAO.insertUsoCpuLocal(looca.getProcessador().getUso(), monitoramentoAtualLocal.getId());
+//                discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtualLocal.getId());
+//                memoriaDAO.insertUsoRamAzure(usoRam, monitoramentoAtualLocal.getId());
 
                 EspecificacaoMaquina maquinaAtualAzure = emDAO.getEspecificacaoMaquinaPorHostNameAzure(
                         looca.getRede().getParametros().getHostName());
                 monitoramentoDAO.insertMonitoramentoAzure(dataAtual, horaAtual, maquinaAtualAzure.getId());
-                Monitoramento monitoramentoAtualAzure = monitoramentoDAO.getMonitoramentoLocal(maquinaAtualAzure.getId());
+                Monitoramento monitoramentoAtualAzure = monitoramentoDAO.getMonitoramentoAzure(maquinaAtualAzure.getId());
                 pacoteDAO.insertPacotesAzure(latencia,
                         pacotesEnviados,
                         pacotesRecebidos,
@@ -225,7 +225,7 @@ public class ApiSwing extends javax.swing.JFrame {
                 discoDAO.insertUsoDiscoAzure(usoDisco, monitoramentoAtualAzure.getId());
                 memoriaDAO.insertUsoRamAzure(usoRam, monitoramentoAtualAzure.getId());
                 
-                if (usoDisco > 90) {
+                if (usoDisco >= 90) {
                     try {               
                         String nome = maquinaAtualAzure.getHostName();
                         json.put("text", "Uma de suas máquinas está com uso elevado do disco! Nome da Máquina: "+ nome);
@@ -238,7 +238,7 @@ public class ApiSwing extends javax.swing.JFrame {
                     
                 }
                 
-                if(usoRam > 80){
+                if(usoRam >= 80){
                      try {               
                         String nome = maquinaAtualAzure.getHostName();
                         json.put("text", "Uma de suas máquinas está com uso elevado do memória! Nome da Máquina: "+ nome);
@@ -249,7 +249,7 @@ public class ApiSwing extends javax.swing.JFrame {
                         e.printStackTrace();
                     }
                      
-                }if(looca.getProcessador().getUso() > 80.0){
+                }if(looca.getProcessador().getUso() >= 80.0){
                     try {               
                         String nome = maquinaAtualAzure.getHostName();
                         json.put("text", "Uma de suas máquinas está com uso elevado da CPU! Nome da Máquina: "+ nome);

@@ -17,7 +17,7 @@ public class MonitoramentoController {
 
         JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
-        return conAzure.queryForObject("select id, "
+        return conAzure.queryForObject("select top 1 id, "
                 + "data, "
                 + "hora, "
                 + "fkMaquina as maquina "
