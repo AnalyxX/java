@@ -225,41 +225,41 @@ public class ApiSwing extends javax.swing.JFrame {
                 discoDAO.insertUsoDiscoAzure(usoDisco, monitoramentoAtualAzure.getId());
                 memoriaDAO.insertUsoRamAzure(usoRam, monitoramentoAtualAzure.getId());
                 
-                if (usoDisco >= 90) {
-                    try {               
-                        String nome = maquinaAtualAzure.getHostName();
-                        json.put("text", "Uma de suas máquinas está com uso elevado do disco! Nome da Máquina: "+ nome);
-
-                        Slack.sendMessage(json);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    
-                }
-                
-                if(usoRam >= 80){
-                     try {               
-                        String nome = maquinaAtualAzure.getHostName();
-                        json.put("text", "Uma de suas máquinas está com uso elevado do memória! Nome da Máquina: "+ nome);
-
-                        Slack.sendMessage(json);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                     
-                }if(looca.getProcessador().getUso() >= 80.0){
-                    try {               
-                        String nome = maquinaAtualAzure.getHostName();
-                        json.put("text", "Uma de suas máquinas está com uso elevado da CPU! Nome da Máquina: "+ nome);
-
-                        Slack.sendMessage(json);
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+//                if (usoDisco >= 90) {
+//                    try {               
+//                        String nome = maquinaAtualAzure.getHostName();
+//                        json.put("text", "Uma de suas máquinas está com uso elevado do disco! Nome da Máquina: "+ nome);
+//
+//                        Slack.sendMessage(json);
+//
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                    
+//                }
+//                
+//                if(usoRam >= 80){
+//                     try {               
+//                        String nome = maquinaAtualAzure.getHostName();
+//                        json.put("text", "Uma de suas máquinas está com uso elevado do memória! Nome da Máquina: "+ nome);
+//
+//                        Slack.sendMessage(json);
+//
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                     
+//                }if(looca.getProcessador().getUso() >= 80.0){
+//                    try {               
+//                        String nome = maquinaAtualAzure.getHostName();
+//                        json.put("text", "Uma de suas máquinas está com uso elevado da CPU! Nome da Máquina: "+ nome);
+//
+//                        Slack.sendMessage(json);
+//
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
 
             }
         }, 0, 5000);//60000

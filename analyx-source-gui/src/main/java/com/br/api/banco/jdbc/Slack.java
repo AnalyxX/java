@@ -1,7 +1,6 @@
 
 package com.br.api.banco.jdbc;
 
-import com.br.api.banco.jdbc.controller.UrlSlackController;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
