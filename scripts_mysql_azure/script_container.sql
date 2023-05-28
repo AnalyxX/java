@@ -1,8 +1,6 @@
 CREATE SCHEMA IF NOT EXISTS bd_analyx DEFAULT CHARACTER SET utf8 ;
 USE bd_analyx;
 
--- drop database bd_analyx;
-
 CREATE TABLE IF NOT EXISTS cpu (
   id INT NOT NULL AUTO_INCREMENT,
   modeloCPU VARCHAR(100) NOT NULL,
@@ -86,8 +84,3 @@ insert into tipoComponente values
 (null,'cpu'),
 (null,'disco'),
 (null,'ram');
-
--- select * from cpu;
--- select * from monitoramento;
--- select * from componente;
--- desc componente;
