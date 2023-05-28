@@ -14,17 +14,12 @@ import org.json.JSONObject;
  * @author gibas
  */
 public class Slack {
-    
-    UrlSlackController urlDAO = new UrlSlackController();
-    UrlSlack urlObj = urlDAO.getUrl();
-    String urlText = urlObj.toString();
-    
     private static HttpClient client = HttpClient.newHttpClient();
-    private static final String URL = String.format("%s",urlText);
+    private static final String URL = "";
     
     public static void sendMessage(JSONObject content) throws IOException, InterruptedException{
         HttpRequest request = HttpRequest.newBuilder(
-                URI.create(URL))
+                URI.create(URL).create(URL))
                 .header("accept", "application/json")
                 .POST(HttpRequest.BodyPublishers.ofString(content.toString()))
                 .build();

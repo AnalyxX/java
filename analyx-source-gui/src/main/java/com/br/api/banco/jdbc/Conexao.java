@@ -18,9 +18,9 @@ public class Conexao {
         
         dataSource.setUrl("jdbc:mysql://localhost:3306/bd_analyx?autoReconnect=true&useSSL=false"); 
         
-        dataSource.setUsername("admin");
+        dataSource.setUsername("Leonardo");
         
-        dataSource.setPassword("1234");
+        dataSource.setPassword("2212Leo*");
 
 //        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
 //        

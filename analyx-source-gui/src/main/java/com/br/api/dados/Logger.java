@@ -35,6 +35,16 @@ public class Logger {
             e.printStackTrace();
         }
     }
+    
+        public void logErro(String message) {
+        try {
+            String logMessageInfo = "[" + getFormattedDate() + "] " + "[INFO] " + message + "\n";
+            arquivoLog.write(logMessageInfo);
+            arquivoLog.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private String getFormattedDate() {
         return data.format(new Date());

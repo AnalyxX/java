@@ -12,7 +12,7 @@ import java.util.List;
  * @author carlo
  */
 public class MemoriaController {
-    
+
     ConexaoAzure conexaoAzure = new ConexaoAzure();
 
     JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
@@ -20,8 +20,8 @@ public class MemoriaController {
     Conexao conexao = new Conexao();
 
     JdbcTemplate con = conexao.getConexaoDoBanco();
-    
-        public void insertMemoriaMaquinaAzure(Long total) {
+
+    public void insertMemoriaMaquinaAzure(Long total) {
 
         List<Memoria> memoria = conAzure.query("select id, "
                 + "total as modelo "
@@ -35,7 +35,22 @@ public class MemoriaController {
             System.out.println(memoria + " Memória já cadastrada");
         }
     }
-    
+
+    public void insertMemoriaMaquinaLocal(Long total) {
+
+        List<Memoria> memoria = con.query("select id, "
+                + "total as modelo "
+                + "from ram where total = ?",
+                new BeanPropertyRowMapper<Memoria>(Memoria.class), total);
+
+        if (memoria.isEmpty()) {
+            con.update("insert into ram values (null,?)", total);
+            System.out.println("Memoria cadastrada");
+        } else {
+            System.out.println(memoria + " Memória já cadastrada");
+        }
+    }
+
     public List<Memoria> showAll() {
         Conexao conexao = new Conexao();
 

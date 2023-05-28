@@ -35,6 +35,21 @@ public class DiscoController {
             System.out.println(disco + " disco já cadastrada");
         }
     }
+    
+        public void insertDiscoMaquinaLocal(Long volume) {
+
+        List<Disco> disco = con.query("select id, "
+                + "volume "
+                + "from disco where volume = ?",
+                new BeanPropertyRowMapper<Disco>(Disco.class), volume);
+
+        if (disco.isEmpty()) {
+            con.update("insert into disco values (null,?)", volume);
+            System.out.println("disco cadastrado");
+        } else {
+            System.out.println(disco + " disco já cadastrada");
+        }
+    }
 
     public void insertUsoDiscoLocal(Double d, Integer fkMonitoramento) {
         
