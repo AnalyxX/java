@@ -175,15 +175,6 @@ insert into setor value
 insert into empresa value
 (null, '00000000000100', 'SPTech School','Rafel Petry','(11)959595959','rafael.petry@sptech.school');
 
-insert into cpu value 
-(null,'i5');
-
-insert into disco value
-(null,'1000000000');
-
-insert into ram value
-(null,'80000');
-
 insert into especificacaoMaquina value
 (null,'joao-host',1,1,1);
 
@@ -202,37 +193,37 @@ insert into usuario values
 (null,'teste@email.com','1234',2,2),
 (null,'carlos@email.com','1234',2,3);
 
-insert into monitoramento value
-(null,'2023-04-23','14:30:00',1);
+-- insert into monitoramento value
+-- (null,'2023-04-23','14:30:00',1);
 
 insert into tipoComponente values
 (null,'cpu'),
 (null,'disco'),
 (null,'ram');
 
-insert into componente value
-(null,50,1,1),
-(null,70,1,2),
-(null,30,1,3);
+-- insert into componente value
+-- (null,50,1,1),
+-- (null,70,1,2),
+-- (null,30,1,3);
          
-insert into monitoramento value
-(null,'2023-05-20','20:50',1);
+-- insert into monitoramento value
+-- (null,'2023-05-20','20:50',1);
 
-insert into monitoramento value
-(1,'2023-05-20','20:50',2);
+-- insert into monitoramento value
+-- (1,'2023-05-20','20:50',2);
 
-insert into monitoramento value
-(2,'2023-05-20','20:50',2);
+-- insert into monitoramento value
+-- (2,'2023-05-20','20:50',2);
 
-insert into monitoramento value
-(3,'2023-05-20','20:50',2);
+-- insert into monitoramento value
+-- (3,'2023-05-20','20:50',2);
 
 -- select CONCAT(id,fkMaquina) as 'CHAVE_PRIMARIA' from monitoramento;
          
-insert into pacote values (null,50.0,1000,1000,10000,1000,1);
+-- insert into pacote values (null,50.0,1000,1000,10000,1000,1);
 -- select * from cpu;
 -- desc pacote;
-select * from pacote;
+-- select * from pacote;
 -- select * from monitoramento;
 -- select * from componente;
 -- select * from monitoramento where fkMaquina = 2 order by id desc;

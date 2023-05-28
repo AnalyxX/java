@@ -212,7 +212,7 @@ public class LoginSwing extends javax.swing.JFrame {
             Usuario user = usuarioDAO.entrarAzure(email, senha);
             String hostName = looca.getRede().getParametros().getHostName();
             emDAO.cadastroDaMaquina(hostName, user.getFuncionario());
-            emDAO.cadastroDaMaquinaLocal(hostName, user.getFuncionario());
+            emDAO.cadastroDaMaquinaLocal(hostName);
             this.setVisible(false);
             JFrame telaApi = new ApiSwing();
             telaApi.setVisible(true);
