@@ -20,7 +20,7 @@ public class DiscoController {
     Conexao conexao = new Conexao();
 
     JdbcTemplate con = conexao.getConexaoDoBanco();
-    
+
     public void insertDiscoMaquinaAzure(Long volume) {
 
         List<Disco> disco = conAzure.query("select id, "
@@ -35,8 +35,8 @@ public class DiscoController {
             System.out.println(disco + " disco já cadastrada");
         }
     }
-    
-        public void insertDiscoMaquinaLocal(Long volume) {
+
+    public void insertDiscoMaquinaLocal(Long volume) {
 
         List<Disco> disco = con.query("select id, "
                 + "volume "
@@ -52,14 +52,14 @@ public class DiscoController {
     }
 
     public void insertUsoDiscoLocal(Double d, Integer fkMonitoramento) {
-        
-        con.update("insert into componente value "
+
+        con.update("insert into componente values "
                 + "(null, ?,?,2)", d, fkMonitoramento);
     }
-    
-    public void insertUsoDiscoAzure(Double d, Integer fkMonitoramento) {
-        
-        conAzure.update("insert into componente value "
-                + "(?,?,2)", d, fkMonitoramento);
+
+    public void insertUsoDiscoAzure(Double d, Integer fkMonitoramento, Integer fkMaquina) {
+
+        conAzure.update("insert into componente values "
+                + "(?, ?, ?, 2)", d, fkMonitoramento, fkMaquina);
     }
 }

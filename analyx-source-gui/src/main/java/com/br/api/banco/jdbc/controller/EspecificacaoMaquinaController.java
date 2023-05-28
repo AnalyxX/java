@@ -114,7 +114,7 @@ public class EspecificacaoMaquinaController {
                 hostName);
         }
     }
-        public EspecificacaoMaquina cadastroDaMaquinaLocal(String hostName) {
+        public EspecificacaoMaquina cadastroDaMaquinaLocal(String hostName,Integer fkUsuario) {
 
         List<EspecificacaoMaquina> cadastro = con.query("select id, "
                 + "hostName, "
@@ -159,8 +159,9 @@ public class EspecificacaoMaquinaController {
                     cpu.getId(),
                     disco.getId(),
                     ram.getId());
-            System.out.println("passou inserir especificacao");
+
             EspecificacaoMaquina maquina = getEspecificacaoMaquinaPorHostNameLocal(hostName);
+            funcionarioDAO.vincularMaquinaLocal(maquina.getId(), fkUsuario);
             
             return con.queryForObject("select id, "
                 + "hostName, "

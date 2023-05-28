@@ -19,11 +19,16 @@ public class FuncionarioController {
     JdbcTemplate con = conexao.getConexaoDoBanco();
 
     public void vincularMaquinaAzure(Integer fkMaquina, Integer idFuncionario) {
-       
+
         conAzure.update("update funcionario set fkMaquina = ?"
                 + " where id = ?", fkMaquina, idFuncionario);
-       
-        
+    }
+
+    public void vincularMaquinaLocal(Integer fkMaquina, Integer idFuncionario) {
+
+        con.update("update funcionario set fkMaquina = ?"
+                + " where id = ?", fkMaquina, idFuncionario);
+
     }
 
 }

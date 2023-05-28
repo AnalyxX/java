@@ -64,17 +64,17 @@ public class MemoriaController {
 
         JdbcTemplate con = conexao.getConexaoDoBanco();
 
-        con.update("insert into componente value "
+        con.update("insert into componente values "
                 + "(null, ?,?,3)", r, fkMonitoramento);
     }
 
-    public void insertUsoRamAzure(Double r, Integer fkMonitoramento) {
+    public void insertUsoRamAzure(Double r, Integer fkMonitoramento, Integer fkMaquina) {
         ConexaoAzure conexaoAzure = new ConexaoAzure();
 
         JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
-        conAzure.update("insert into componente value "
-                + "(?,?,3)", r, fkMonitoramento);
+        conAzure.update("insert into componente values "
+                + "(?,?,?,3)", r, fkMonitoramento, fkMaquina);
     }
 
 }

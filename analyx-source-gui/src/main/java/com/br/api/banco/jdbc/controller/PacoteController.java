@@ -15,18 +15,20 @@ public class PacoteController {
             Long pctRecebido,
             Long byteRecebido,
             Long byteEnviado,
-            Integer fkMonitoramento) {
+            Integer fkMonitoramento,
+            Integer fkMaquina) {
         ConexaoAzure conexaoAzure = new ConexaoAzure();
 
         JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
-        conAzure.update("insert into pacote values (?, ?, ?, ?, ?, 1)",
+        conAzure.update("insert into pacote values (?, ?, ?, ?, ?, ?, ?)",
                 latencia,
                 pctEnviado,
                 pctRecebido,
                 byteEnviado,
                 byteRecebido,
-                fkMonitoramento);
+                fkMonitoramento,
+                fkMaquina);
     }
 
     public void insertPacotesLocal( Double latencia,

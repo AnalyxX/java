@@ -65,9 +65,9 @@ public class CpuController {
                 + "(null, ?,?,1)", c, fkMonitoramento);
     }
 
-    public void insertUsoCpuAzure(Double c, Integer fkMonitoramento) {
+    public void insertUsoCpuAzure(Double c, Integer fkMonitoramento, Integer fkMaquina) {
 
         conAzure.update("insert into componente values "
-                + "(?,?,1)", c, fkMonitoramento);
+                + "(?, ?, ?, 1)", c, fkMonitoramento, fkMaquina);
     }
 }

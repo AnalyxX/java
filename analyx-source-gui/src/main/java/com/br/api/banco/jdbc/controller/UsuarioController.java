@@ -22,17 +22,13 @@ public class UsuarioController {
 
     public Usuario entrarMySql(String email, String senha) {
 
-        return con.queryForObject("select u.id, "
-                + "		u.email,"
-                + "		u.senha,"
-                + "		tu.tipoUsuario,"
-                + "		f.nome as funcionario "
-                + "                     from usuario as u"
-                + "			join tipoUsuario as tu"
-                + "			on tu.id = u.fkTipoUsuario"
-                + "				join funcionario as f"
-                + "				on f.id = u.fkFuncionario "
-                + "               where email = ? and senha = ?", new BeanPropertyRowMapper<Usuario>(Usuario.class), email, senha);
+        return con.queryForObject("select id, "
+                + "email,"
+                + "senha, "
+                + "fkTipoUsuario as tipoUsuario, "
+                + "fkFuncionario as funcionario "
+                + "from usuario where email = ? and senha = ?",
+                new BeanPropertyRowMapper<Usuario>(Usuario.class), email, senha);
     }
 
     public Usuario entrarAzure(String email, String senha) {

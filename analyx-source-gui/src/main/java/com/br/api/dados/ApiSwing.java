@@ -199,7 +199,6 @@ public class ApiSwing extends javax.swing.JFrame {
 //                        looca.getRede().getParametros().getHostName());
 //                monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtualLocal.getId());
 //                Monitoramento monitoramentoAtualLocal = monitoramentoDAO.getMonitoramentoLocal(maquinaAtualLocal.getId());
-//                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtualLocal.getId());
 //
 //                pacoteDAO.insertPacotesLocal(latencia,
 //                        pacotesEnviados,
@@ -209,23 +208,29 @@ public class ApiSwing extends javax.swing.JFrame {
 //                        monitoramentoAtualLocal.getId());
 //                cpuDAO.insertUsoCpuLocal(looca.getProcessador().getUso(), monitoramentoAtualLocal.getId());
 //                discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtualLocal.getId());
-//                memoriaDAO.insertUsoRamAzure(usoRam, monitoramentoAtualLocal.getId());
+//                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtualLocal.getId());
 
                 EspecificacaoMaquina maquinaAtualAzure = emDAO.getEspecificacaoMaquinaPorHostNameAzure(
                         looca.getRede().getParametros().getHostName());
-                System.out.println(maquinaAtualAzure);
                 monitoramentoDAO.insertMonitoramentoAzure(dataAtual, horaAtual, maquinaAtualAzure.getId());
                 Monitoramento monitoramentoAtualAzure = monitoramentoDAO.getMonitoramentoAzure(maquinaAtualAzure.getId());
-                System.out.println(monitoramentoAtualAzure);
+                
                 pacoteDAO.insertPacotesAzure(latencia,
                         pacotesEnviados,
                         pacotesRecebidos,
                         bytesRecebidos,
                         bytesEnviados,
-                        monitoramentoAtualAzure.getId());
-                cpuDAO.insertUsoCpuAzure(looca.getProcessador().getUso(), monitoramentoAtualAzure.getId());
-                discoDAO.insertUsoDiscoAzure(usoDisco, monitoramentoAtualAzure.getId());
-                memoriaDAO.insertUsoRamAzure(usoRam, monitoramentoAtualAzure.getId());
+                        monitoramentoAtualAzure.getId(),
+                        maquinaAtualAzure.getId());
+                cpuDAO.insertUsoCpuAzure(looca.getProcessador().getUso(), 
+                        monitoramentoAtualAzure.getId(),
+                        maquinaAtualAzure.getId());
+                discoDAO.insertUsoDiscoAzure(usoDisco, 
+                        monitoramentoAtualAzure.getId(),
+                        maquinaAtualAzure.getId());
+                memoriaDAO.insertUsoRamAzure(usoRam, 
+                        monitoramentoAtualAzure.getId(),
+                        maquinaAtualAzure.getId());
                 
 //                if (usoDisco >= 90) {
 //                    try {               
