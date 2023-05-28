@@ -20,7 +20,7 @@ public class PacoteController {
 
         JdbcTemplate conAzure = conexaoAzure.getConexaoDoBanco();
 
-        conAzure.update("insert into pacote values (?, ?, ?, ?, ?, ?)",
+        conAzure.update("insert into pacote values (?, ?, ?, ?, ?, 1)",
                 latencia,
                 pctEnviado,
                 pctRecebido,

@@ -103,15 +103,15 @@ CREATE TABLE IF NOT EXISTS monitoramento (
 CREATE TABLE IF NOT EXISTS pacote (
   id INT NOT NULL AUTO_INCREMENT,
   latencia DECIMAL(5,2) NOT NULL,
-  pacotesEnviados INT NOT NULL,
-  pacotesRecebidos INT NOT NULL,
-  bytesEnviados INT NOT NULL,
-  bytesRecebidos INT NOT NULL,
+  pacotesEnviados BIGINT NOT NULL,
+  pacotesRecebidos BIGINT NOT NULL,
+  bytesEnviados BIGINT NOT NULL,
+  bytesRecebidos BIGINT NOT NULL,
   fkMonitoramento INT NOT NULL,
   PRIMARY KEY (id),
   CONSTRAINT fk_rede_Monitoramento1
-    FOREIGN KEY (fkMonitoramento)
-    REFERENCES monitoramento (id));
+    FOREIGN KEY (id,fkMonitoramento)
+    REFERENCES monitoramento (id,fkMaquina));
 
 CREATE TABLE IF NOT EXISTS tipoComponente (
   id INT NOT NULL AUTO_INCREMENT,

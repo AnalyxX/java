@@ -213,8 +213,10 @@ public class ApiSwing extends javax.swing.JFrame {
 
                 EspecificacaoMaquina maquinaAtualAzure = emDAO.getEspecificacaoMaquinaPorHostNameAzure(
                         looca.getRede().getParametros().getHostName());
+                System.out.println(maquinaAtualAzure);
                 monitoramentoDAO.insertMonitoramentoAzure(dataAtual, horaAtual, maquinaAtualAzure.getId());
                 Monitoramento monitoramentoAtualAzure = monitoramentoDAO.getMonitoramentoAzure(maquinaAtualAzure.getId());
+                System.out.println(monitoramentoAtualAzure);
                 pacoteDAO.insertPacotesAzure(latencia,
                         pacotesEnviados,
                         pacotesRecebidos,
