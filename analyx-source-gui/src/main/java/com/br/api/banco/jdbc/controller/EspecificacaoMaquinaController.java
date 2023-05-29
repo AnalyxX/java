@@ -6,6 +6,7 @@ import com.br.api.banco.jdbc.Cpu;
 import com.br.api.banco.jdbc.Disco;
 import com.br.api.banco.jdbc.EspecificacaoMaquina;
 import com.br.api.banco.jdbc.Memoria;
+import com.br.api.dados.Logger;
 import com.github.britooo.looca.api.core.Looca;
 import com.github.britooo.looca.api.group.discos.Volume;
 import java.util.List;
@@ -25,6 +26,7 @@ public class EspecificacaoMaquinaController {
     Conexao conexao = new Conexao();
 
     JdbcTemplate con = conexao.getConexaoDoBanco();
+    private Logger log;
 
     Looca looca = new Looca();
     CpuController cpuDAO = new CpuController();
@@ -45,7 +47,10 @@ public class EspecificacaoMaquinaController {
     }
 
     public EspecificacaoMaquina cadastroDaMaquina(String hostName, Integer fkUsuario) {
-
+        try {
+            log = new Logger("logAnalyx.txt");
+        } catch (Exception e) {
+        }
         List<EspecificacaoMaquina> cadastro = conAzure.query("select id, "
                 + "hostName, "
                 + "fkCpu as cpu, "
@@ -68,54 +73,58 @@ public class EspecificacaoMaquinaController {
             discoDAO.insertDiscoMaquinaAzure(total);
             memoriaDAO.insertMemoriaMaquinaAzure(totalRam);
             System.out.println("A máquina foi cadastrada na Azure");
-            
+
             Cpu cpu = conAzure.queryForObject("select id, modeloCPU from cpu "
-                    + "where modeloCPU = ?", 
-                    new BeanPropertyRowMapper<Cpu>(Cpu.class) ,
+                    + "where modeloCPU = ?",
+                    new BeanPropertyRowMapper<Cpu>(Cpu.class),
                     looca.getProcessador().getNome());
-            
+
             Disco disco = conAzure.queryForObject("select id, volume from disco "
-                    + "where volume = ?", 
+                    + "where volume = ?",
                     new BeanPropertyRowMapper<Disco>(Disco.class),
                     total);
-            
+
             Memoria ram = conAzure.queryForObject("select id, total from ram "
                     + "where total = ?",
                     new BeanPropertyRowMapper<Memoria>(Memoria.class),
                     totalRam);
-            
+
             conAzure.update("insert into especificacaoMaquina values "
                     + "(?, ?, ?, ?)", hostName,
                     cpu.getId(),
                     disco.getId(),
                     ram.getId());
-            
+
             EspecificacaoMaquina maquina = getEspecificacaoMaquinaPorHostNameAzure(hostName);
-            
+
             funcionarioDAO.vincularMaquinaAzure(maquina.getId(), fkUsuario);
-            
+            log.logInfo("Máquina cadastrada na Azure: " + maquina);
             return conAzure.queryForObject("select id, "
-                + "hostName, "
-                + "fkCpu as cpu, "
-                + "fkDisco as disco, "
-                + "fkRam as ram "
-                + "from especificacaoMaquina where hostName = ?",
-                new BeanPropertyRowMapper<EspecificacaoMaquina>(EspecificacaoMaquina.class),
-                hostName);
+                    + "hostName, "
+                    + "fkCpu as cpu, "
+                    + "fkDisco as disco, "
+                    + "fkRam as ram "
+                    + "from especificacaoMaquina where hostName = ?",
+                    new BeanPropertyRowMapper<EspecificacaoMaquina>(EspecificacaoMaquina.class),
+                    hostName);
         } else {
             System.out.println("A máquina já está cadastrada na Azure");
             return conAzure.queryForObject("select id, "
-                + "hostName, "
-                + "fkCpu as cpu, "
-                + "fkDisco as disco, "
-                + "fkRam as ram "
-                + "from especificacaoMaquina where hostName = ?",
-                new BeanPropertyRowMapper<EspecificacaoMaquina>(EspecificacaoMaquina.class),
-                hostName);
+                    + "hostName, "
+                    + "fkCpu as cpu, "
+                    + "fkDisco as disco, "
+                    + "fkRam as ram "
+                    + "from especificacaoMaquina where hostName = ?",
+                    new BeanPropertyRowMapper<EspecificacaoMaquina>(EspecificacaoMaquina.class),
+                    hostName);
         }
     }
-        public EspecificacaoMaquina cadastroDaMaquinaLocal(String hostName) {
 
+    public EspecificacaoMaquina cadastroDaMaquinaLocal(String hostName) {
+        try {
+            log = new Logger("logAnalyx.txt");
+        } catch (Exception e) {
+        }
         List<EspecificacaoMaquina> cadastro = con.query("select id, "
                 + "hostName, "
                 + "fkCpu as cpu, "
@@ -138,46 +147,46 @@ public class EspecificacaoMaquinaController {
             discoDAO.insertDiscoMaquinaLocal(total);
             memoriaDAO.insertMemoriaMaquinaLocal(totalRam);
             System.out.println("A máquina foi cadastrada no Mysql");
-            
+
             Cpu cpu = con.queryForObject("select id, modeloCPU from cpu "
-                    + "where modeloCPU = ?", 
-                    new BeanPropertyRowMapper<Cpu>(Cpu.class) ,
+                    + "where modeloCPU = ?",
+                    new BeanPropertyRowMapper<Cpu>(Cpu.class),
                     looca.getProcessador().getNome());
-            
+
             Disco disco = con.queryForObject("select id, volume from disco "
-                    + "where volume = ?", 
+                    + "where volume = ?",
                     new BeanPropertyRowMapper<Disco>(Disco.class),
                     total);
-            
+
             Memoria ram = con.queryForObject("select id, total from ram "
                     + "where total = ?",
                     new BeanPropertyRowMapper<Memoria>(Memoria.class),
                     totalRam);
-            
+
             con.update("insert into especificacaoMaquina values "
                     + "(null,?, ?, ?, ?)", hostName,
                     cpu.getId(),
                     disco.getId(),
                     ram.getId());
-
+            log.logInfo("Máquina cadastrada Mysql local: " + hostName);
             return con.queryForObject("select id, "
-                + "hostName, "
-                + "fkCpu as cpu, "
-                + "fkDisco as disco, "
-                + "fkRam as ram "
-                + "from especificacaoMaquina where hostName = ?",
-                new BeanPropertyRowMapper<EspecificacaoMaquina>(EspecificacaoMaquina.class),
-                hostName);
+                    + "hostName, "
+                    + "fkCpu as cpu, "
+                    + "fkDisco as disco, "
+                    + "fkRam as ram "
+                    + "from especificacaoMaquina where hostName = ?",
+                    new BeanPropertyRowMapper<EspecificacaoMaquina>(EspecificacaoMaquina.class),
+                    hostName);
         } else {
             System.out.println("A máquina já está cadastrada na Azure");
             return con.queryForObject("select id, "
-                + "hostName, "
-                + "fkCpu as cpu, "
-                + "fkDisco as disco, "
-                + "fkRam as ram "
-                + "from especificacaoMaquina where hostName = ?",
-                new BeanPropertyRowMapper<EspecificacaoMaquina>(EspecificacaoMaquina.class),
-                hostName);
+                    + "hostName, "
+                    + "fkCpu as cpu, "
+                    + "fkDisco as disco, "
+                    + "fkRam as ram "
+                    + "from especificacaoMaquina where hostName = ?",
+                    new BeanPropertyRowMapper<EspecificacaoMaquina>(EspecificacaoMaquina.class),
+                    hostName);
         }
     }
 
@@ -192,7 +201,7 @@ public class EspecificacaoMaquinaController {
                 new BeanPropertyRowMapper<EspecificacaoMaquina>(EspecificacaoMaquina.class),
                 hostName);
     }
-    
+
     public EspecificacaoMaquina getEspecificacaoMaquinaPorHostNameAzure(String hostName) {
 
         return conAzure.queryForObject("select id, "

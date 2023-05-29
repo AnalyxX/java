@@ -216,9 +216,9 @@ public class LoginSwing extends javax.swing.JFrame {
             this.setVisible(false);
             JFrame telaApi = new ApiSwing();
             telaApi.setVisible(true);
-            log.logInfo("Login efetuado user: " + email);
+            log.logInfo("Login efetuado user: " + email + " Máquina acessada: " + hostName);
         } catch (Exception e) {
-            log.logInfo("Informações de login incorretas, user: " + email);
+            log.logWarning("Informações de login incorretas, user: " + email);
             lbl_verify.setText("Informações de login incorretas");
             System.out.println("erro ->" + e.getMessage());
             e.printStackTrace();
