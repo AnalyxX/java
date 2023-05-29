@@ -5,6 +5,7 @@ import com.br.api.banco.jdbc.AlertaLimite;
 import com.br.api.banco.jdbc.EspecificacaoMaquina;
 import com.br.api.banco.jdbc.Monitoramento;
 import com.br.api.banco.jdbc.Slack;
+import com.br.api.banco.jdbc.controller.SlackController;
 import com.br.api.banco.jdbc.controller.AlertaController;
 import com.br.api.banco.jdbc.controller.AlertaLimiteController;
 import com.br.api.banco.jdbc.controller.CpuController;
@@ -143,6 +144,10 @@ public class ApiSwing extends javax.swing.JFrame {
         AlertaController alertaDAO  = new AlertaController();
         Looca looca = new Looca();
         JSONObject json = new JSONObject();
+        SlackController urlSlack = new SlackController();
+        String webhook = urlSlack.getSlackWebhook();
+        
+        Slack.URL = webhook;
 
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -258,17 +263,16 @@ public class ApiSwing extends javax.swing.JFrame {
                             maquinaAtualAzure.getId()
                     );
                     
-//                    try {               
-//                        String nome = maquinaAtualAzure.getHostName();
-//                        json.put("text", 
-//                                "Uma de suas máquinas está com uso crítico da CPU!"
-//                                        + " Nome da Máquina: "+ nome);
-//
-//                        Slack.sendMessage(json);
-//
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
+                   try {               
+                        String nome = maquinaAtualAzure.getHostName();
+                        json.put("text", 
+                               "Uma de suas máquinas está com uso crítico da CPU!"
+                                        + " Nome da Máquina: "+ nome);
+
+                       Slack.sendMessage(json);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 }
                 
                 if (usoDisco <= verde) {
@@ -287,17 +291,17 @@ public class ApiSwing extends javax.swing.JFrame {
                             maquinaAtualAzure.getId()
                     );
                     
-//                    try {               
-//                        String nome = maquinaAtualAzure.getHostName();
-//                        json.put("text", 
-//                                "Uma de suas máquinas está com uso crítico do Disco!"
-//                                        + " Nome da Máquina: "+ nome);
-//
-//                        Slack.sendMessage(json);
-//
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
+                   try {               
+                        String nome = maquinaAtualAzure.getHostName();
+                        json.put("text", 
+                                "Uma de suas máquinas está com uso crítico do Disco!"
+                                        + " Nome da Máquina: "+ nome);
+
+                        Slack.sendMessage(json);
+
+                    } catch (Exception e) {
+                       e.printStackTrace();
+                    }
                 }
                 
                 if (usoRam <= verde) {
@@ -316,17 +320,17 @@ public class ApiSwing extends javax.swing.JFrame {
                             maquinaAtualAzure.getId()
                     );
                     
-//                    try {               
-//                        String nome = maquinaAtualAzure.getHostName();
-//                        json.put("text", 
-//                                "Uma de suas máquinas está com uso crítico do Disco!"
-//                                        + " Nome da Máquina: "+ nome);
-//
-//                        Slack.sendMessage(json);
-//
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
+                    try {               
+                        String nome = maquinaAtualAzure.getHostName();
+                        json.put("text", 
+                                "Uma de suas máquinas está com uso crítico do Disco!"
+                                        + " Nome da Máquina: "+ nome);
+
+                        Slack.sendMessage(json);
+
+                    } catch (Exception e) {
+                       e.printStackTrace();
+                    }
                 }
                 System.out.println("Monitoramento feito com sucesso, "
                         + "aguarde mais 1 minuto");
