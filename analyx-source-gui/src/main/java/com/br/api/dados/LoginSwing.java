@@ -212,10 +212,10 @@ public class LoginSwing extends javax.swing.JFrame {
             Usuario user = usuarioDAO.entrarAzure(email, senha);
             String hostName = looca.getRede().getParametros().getHostName();
             emDAO.cadastroDaMaquina(hostName, user.getFuncionario());
-            //emDAO.cadastroDaMaquinaLocal(hostName);
+            emDAO.cadastroDaMaquinaLocal(hostName);
             this.setVisible(false);
-            JFrame telaApi = new ApiSwing();
-            telaApi.setVisible(true);
+            JFrame posLogin = new PosLogin();
+            posLogin.setVisible(true);
             log.logInfo("Login efetuado user: " + email + " Máquina acessada: " + hostName);
         } catch (Exception e) {
             log.logWarning("Informações de login incorretas, user: " + email);

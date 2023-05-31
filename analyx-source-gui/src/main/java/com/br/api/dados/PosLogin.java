@@ -114,20 +114,20 @@ public class PosLogin extends javax.swing.JFrame {
                     latencia = null;
                 }
 
-                EspecificacaoMaquina maquinaAtualLocal = emDAO.getEspecificacaoMaquinaPorHostNameLocal(
-                        looca.getRede().getParametros().getHostName());
-                monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtualLocal.getId());
-                Monitoramento monitoramentoAtualLocal = monitoramentoDAO.getMonitoramentoLocal(maquinaAtualLocal.getId());
-
-                pacoteDAO.insertPacotesLocal(latencia,
-                        pacotesEnviados,
-                        pacotesRecebidos,
-                        bytesRecebidos,
-                        bytesEnviados,
-                        monitoramentoAtualLocal.getId());
-                cpuDAO.insertUsoCpuLocal(usoCpu, monitoramentoAtualLocal.getId());
-                discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtualLocal.getId());
-                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtualLocal.getId());
+//                EspecificacaoMaquina maquinaAtualLocal = emDAO.getEspecificacaoMaquinaPorHostNameLocal(
+//                        looca.getRede().getParametros().getHostName());
+//                monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtualLocal.getId());
+//                Monitoramento monitoramentoAtualLocal = monitoramentoDAO.getMonitoramentoLocal(maquinaAtualLocal.getId());
+//
+//                pacoteDAO.insertPacotesLocal(latencia,
+//                        pacotesEnviados,
+//                        pacotesRecebidos,
+//                        bytesRecebidos,
+//                        bytesEnviados,
+//                        monitoramentoAtualLocal.getId());
+//                cpuDAO.insertUsoCpuLocal(usoCpu, monitoramentoAtualLocal.getId());
+//                discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtualLocal.getId());
+//                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtualLocal.getId());
 
                 EspecificacaoMaquina maquinaAtualAzure = emDAO.getEspecificacaoMaquinaPorHostNameAzure(
                         looca.getRede().getParametros().getHostName());

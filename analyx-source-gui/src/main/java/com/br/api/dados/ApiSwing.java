@@ -34,6 +34,8 @@ public class ApiSwing extends javax.swing.JFrame {
 
     /**
      * Creates new form ApiSwing
+     * @throws java.io.IOException
+     * @throws java.lang.InterruptedException
      */
     public ApiSwing() throws IOException, InterruptedException {
         initComponents();
@@ -186,7 +188,7 @@ public class ApiSwing extends javax.swing.JFrame {
                     }
                 }
 
-                Double latencia = 0.0;
+                Double latencia;
                 try {
                     InetAddress address = InetAddress.getByName("www.google.com.br");
                     long start = System.nanoTime();
@@ -268,7 +270,7 @@ public class ApiSwing extends javax.swing.JFrame {
                                         + " Nome da Máquina: "+ nome);
 
                        Slack.sendMessage(json);
-                } catch (Exception e) {
+                } catch (IOException | InterruptedException | JSONException e) {
                     e.printStackTrace();
                 }
                 }
@@ -297,7 +299,7 @@ public class ApiSwing extends javax.swing.JFrame {
 
                         Slack.sendMessage(json);
 
-                    } catch (Exception e) {
+                    } catch (IOException | InterruptedException | JSONException e) {
                        e.printStackTrace();
                     }
                 }
@@ -326,7 +328,7 @@ public class ApiSwing extends javax.swing.JFrame {
 
                         Slack.sendMessage(json);
 
-                    } catch (Exception e) {
+                    } catch (IOException | InterruptedException | JSONException e) {
                        e.printStackTrace();
                     }
                 }
@@ -342,13 +344,12 @@ public class ApiSwing extends javax.swing.JFrame {
     public static void main(String args[]) {
 
         java.awt.EventQueue.invokeLater(new Runnable() {
+            @Override
             public void run() {
                 try {
                     new ApiSwing().setVisible(true);
-                } catch (InterruptedException ex) {
+                } catch (InterruptedException | IOException ex) {
                     System.out.println(ex.getMessage());
-                } catch (IOException e) {
-                    System.out.println(e.getMessage());
                 }
             }
         });
