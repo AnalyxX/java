@@ -1,6 +1,5 @@
 package com.br.api.dados;
 
-import com.br.api.banco.jdbc.Alerta;
 import com.br.api.banco.jdbc.AlertaLimite;
 import com.br.api.banco.jdbc.EspecificacaoMaquina;
 import com.br.api.banco.jdbc.Monitoramento;
@@ -25,8 +24,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.json.*;
 
 /**
@@ -152,7 +149,6 @@ public class ApiSwing extends javax.swing.JFrame {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-
                 
                 Date dataHoraAtual = new Date();
                 String dataAtual = new SimpleDateFormat("yyyy/MM/dd").format(dataHoraAtual);
@@ -206,20 +202,20 @@ public class ApiSwing extends javax.swing.JFrame {
                     latencia = null;
                 }
 
-                EspecificacaoMaquina maquinaAtualLocal = emDAO.getEspecificacaoMaquinaPorHostNameLocal(
-                        looca.getRede().getParametros().getHostName());
-                monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtualLocal.getId());
-                Monitoramento monitoramentoAtualLocal = monitoramentoDAO.getMonitoramentoLocal(maquinaAtualLocal.getId());
-
-                pacoteDAO.insertPacotesLocal(latencia,
-                        pacotesEnviados,
-                        pacotesRecebidos,
-                        bytesRecebidos,
-                        bytesEnviados,
-                        monitoramentoAtualLocal.getId());
-                cpuDAO.insertUsoCpuLocal(usoCpu, monitoramentoAtualLocal.getId());
-                discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtualLocal.getId());
-                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtualLocal.getId());
+//                EspecificacaoMaquina maquinaAtualLocal = emDAO.getEspecificacaoMaquinaPorHostNameLocal(
+//                        looca.getRede().getParametros().getHostName());
+//                monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtualLocal.getId());
+//                Monitoramento monitoramentoAtualLocal = monitoramentoDAO.getMonitoramentoLocal(maquinaAtualLocal.getId());
+//
+//                pacoteDAO.insertPacotesLocal(latencia,
+//                        pacotesEnviados,
+//                        pacotesRecebidos,
+//                        bytesRecebidos,
+//                        bytesEnviados,
+//                        monitoramentoAtualLocal.getId());
+//                cpuDAO.insertUsoCpuLocal(usoCpu, monitoramentoAtualLocal.getId());
+//                discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtualLocal.getId());
+//                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtualLocal.getId());
 
                 EspecificacaoMaquina maquinaAtualAzure = emDAO.getEspecificacaoMaquinaPorHostNameAzure(
                         looca.getRede().getParametros().getHostName());
@@ -247,12 +243,14 @@ public class ApiSwing extends javax.swing.JFrame {
                 Double verde = alertaLimite.getLimiteVerde();
                 Double vermelho = alertaLimite.getLimiteVermelho();
                 
-                if (usoCpu <= verde) {
+                if (usoCpu <= verde && usoDisco <= verde && usoRam <= verde) {
                     alertaDAO.insertAlertaAzure("Normal", 1, 1, alertaLimite.getId(),
                             monitoramentoAtualAzure.getId(),
                             maquinaAtualAzure.getId()
                     );
-                } else if (usoCpu > verde && usoCpu < vermelho) {
+                } else if (usoCpu > verde && usoCpu < vermelho  &&
+                        usoDisco > verde && usoDisco < vermelho &&
+                        usoRam > verde && usoRam < vermelho) {
                     alertaDAO.insertAlertaAzure("Alerta", 1, 2, alertaLimite.getId(),
                             monitoramentoAtualAzure.getId(),
                             maquinaAtualAzure.getId()
