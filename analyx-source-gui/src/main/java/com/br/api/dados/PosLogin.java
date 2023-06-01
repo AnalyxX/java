@@ -114,20 +114,20 @@ public class PosLogin extends javax.swing.JFrame {
                     latencia = null;
                 }
 
-//                EspecificacaoMaquina maquinaAtualLocal = emDAO.getEspecificacaoMaquinaPorHostNameLocal(
-//                        looca.getRede().getParametros().getHostName());
-//                monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtualLocal.getId());
-//                Monitoramento monitoramentoAtualLocal = monitoramentoDAO.getMonitoramentoLocal(maquinaAtualLocal.getId());
-//
-//                pacoteDAO.insertPacotesLocal(latencia,
-//                        pacotesEnviados,
-//                        pacotesRecebidos,
-//                        bytesRecebidos,
-//                        bytesEnviados,
-//                        monitoramentoAtualLocal.getId());
-//                cpuDAO.insertUsoCpuLocal(usoCpu, monitoramentoAtualLocal.getId());
-//                discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtualLocal.getId());
-//                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtualLocal.getId());
+                EspecificacaoMaquina maquinaAtualLocal = emDAO.getEspecificacaoMaquinaPorHostNameLocal(
+                        looca.getRede().getParametros().getHostName());
+                monitoramentoDAO.insertMonitoramentoLocal(dataAtual, horaAtual, maquinaAtualLocal.getId());
+                Monitoramento monitoramentoAtualLocal = monitoramentoDAO.getMonitoramentoLocal(maquinaAtualLocal.getId());
+
+                pacoteDAO.insertPacotesLocal(latencia,
+                        pacotesEnviados,
+                        pacotesRecebidos,
+                        bytesRecebidos,
+                        bytesEnviados,
+                        monitoramentoAtualLocal.getId());
+                cpuDAO.insertUsoCpuLocal(usoCpu, monitoramentoAtualLocal.getId());
+                discoDAO.insertUsoDiscoLocal(usoDisco, monitoramentoAtualLocal.getId());
+                memoriaDAO.insertUsoRamLocal(usoRam, monitoramentoAtualLocal.getId());
 
                 EspecificacaoMaquina maquinaAtualAzure = emDAO.getEspecificacaoMaquinaPorHostNameAzure(
                         looca.getRede().getParametros().getHostName());
@@ -185,63 +185,6 @@ public class PosLogin extends javax.swing.JFrame {
                     }
                 }
 
-//                if (usoDisco <= verde) {
-//                    alertaDAO.insertAlertaAzure("Normal", 2, 1, alertaLimite.getId(),
-//                            monitoramentoAtualAzure.getId(),
-//                            maquinaAtualAzure.getId()
-//                    );
-//                } else if (usoDisco > verde && usoDisco < vermelho) {
-//                    alertaDAO.insertAlertaAzure("Alerta", 2, 2, alertaLimite.getId(),
-//                            monitoramentoAtualAzure.getId(),
-//                            maquinaAtualAzure.getId()
-//                    );
-//                } else {
-//                    alertaDAO.insertAlertaAzure("Crítico", 2, 3, alertaLimite.getId(),
-//                            monitoramentoAtualAzure.getId(),
-//                            maquinaAtualAzure.getId()
-//                    );
-//
-//                    try {
-//                        String nome = maquinaAtualAzure.getHostName();
-//                        json.put("text",
-//                                "Uma de suas máquinas está com uso crítico do Disco!"
-//                                + " Nome da Máquina: " + nome);
-//
-//                        Slack.sendMessage(json);
-//
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//
-//                if (usoRam <= verde) {
-//                    alertaDAO.insertAlertaAzure("Normal", 3, 1, alertaLimite.getId(),
-//                            monitoramentoAtualAzure.getId(),
-//                            maquinaAtualAzure.getId()
-//                    );
-//                } else if (usoRam > verde && usoRam < vermelho) {
-//                    alertaDAO.insertAlertaAzure("Alerta", 3, 2, alertaLimite.getId(),
-//                            monitoramentoAtualAzure.getId(),
-//                            maquinaAtualAzure.getId()
-//                    );
-//                } else {
-//                    alertaDAO.insertAlertaAzure("Crítico", 3, 3, alertaLimite.getId(),
-//                            monitoramentoAtualAzure.getId(),
-//                            maquinaAtualAzure.getId()
-//                    );
-//
-//                    try {
-//                        String nome = maquinaAtualAzure.getHostName();
-//                        json.put("text",
-//                                "Uma de suas máquinas está com uso crítico do Disco!"
-//                                + " Nome da Máquina: " + nome);
-//
-//                        Slack.sendMessage(json);
-//
-//                    } catch (Exception e) {
-//                        e.printStackTrace();
-//                    }
-//                }
                 System.out.println("Monitoramento feito com sucesso, "
                         + "aguarde mais 1 minuto");
             }

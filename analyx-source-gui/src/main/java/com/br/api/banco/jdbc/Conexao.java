@@ -1,6 +1,5 @@
 package com.br.api.banco.jdbc;
 
-import com.br.api.dados.Logger;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -22,7 +21,7 @@ public class Conexao {
         dataSource.setUsername("root");
 
         dataSource.setPassword("urubu100");
-//
+
 //        dataSource.setUrl("jdbc:mysql://localhost:3306/bd_analyx?autoReconnect=true&useSSL=false");
 //
 //        dataSource.setUsername("admin");
