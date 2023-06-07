@@ -4,6 +4,7 @@ import com.br.api.banco.jdbc.Usuario;
 import com.br.api.banco.jdbc.controller.EspecificacaoMaquinaController;
 import com.br.api.banco.jdbc.controller.UsuarioController;
 import com.github.britooo.looca.api.core.Looca;
+import java.io.IOException;
 import javax.swing.JFrame;
 
 /**
@@ -20,7 +21,7 @@ public class LoginSwing extends javax.swing.JFrame {
         initComponents();
         try {
             log = new Logger("logAnalyx.txt");
-        } catch (Exception e) {
+        } catch (IOException e) {
         }
         
     }
