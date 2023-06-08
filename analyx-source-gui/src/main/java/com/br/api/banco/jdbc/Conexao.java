@@ -5,7 +5,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 
 /**
  *
- * @author consultor
+ * @author Carlos
  */
 public class Conexao {
 

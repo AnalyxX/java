@@ -77,7 +77,8 @@ public class PosLogin extends javax.swing.JFrame {
                 Double usoDisco = (espacoUtilizado / total) * 100.0;
                 usoDisco = Math.round(usoDisco * 100.0) / 100.0;
 
-                Double memoriaUtilizada = (double) (looca.getMemoria().getTotal() - looca.getMemoria().getEmUso());
+                Double memoriaUtilizada = (double) (looca.getMemoria().getTotal() - 
+                        looca.getMemoria().getEmUso());
                 Double usoRam = (memoriaUtilizada / looca.getMemoria().getTotal()) * 100.0;
                 usoRam = Math.round(usoRam * 100.0) / 100.0;
 
